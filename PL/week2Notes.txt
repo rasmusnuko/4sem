@@ -1,0 +1,95 @@
+One machine, One language
+    - One physical machine exists to run it language
+    - Language and machine come together
+    - Funde mental: Fetch-decode
+
+Abstract Machine (AM)
+    - Set of data structures and algorithm, can store and run programs
+    - Interpreter (L0 -> L1)
+      . Component that interprets intructions
+      . The structure of the interpreter is the same for all AM
+      . AM =~ Store + Interpreter
+
+Machine Language
+    - M -> AM
+    - L_m -> Machine language of M
+       (The language understood by M's interpreter)
+      . Internal: data structures in memory
+      . External: Character strings
+
+Chinese Box
+    - Some HW machines are microprogrammed
+    - Instructions of L_Mb is interpreted into lower level intructions
+    - Interpreted by a micro interpreter
+
+Making an abstract machine
+    1. Realization in Hardware
+    2. Emulation or simulation via Firmware
+    3. Interpretation or simulation via Software
+
+Just-in-time compilation (NOT IN THE BOOK)
+    Aka. Dynamic translation / Run-time compilation
+    - JIT compiler analyses the code and translates parts to speedup
+      - Per-file, per-function or arbitrary code fragments
+      - Code cached and reused later without needing to recompile
+    - Combines: Speed of compiled + Flexibility of interpretation
+
+Hiearchy of abstract machines
+    - A computer architecture (Hw or Sw) is structured in a series of
+      hiararchical abstarct machines
+
+First Futamura Projection
+    - Peval_L0 (X,Y): Partial evalutaion for language L0
+    - Int^L0:         Language interpreter for L1, written in L0
+    - P^L1:           Program written in L1
+    - D:              Program Data
+        - This gives us the compiled and specialized version of
+        - the program (writtin in L1, translated to L0)
+
+    - Output: P^L1 written in L0
+
+Second projection of Futamura
+  + So this is Peval(Peval(Int)) --> R^L0
+    - Peval_L0 (X,Y): Partial evalutaion for language L0
+    - Int^L0:         Language interpreter for L1, written in L0
+    - P^L1:           Program written in L1
+        - Output: Compiler written in L0
+        - We get a compiler for L1 to L0, written in L0
+
+!Homework! Third projection of Futamuta
+    - Peval(Peval(Peval(Int)))
+
+
+----BNF Semantic----
+Description of a language
+    - Syntax
+        ' When a sentence is correct, relationship between symbols
+    - Semantics
+        ' Attribution of Meaning
+        ' What does a correct sentence mean?
+    - Pragmatic
+        ' How correct and sensible sentences are used 
+        ' Relationships between signs, meaning and user
+    - Implementation
+        ' Execute a corrent sentence respecting its semantics
+
+Tools to describe languages
+    - Syntax
+        ' Formal: Generative Grammars (Chomsky), BNF(Backus Naur Form)
+        ' Quasi-formal: typing, contextual constraints
+    - Semantics
+        ' Informal: Natural language
+        ' Manual–Formal: denotational, operational (axiomatic, algebraic)
+    - Pragmatic
+        ' Informal: examples
+        ' Semi-formal: programming methodologies 
+    - Implementation
+        ' Derivation from semantics–Abstract machine
+
+
+Main stages of compilation
+    - Scanner: Lexical Analysis
+        ' Breaks program into the syntatic components (Tokens)
+    - Parser: Syntatctic analysis
+        ' Creates a tree representation of the program syntax
+        ' Recognizes the well-formed senteces of the language
