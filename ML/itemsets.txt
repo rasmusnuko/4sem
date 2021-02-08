@@ -1,0 +1,25 @@
+__ITEMSETS__
+An itemsset X belongs to the border (wrt. sigma)
+    - All Y that are in X: Y is frquent
+    - All Z that are not in X: Z in not frequent
+
+#!LÆS OP#!
+Maximal Frequent Itemset 
+    - Due antimonotonicity, solutions can be summarized by their borders
+    - Can be used as a condensed representation of a solution.
+      As all itemsets can be derived from the maximal frequent itemsets
+    - Positive border
+        ' X itself is frequent
+          (X is also a maximal frequent itemset)
+    - Negative border
+        ' X itself is not frequent
+
+Closed Itemsets
+    - An itemset X is closed, if none of its immediate superset
+      has exactly the same support as X
+
+Closed Frequent Itemset
+    - Close itemsets that are frequent (wrt Sigma)
+    - Represent a solution (all frequent itemsets) and their support
+
+

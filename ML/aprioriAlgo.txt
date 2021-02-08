@@ -1,0 +1,10 @@
+__Aprioti Algorithm__
+1. Find frequent 1-itemssets first, then 2-itemsets, etc
+
+2. For finding (k+1)-itemsets C_(k+1): consider only those as candidates,
+   where all k-itemsets C_k is in C_(k+1) are frequent
+
+3. Count frequenct of all k-itemset candidates in a singe database scan
+   (Hashing of the candidate itemset)
+
+Pseudo code (Arthur's Slides 78)
