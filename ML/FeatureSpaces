@@ -1,0 +1,45 @@
+Characteristics
+    - Nominal (Categories)
+      ' No meaningful distance
+      ' Sex, eye color, etc
+    - Oridinal
+      ' No uniform distance
+      ' Order relation (eg. better/worse)
+    - Metric
+      ' Meaningful relation
+      ' Age, height, width
+
+Aggregations of Features
+    - Absolute frequency: f(n) number of occurences in the sample
+    - Relative frequency: p(a) = f(a)/n
+    - Mode: The value with the largest frequency
+    - Median (for non-nomial features)
+      ' The central elemnt in the sample
+    - Arithmetic mean (For metric features)
+      ' Average
+
+Aggregations of Feature Vectors
+    - Controid: Adding all vectors and dividing it by n (vectors)
+    - Modoid: The object that has the smallest distance to all the other objects
+
+Feature Space and Distance Function
+    - A feature space is a domain with a distance function
+    - 'dom' is a sorted set of features
+    - 'dist': dom x dom > R_0^+ is a total (distance) function
+       with the following properties:
+         ' Strictness:
+                      For any to object that are not the same,
+                      the distance is posititve
+         ' Reflexivity:
+                      If we take the distance from a object to itself,
+                      the distance has to be 0
+         ' Symmetry:
+                      For any pair of object,
+                      the distance is the same both ways
+
+Common distance Functions:
+    - Euclidean norm (L2)
+    - Manhattan norm (L1)
+    - Maximum norm (L_max)
+    - Weighted Euclidean Norm
+    - Quadratic norm
