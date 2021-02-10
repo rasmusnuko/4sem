@@ -1,10 +1,33 @@
 __Aprioti Algorithm__
-1. Find frequent 1-itemssets first, then 2-itemsets, etc
+Problem 1: Find all the frequent itemsets
+*** Pseudo code (Arthur's Slides 78) ***
 
-2. For finding (k+1)-itemsets C_(k+1): consider only those as candidates,
-   where all k-itemsets C_k is in C_(k+1) are frequent
+    1. Find frequent 1-itemssets first, then 2-itemsets, etc
 
-3. Count frequenct of all k-itemset candidates in a singe database scan
-   (Hashing of the candidate itemset)
+    2. For finding (k+1)-itemsets C_(k+1): consider only those as candidates,
+       where all k-itemsets C_k is in C_(k+1) are frequent
 
-Pseudo code (Arthur's Slides 78)
+    3. Count frequenct of all k-itemset candidates in a singe database scan
+       (Hashing of the candidate itemset)
+
+
+
+Problem 2: Find association rules, given an confidence, 
+           via. solution from problem 1.
+
+Association Rules
+\ Support of Rule / Support of Antecedent 
+    - If a rule is not confident
+        * Then it's 'children' are not confident aswell.
+    - Splitting a frequent itemset into Antecedent + Consequent
+        * BEGH
+          - Antecedent eg. BEG,   BG
+          - Consequent eg. H,     EH
+    - Support of sigma divided by Support(Antecedent -> Consequent)
+
+
+Theorem 2.1
+    If Y is a subset of X (not Ø)
+    If conf(Y --> X/Y) < confidence
+    Any subset of Y = Y':
+       conf(Y' --> X/Y') < confidence

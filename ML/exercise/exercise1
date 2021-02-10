@@ -1,0 +1,95 @@
+Exercise 1.1
+Which data mining tasks (association rule mining, clustering, outlier detection, classiﬁcation, etc.) are hiding
+in the following use cases? Are the tasks supervised or unsupervised?
+
+(a) Optical character recognition/OCR
+        Classification
+
+(b) Computer Aided Diagnosis
+        Clustering
+
+(c) Cheat Detection
+        Outlier Detection
+
+(d) Recommendation Systems
+        Clustering
+        Classification
+
+(e) News Aggregation
+        Classification
+        Cluserting
+
+(f) Extraction of Data / Web Scraping
+        
+
+(g) Identiﬁcation of the most important suppliers
+        Outlier Detection
+        
+
+Exercise 1.2
+(a) S ∪ T
+   {a, b, c, d} 
+
+(b) S ∩ T
+    {a, d}
+
+(c) S¯
+    {d, e, f, ..., x, y, z}
+
+(d) S \ T
+    {a, b}
+
+(e) S × T
+    {(a,c), (a,d), (b,c), (b,d), (c,c), (c,d)}
+
+(f) power(S)
+    {Ø, a, b, c, (a,b), (a,c), (b,c), (a,b,c)}
+
+(g) S ∩ T¯
+    {a, b}
+
+
+
+Exercise 1.3
+
+Consider the sets A = {a, b, c} and Z = {1, 2, 3, 4} and some binary relation over them.
+If for example the elements a ∈ A and 2 ∈ Z are in relation R could we write: aR2 or (a, 2) ∈ R.
+
+See ./Visuals/Ex1.3*
+(a) The Cartesian product A × Z
+(b) A binary relation over A and Z, that is not a function.
+(c) A non-total function A → Z
+(d) A total function A → Z
+
+(e) We called the case c) non-total
+    Could we have called it partial, or would that make a difference?
+    - Hmmmm
+
+
+
+
+
+Exercise 1.4
+
+(b) What kind of formats should a dataset have in order to be analyzed with WEKA? What could be done
+    with other formats?
+        - filetype: .arff 
+
+(c) Check out the “iris” dataset. Read about it (e.g, wikipedia) to understand its properties (e.g., how many
+     attributes, meaning of attributes, classes).
+
+(d) Start the WEKA explorer.
+(e) Load iris.arff.
+(f) Go to the “Cluster”-tab and run “SimpleKMeans”. Make sure to set the parameter for the number of
+     clusters to the known number of classes in the dataset. Also use the button “IgnoreAttributes” to ignore
+     the class attribute.
+(g) Right-click on the result allows you to visualize the cluster assignments. Explore the possibilities. Com-
+     pare colors by cluster and colors by class. Are the clusters similar to the classes?
+
+(h) You can visualize different combinations (pairs) of attributes. In some attribute combinations, the clusters
+     are better separated. Why?
+
+(i) Try some preprocessing (e.g., use ﬁlter “Normalize”, or select additional attributes to ignore) and repeat
+the clustering. What do you observe?
+
+

@@ -1,0 +1,21 @@
+Exercise 2.1
+(a) A database contains transactions over the following items: “apples”, “bananas”, and “cherries”.
+How many different combinations of these items can exist? 
+(i.e., how many different transactions could possibly occur in the database)
+      - 7 Transactions (2^n -1 ), -1 because of no empty set:
+        {A}, {B}, {C}, {A,B}, {A,C}, {B,C}, {A,B,C}
+
+(b) The database now also contains the items “dates”, “eggplants”, “ﬁgs”, and “guavas”. How many possible
+transactions do we have now?
+      - 2^7-1 (no empty set) = 127
+
+(c) How many combinations (possible different transactions) do we have with n items?
+      - 2^n-1 (no empty set)
+
+(d) How many transactions with exactly two items (i.e., 2-itemsets),
+    can we have when the database contains 3 items?
+      - 
+    When it contains 5 items?
+      - 
+    How many k-itemsets do we have when the database contains n items?
+      - 
