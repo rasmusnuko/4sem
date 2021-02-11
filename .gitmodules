@@ -1,3 +1,6 @@
 [submodule "PL/PL/dm552"]
 	path = PL/PL/dm552
 	url = https://github.com/jacopoMauro/dm552
+[submodule "PL/dm522"]
+	path = PL/dm522
+	url = https://github.com/jacopoMauro/dm552
