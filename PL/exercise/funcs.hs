@@ -58,7 +58,7 @@ mysum (x:xs) =
 
 myreverse :: [a] -> [a]
 myreverse list =
-  if null list then list
+  if null list then []
   else (mylast list):[] ++ myreverse(init list)
 
 myelem :: (Eq a) => a -> [a] -> Bool
