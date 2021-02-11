@@ -17,7 +17,7 @@ testList x =
   else "Empty List"
 
 myhead :: [a] -> a
-myhead x = x!!0
+myhead (x:xs) = x
 
 mytail :: [a] -> [a]
 mytail (x:xs) = xs
@@ -25,13 +25,44 @@ mytail (x:xs) = xs
 mynull :: [a] -> Bool
 mynull x = (mylength x) == 0
 
+mylast :: [a] -> a
+mylast x = x!!((length x)-1)
+
 mylength :: [a] -> Int
 mylength list =
   if (null list) then 0
   else succ (mylength (mytail list) )
 
 mytake :: Int -> [a] -> [a]
-mytake size [] = []
-mytake size (xs:s) =
-  if (mylength xs++s) > x then (xs ++ (mytake (pred size) s)
-  else xs++s
+mytake x (l:xl) =
+  if x == 1 then (l:[])
+  else if null (l:xl) then (l:[])
+  else (l:(mytake (pred x) xl))
+
+myrepeat :: a -> [a]
+myrepeat x = x:[] ++ (myrepeat x)
+
+myreplicate :: Int -> a -> [a]
+myreplicate x y = mytake x (myrepeat y)
+
+mymaximum :: (Integral a) => [a] -> a
+mymaximum (x:xs) =
+  if (null xs) then x
+  else if x > (myhead xs) then mymaximum (x:(mytail xs))
+  else mymaximum xs
+
+mysum :: (Integral a) => [a] -> a
+mysum (x:xs) =
+  if (null xs) then x
+  else mysum ((x + (myhead xs)):(mytail xs))
+
+myreverse :: [a] -> [a]
+myreverse list =
+  if null list then list
+  else (mylast list):[] ++ myreverse(init list)
+
+myelem :: (Eq a) => a -> [a] -> Bool
+myelem x (l:xl) =
+  if (x == l) then True
+  else if null xl then False
+  else myelem x xl
