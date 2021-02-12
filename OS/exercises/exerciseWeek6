@@ -1,0 +1,93 @@
+=Practice exercises=
+1.1 What are the three main purposes of an operating system?
+      ' Managing a computer's hardware
+
+1.3 What is the main difficulty that a programmer must overcome in
+    writing an operating system for a real-time environment?
+      ' 
+
+
+1.4 Keeping in mind the various definitions ofoperating system,
+    consider whether the operating system should include applications
+    such as webbrowsers and mail programs. Argue both that it should and
+    that it should not, and support your answers.
+      ' Including a lot of desirable programs, can lead to ease of use
+        for the end user, but for users who have specific prefered
+        software that they won't it can lead using resources without
+        any need for it.
+      ' Windows 100 apps that you can't uninstall
+
+
+1.5 How does the distinction between kernel mode and user mode
+    function as a rudimentary form of protection (security)?
+      ' It makes sure that the user can't execute code
+        that can be harmful for the functionality of the computer
+
+
+1.6 Which of the following instructions should be privileged?
+  a.  Set value of timer.
+  b.  Read the clock.
+  c.  Clear memory.
+  d.  Issue a trap instruction.
+  e.  Turn off interrupts.
+  f.  Modify entries in device-status table.
+  g.  Switch from user to kernel mode.
+  h.  Access I/O device.
+      '  
+
+
+1.8 Some CPUs provide for more than two modes of operation.
+    What are two possible uses of these multiple modes?
+      ' 
+
+
+1.10 Give two reasons why caches are useful. What problems do they solve?     What problems do they cause? If a cache can be made as large as
+     the device for which it is caching (for instance, a cache as large
+     as a disk),why not make it that large and eliminate the device?
+      ' 
+
+
+1.11 Distinguish between the client–server and peer-to-peer models of '
+     distributed systems.
+      ' 
+
+
+=Exercises=
+
+1.12 How do clustered systems differ from multiprocessor systems?
+     What isrequired for two machines belonging to a cluster to cooperat
+     to provide a highly available service?
+      ' 
+
+
+1.14 What is the purpose of interrupts? How does an interrupt differ fro
+     a trap? Can traps be generated intentionally by a user program?
+     If so, for what purpose?
+      ' 
+
+
+1.16 Direct memory access is used for high-speed I/O devices in order toavoid increasing theCPU’s execution load.
+  a.  How does theCPUinterface with the device to coordinate thetransfer?
+  b.  How does theCPUknow when the memory operations are com-plete?
+  c.  TheCPUis allowed to execute other programs while the DMA controlle
+      is transferring data. Does this process interfere with the 
+      execution of the user programs? If so, describe what forms 
+      of interference are caused.
+      ' 
+
+
+1.19 Rank the following storage systems from slowest to fastest:
+  a.  Hard-disk drives
+  b.  Registers
+  c.  Optical disk
+  d.  Main memory
+  e.  Nonvolatile memory
+  f.  Magnetic tapes
+  g.  Cache
+
+      ' b, g, d, e, a, c, f
+
+1.24 Describe some of the challenges of designing operating systems
+     for mobile devices compared with designing operating systems for
+     tradiuional PCs
+      ' 
