@@ -43,3 +43,10 @@ Common distance Functions:
     - Maximum norm (L_max)
     - Weighted Euclidean Norm
     - Quadratic norm
+
+
+Distance measures
+    - JL
+    - Jaccard
+    - Cosine
+

@@ -1,23 +1,26 @@
 Exercise 1.1
-Which data mining tasks (association rule mining, clustering, outlier detection, classiﬁcation, etc.) are hiding
+Which data mining tasks (association rule mining, clustering, outlier detection, classification, etc.) are hiding
 in the following use cases? Are the tasks supervised or unsupervised?
 
 (a) Optical character recognition/OCR
         Classification
+        Supervised
 
 (b) Computer Aided Diagnosis
-        Clustering
+	Classification --> (Clutering with meaning to labels)
+        Clustering --> (Cluters categories are not known before hand)
 
 (c) Cheat Detection
         Outlier Detection
 
 (d) Recommendation Systems
-        Clustering
-        Classification
+	Association rules
+	
 
 (e) News Aggregation
-        Classification
-        Cluserting
+        Classification of Cluserting
+	Outlier detection
+
 
 (f) Extraction of Data / Web Scraping
         
@@ -27,6 +30,7 @@ in the following use cases? Are the tasks supervised or unsupervised?
         
 
 Exercise 1.2
+S = {a,b,c} ; T = {c,d}
 (a) S ∪ T
    {a, b, c, d} 
 
