@@ -1,10 +1,18 @@
 =Practice exercises=
 1.1 What are the three main purposes of an operating system?
       ' Managing a computer's hardware
+          - Allocating resources 
+          - Security
+      ' User interface
+      ' Service software
+      ' I/O Devices
+          - Printer, mouse, etc.
+
 
 1.3 What is the main difficulty that a programmer must overcome in
     writing an operating system for a real-time environment?
-      ' 
+      ' Real-time enviroment = Interact with OS in real-time
+      ' Some task have to be executed, and may interupt others
 
 
 1.4 Keeping in mind the various definitions ofoperating system,
@@ -22,6 +30,8 @@
     function as a rudimentary form of protection (security)?
       ' It makes sure that the user can't execute code
         that can be harmful for the functionality of the computer
+      ' Making sure that one user can access the files of another user
+      ' Encapsulation: Kernel takes care of the complex things
 
 
 1.6 Which of the following instructions should be privileged?
@@ -33,19 +43,24 @@
   f.  Modify entries in device-status table.
   g.  Switch from user to kernel mode.
   h.  Access I/O device.
-      '  
 
 
 1.8 Some CPUs provide for more than two modes of operation.
     What are two possible uses of these multiple modes?
-      ' 
+      ' Some middle layers can be made, for some modes to have
+        some priveledges, but not all priveledges
+      ' Virtualization may use it, so it can use some kernel
+        programs, but not all
 
 
 1.10 Give two reasons why caches are useful. What problems do they solve?
      What problems do they cause? If a cache can be made as large as
      the device for which it is caching (for instance, a cache as large
      as a disk), why not make it that large and eliminate the device?
-      ' 
+      ' They're very expensive, and programs could easily write
+        over eachothers data
+      ' It also would defeat the purpose of having the cache closer
+        to the CPU than the main memory
 
 
 1.11 Distinguish between the client–server and peer-to-peer models of '
@@ -59,24 +74,40 @@
 1.12 How do clustered systems differ from multiprocessor systems?
      What is required for two machines belonging to a cluster to cooperate
      to provide a highly available service?
-      ' 
+      ' Clustered system
+          - Network of entities, therefore having multiple CPUs
+          - Very important the the entity have the same data
+          - Good for servers, if one entity fails,
+            than another can take over
+      ' Multiprocessor system
+          - One system with multiple CPUs
+          - All data in the same memory, therefore no prob organizing data
+
 
 
 1.14 What is the purpose of interrupts? How does an interrupt differ fro
      a trap? Can traps be generated intentionally by a user program?
      If so, for what purpose?
-      ' 
+      ' Interupts
+          - Hardware
+          - Processes can be stopped when ever, using interupts
+      ' Trap
+          - Software trying to make an interupt
+          - Kind of exceptions (Divided by 0, could reach memory)
 
 
 1.16 Direct memory access is used for high-speed I/O devices in order to 
-     avoid increasing theCPU’s execution load.
+     avoid increasing the CPU’s execution load.
   a.  How does theCPUinterface with the device to coordinate thetransfer?
+          - Via the DMA (Direct Memory Access)
   b.  How does theCPUknow when the memory operations are com-plete?
+          - The DMA sends an interupts
   c.  TheCPUis allowed to execute other programs while the DMA controlle
       is transferring data. Does this process interfere with the 
       execution of the user programs? If so, describe what forms 
       of interference are caused.
-      ' 
+          - The bus is used by the DMA to access main memory, so
+            using the bus at the same time, would cause in slow down
 
 
 1.19 Rank the following storage systems from slowest to fastest:
@@ -84,7 +115,7 @@
   b.  Registers
   c.  Optical disk
   d.  Main memory
-  e.  Nonvolatile memory
+  e.  Nonvolatile memory (SSD according to the book)
   f.  Magnetic tapes
   g.  Cache
 
@@ -92,5 +123,6 @@
 
 1.24 Describe some of the challenges of designing operating systems
      for mobile devices compared with designing operating systems for
-     tradiuional PCs
-      ' 
+     traditional PCs
+      ' Prioritizing effiency over speed, due to the battery
+      ' Lower specs

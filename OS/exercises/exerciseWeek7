@@ -1,0 +1,65 @@
+1.    What is the purpose of system calls?
+
+
+2.    what system calls have to be executed by a command interpreter or
+      shell in order to start a new process on a UNIX system?
+
+
+3.    What is the purpose of system programs?
+
+
+
+4.    What is the main advantage of the layered approach to system design?
+
+      
+      What are the disadvantages of the layered approach?
+
+
+
+5.    List five services provided by an operating system,
+      and explain how each creates convenience for users.
+      In which cases would it be impossible for user-level
+      programs to provide these services?
+      Explain your answer.
+
+
+
+6.    How could a system be designed to allow a choice of
+      operating systems from which to boot?
+      
+      
+      What would the bootstrap program need to do?
+
+
+
+7.    What are the advantages and disadvantages of using the same system-call
+      interface for manipulating both files and devices?
+
+
+
+8.    Describe why Android uses ahead-of-time (AOT) rather
+      than just-in-time (JIT) compilation.
+
+
+
+9.    How are iOS and Android similar? How are they different?
+
+
+
+10.   What are the two models of interprocess communication?
+      
+      
+      What are the strengths and weaknesses of the two approaches?
+
+
+
+11.   What is the main advantage of the microkernel approach to system design?
+      
+      
+      How do user programs and system services interact in a micro-kernel architecture?
+      
+      
+      What are the disadvantages of using the microkernel approach?
+
+
+
