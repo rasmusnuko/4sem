@@ -1,0 +1,57 @@
+# Calculability #
+
+
+
+
+
+
+
+Names and Denotable Objects
+    ' Names defined by user:
+        variable, formal parameteres, precedures,
+        modules, labels, etc.
+    ' Names defined ny the language:
+        Primitive types: Char, Int, Float, etc
+    ' Denotable Objects:
+        when an 'object' can be associated with a name
+
+Binding Time:
+    ' Static
+        Language design:
+            Primitive types, names for predefined operations/constants
+        
+        Writting the program
+            Definition of some names (variables/functions)
+        
+        Compilation
+            Binding of some names (global var)
+
+    ' Dynamic
+        Run time
+            Definitive link of all names not yet tied
+            (e.g local variables in blocks)
+
+
+Environment:
+    ' Environment:
+        A est of associations between names and objects that
+        exist at run time at a specific point in the program
+    
+    ' Aliasing:
+        Different names denote the same object
+
+
+Blocks
+    ' Block:
+        - Sequence of instructions of code
+        - Textual region of the program. identified by a beginning and an end
+          signal, which may contain declarations local to that region
+    
+    ' Why blocks?
+        - Reusability
+        - Isolation, seperation of concerns
+        - Readability, clarity of programming
+        - Allow recursion
+        - Optimize the memory occupation
+
+

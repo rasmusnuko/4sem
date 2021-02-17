@@ -3,12 +3,14 @@ One machine, One language
     - Language and machine come together
     - Funde mental: Fetch-decode
 
+
 Abstract Machine (AM)
     - Set of data structures and algorithm, can store and run programs
     - Interpreter (L0 -> L1)
       . Component that interprets intructions
       . The structure of the interpreter is the same for all AM
       . AM =~ Store + Interpreter
+
 
 Machine Language
     - M -> AM
@@ -17,15 +19,18 @@ Machine Language
       . Internal: data structures in memory
       . External: Character strings
 
+
 Chinese Box
     - Some HW machines are microprogrammed
     - Instructions of L_Mb is interpreted into lower level intructions
     - Interpreted by a micro interpreter
 
-Making an abstract machine
+
+Making an abstract machine 
     1. Realization in Hardware
     2. Emulation or simulation via Firmware
     3. Interpretation or simulation via Software
+
 
 Just-in-time compilation (NOT IN THE BOOK)
     Aka. Dynamic translation / Run-time compilation
@@ -34,12 +39,22 @@ Just-in-time compilation (NOT IN THE BOOK)
       - Code cached and reused later without needing to recompile
     - Combines: Speed of compiled + Flexibility of interpretation
 
+
 Hiearchy of abstract machines
     - A computer architecture (Hw or Sw) is structured in a series of
       hiararchical abstarct machines
 
+
+Metaprograms
+    - Interpreter
+        * A program I^N_L is a N interpreter (written in N)
+    - Compiler
+        * A compiler C^N_(L->L0)
+    - Specializer (Partial Evaluator)
+
+
 First Futamura Projection
-    - Peval_L0 (X,Y): Partial evalutaion for language L0
+    - Peval_L0 (X,Y): Partial evalutator (specializer) for language L0
     - Int^L0:         Language interpreter for L1, written in L0
     - P^L1:           Program written in L1
     - D:              Program Data
@@ -48,24 +63,29 @@ First Futamura Projection
 
     - Output: P^L1 written in L0
 
-Second projection of Futamura
+
+Second projection of Futamura 
   + So this is Peval(Peval(Int)) --> R^L0
-    - Peval_L0 (X,Y): Partial evalutaion for language L0
+    - Peval_L0 (X,Y): Partial evalutator (specializer) for language L0
     - Int^L0:         Language interpreter for L1, written in L0
     - P^L1:           Program written in L1
         - Output: Compiler written in L0
         - We get a compiler for L1 to L0, written in L0
 
-
 !Homework!
+#!* LÆS PÅ *!#
 Third projection of Futamuta
+(Specializing a specializer for a specializer)
     - Peval(Peval(Peval(Int)))
       
-      - 
-
+      - We get a compiler generator
 
 
 ----BNF Semantic----
+BNF
+  We use the notation:
+    <A>:: = <B> | <C>
+
 Description of a language
     - Syntax
         ' When a sentence is correct, relationship between symbols
@@ -77,6 +97,7 @@ Description of a language
         ' Relationships between signs, meaning and user
     - Implementation
         ' Execute a corrent sentence respecting its semantics
+
 
 Tools to describe languages
     - Syntax
