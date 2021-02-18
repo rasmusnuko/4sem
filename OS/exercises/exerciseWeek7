@@ -154,4 +154,168 @@
             to slow down
 
 
+C code:
+
+(1.)
+The following is the code to allocate memory for a 2-dimensional
+array of fixed size 8×8.
+
+    #include <stdio.h>
+    int main() {
+    int x;
+    int y;
+    int array[8][8];
+    for ( x = 0; x < 8; x++ ) {
+      for ( y = 0; y < 8; y++ )
+        array[x][y] = x * y;
+      }
+    }
+
+
+
+Where in the memory is the matrix stored?
+    On the stack, because it is statically allocated.
+    It is statically allocated, because it says it is 8x8
+
+
+Provide the code for a variant of the code that allocated the memory 
+dynamically.
+
+int main() {
+    int x;
+    int y;
+    int **array = malloc(sizeof(int*)*8);
+    for (x = 0; x < 8; x++){
+        array[x] = malloc(sizeof(int)*8);
+        for(y = 0; y<8; y++){
+            array[x][y] = x*y;
+            printf("%d\n", array[x][y]);
+        }
+    }
+}
+
+
+Where is your dynamically allocated memory stored?
+    On the heap
+
+
+
+
+(2.)
+    #include <stdio.h>
+    int main(int argc, char** argv)
+    {
+      stupid();
+      stupid();
+      return 0; 
+    }
+
+    int stupid()
+    {
+      static int i=17;
+      printf("i is %d\n", i);
+      i++;
+    }
+
+What is the output of the following C program?
+    Because of the 'static', it means there's only one instance of 'i'
+    
+    No matter how many times we call stupid(), 'static int i = 17' only
+    sets i = 17 once
+
+    So the output is "17\n18\n"
+
+
+
+(3.)
+
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    static int comp(const void * x, const void * y)
+    {
+      int a = (int)(*(int*)x);
+      int b = (int)(*(int*)y);
+
+      if (a==b)
+        return 0;
+      else
+        if (a < b)
+            return -1;
+        else
+            return 1;
+    }
+
+    int main(int argc, char* argv[])
+    {
+       int numbers[10]={1892,45,200,-98,4087,5,-12345,1087,88,-100000};
+       int i;
+
+      /* Sort the array */
+      qsort(numbers,10,sizeof(int),comp) ;
+      for (i=0;i<9;i++)
+        printf("Number = %d\n",numbers[ i ]) ;
+      return 0;
+    }
+
+Discuss the following C program, and put it in relation to the function
+declaration as found by the man page of the library function for sorting 
+an array:
+void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
+
+The function sorts an array
+base: The array to sort
+memb: Size of array
+size: Memory size of the values in the array (Because base is a void*)
+*compar: compares two values from the array, return 0 or -1 or 1 
+
+
+
+(4.)
+
+    #include <stdio.h>
+
+    #define SQR(a)((a)*(a))
+    #define CUB(a)((a)*(a)*(a))
+
+
+    inline static int cub(int x) { return x*x*x; }
+
+    int main()
+    {
+            int x;
+
+            x=3;
+            printf("square? :%d\n",SQR(x));
+            printf("x:       %d\n",x);
+
+            x=3;
+            printf("square? :%d\n",SQR(++x));
+            printf("x:       %d\n",x);
+
+            x=3;
+            printf("cub?    :%d\n",CUB(x++));
+            printf("x:       %d\n",x);
+
+            x=3;
+            printf("cub?    :%d\n",CUB(++x));
+            printf("x:       %d\n",x);
+
+            x=3;
+            printf("cub?    :%d\n",cub(++x));
+            printf("x:       %d\n",x);
+
+            return 0;
+    }
+
+Discuss the result of the following C program. If possible, try it on
+different machines. In order to understand the results, find out what a
+sequence point is.
+    CUB(a)((a)*(a)*(a))
+    x++ : CUB(x++) = (x++) * (x++) * (x++) == undefined behaviour
+    ++x : Samme udfald
+
+Follow the C-tutorial for FILE I/O on
+https://www.cprogramming.com/tutorial/cfileio.html
+and answer the quiz questions.
 
