@@ -8,8 +8,10 @@
 
 
 3.    What is the purpose of system programs?
-          . The command interpreter doesn't understand the command itself, but finds the program
-          . Commands are used to identify a file, to be loaded into memory and executed
+          . The command interpreter doesn't understand the command itself
+            but finds the program
+          . Commands are used to identify a file, to be loaded into memory
+            and executed
           . ie. ls, rm, mkdir, touch, ...
 
 
@@ -28,7 +30,8 @@
 
 5.    List five services provided by an operating system,
       and explain how each creates convenience for users.
-      In which cases would it be impossible for user-level programs to provide these services?
+      In which cases would it be impossible for user-level programs to 
+      provide these services?
       Explain your answer.
           1. File management
               * Create, delete, copy, rename
@@ -57,7 +60,8 @@
 
 7.    What are the advantages and disadvantages of using the same system-call
       interface for manipulating both files and devices?
-          . We can prevent deadlocks if we have to request (open) and release (close) devices
+          . We can prevent deadlocks if we have to request (open) and 
+            release (close) devices
           . 
 
 
@@ -67,6 +71,7 @@
           . Program is written in Java
               compiled to .class -> .dex -> machine code
 
+  
           . It allows for more efficiency of application execution
             as well as reduced power consumption
 
@@ -116,12 +121,14 @@
             and do not require modifications to the kernel
       
       
-      How do user programs and system services interact in a micro-kernel architecture?
+      How do user programs and system services interact in a micro-kernel 
+      architecture?
           . Via Message passing
       
       
       What are the disadvantages of using the microkernel approach?
-          . System-function overhead (from Message passing) causes the system to slow down
+          . System-function overhead (from Message passing) causes the system 
+            to slow down
 
 
 
