@@ -2,9 +2,15 @@
           . They're the interface between user space and services
             * I/O Operations, Program Execution, Error Detection, etc.
 
+
+
 2.    What system calls have to be executed by a command interpreter or
       shell in order to start a new process on a UNIX system?
-          . Most of them
+          . Fork
+              - Duplicates a process which is running, and everything
+                associated with it
+              - exec is used to start the forked program with new 
+
 
 
 3.    What is the purpose of system programs?
@@ -12,13 +18,14 @@
             but finds the program
           . Commands are used to identify a file, to be loaded into memory
             and executed
-          . ie. ls, rm, mkdir, touch, ...
+          . ie. cp, ls, rm, mkdir, touch, ...
+
 
 
 4.    What is the main advantage of the layered approach to system design?
           . Simplicity of construction and debugging
           . Each layer only uses the services of the lower-level layers
-          . Modules, no need to recompile OS for features to be added
+          . Example: Modules, no need to recompile OS for features to be added
 
       
       What are the disadvantages of the layered approach?
@@ -42,13 +49,19 @@
           4. File modification
               * Text editors
           5. Status information
-              * Getting: date/time, logs, available disk / memory space. 
+              * Getting: date/time, logs, available disk / memory space.
+          6. Error Detection
+              * I/O device disconnected, Files has been corrupted
+          - Implemented in OS, because users can't be trusted.
+            And to make sure that all users on a system use the same
+            file-system, etc.
 
 
 
 6.    How could a system be designed to allow a choice of
       operating systems from which to boot?
-          . With a bootstrap program, ie. GRUB
+          . OSes are just executables, a BIOS/EUFI could be used to choose
+            which OS we want to boot into
       
       
       What would the bootstrap program need to do?
@@ -58,20 +71,29 @@
           . Mount the root file system
 
 
+
 7.    What are the advantages and disadvantages of using the same system-call
       interface for manipulating both files and devices?
+          . Advantage: It is easy to implement and use, if there's only one 
+            system calls for opening and closing files AND I/O devices
+          
+          ' Disadvantage: Limited access to complex devices, if they're only
+            seen as files
+          
           . We can prevent deadlocks if we have to request (open) and 
             release (close) devices
-          . 
 
 
 
 8.    Describe why Android uses ahead-of-time (AOT) rather
       than just-in-time (JIT) compilation.
+          . JIT compiles as little as posible, good for error detection
+          . AOT compiles as much as possible, good for effifiency
+
           . Program is written in Java
               compiled to .class -> .dex -> machine code
-
   
+          . JIT can be expensive with power consumption 
           . It allows for more efficiency of application execution
             as well as reduced power consumption
 
@@ -81,9 +103,9 @@
           . Similarities
               * They're both hybrid systems
               * Touch-based UI
-              * 
           . Differences
               * iOS uses a Microkernel (Mach), Android uses the Linux kernel
+                  - Android monolithic with modules
 
               * Android runs on a broad assortment of devices,
                 iOS is only made to run on iPhone
@@ -96,7 +118,8 @@
       What are the strengths and weaknesses of the two approaches?
           . Shared memory
               * Strengths
-                  - Faster. Once astablished, no assistence from the kernel is required
+                  - Faster. Once astablished, no assistence from the kernel
+                    is required
               * Weaknesses
                   - Conflicts (Processes try to read memory at the same time)
 
