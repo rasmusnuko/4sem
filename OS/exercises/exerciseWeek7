@@ -1,65 +1,127 @@
 1.    What is the purpose of system calls?
+          . They're the interface between user space and services
+            * I/O Operations, Program Execution, Error Detection, etc.
 
-
-2.    what system calls have to be executed by a command interpreter or
+2.    What system calls have to be executed by a command interpreter or
       shell in order to start a new process on a UNIX system?
+          . Most of them
 
 
 3.    What is the purpose of system programs?
-
+          . The command interpreter doesn't understand the command itself, but finds the program
+          . Commands are used to identify a file, to be loaded into memory and executed
+          . ie. ls, rm, mkdir, touch, ...
 
 
 4.    What is the main advantage of the layered approach to system design?
+          . Simplicity of construction and debugging
+          . Each layer only uses the services of the lower-level layers
+          . Modules, no need to recompile OS for features to be added
 
       
       What are the disadvantages of the layered approach?
+          . It is hard to pin point the functionality of each layer
+          . Overhead because of user-level programs
+            having to traverse through all the layers
 
 
 
 5.    List five services provided by an operating system,
       and explain how each creates convenience for users.
-      In which cases would it be impossible for user-level
-      programs to provide these services?
+      In which cases would it be impossible for user-level programs to provide these services?
       Explain your answer.
+          1. File management
+              * Create, delete, copy, rename
+          2. Program loading and execution
+              * For loading programs into memory and executing them
+          3. Communications
+              * Creates virtual connections between processes
+          4. File modification
+              * Text editors
+          5. Status information
+              * Getting: date/time, logs, available disk / memory space. 
 
 
 
 6.    How could a system be designed to allow a choice of
       operating systems from which to boot?
+          . With a bootstrap program, ie. GRUB
       
       
       What would the bootstrap program need to do?
-
+          . Load the kernel program into memory
+          . Diagnostics to inspect memory and CPU + Discover devices
+          . Initialize aspects of the system
+          . Mount the root file system
 
 
 7.    What are the advantages and disadvantages of using the same system-call
       interface for manipulating both files and devices?
+          . We can prevent deadlocks if we have to request (open) and release (close) devices
+          . 
 
 
 
 8.    Describe why Android uses ahead-of-time (AOT) rather
       than just-in-time (JIT) compilation.
+          . Program is written in Java
+              compiled to .class -> .dex -> machine code
+
+          . It allows for more efficiency of application execution
+            as well as reduced power consumption
 
 
 
 9.    How are iOS and Android similar? How are they different?
+          . Similarities
+              * They're both hybrid systems
+              * Touch-based UI
+              * 
+          . Differences
+              * iOS uses a Microkernel (Mach), Android uses the Linux kernel
+
+              * Android runs on a broad assortment of devices,
+                iOS is only made to run on iPhone
+
+              * Closed sourced / Open sourced 
 
 
 
 10.   What are the two models of interprocess communication?
-      
-      
       What are the strengths and weaknesses of the two approaches?
+          . Shared memory
+              * Strengths
+                  - Faster. Once astablished, no assistence from the kernel is required
+              * Weaknesses
+                  - Conflicts (Processes try to read memory at the same time)
+
+          . Message passing
+              * Strengths
+                  - Best for smaller amount of data, no conflicts to avoid
+                  - Easier to implement
+              * Weaknesses
+                  - Slower due to kernel interventions
+                      typically implemented using system calls
 
 
 
 11.   What is the main advantage of the microkernel approach to system design?
+          . Minimal kernel, most services run at user-level
+
+          . Main purpose is to provide communication between
+            client programs and the services in user-space
+
+          . It makes extending the OS easier.
+            All services are added in user-space,
+            and do not require modifications to the kernel
       
       
       How do user programs and system services interact in a micro-kernel architecture?
+          . Via Message passing
       
       
       What are the disadvantages of using the microkernel approach?
+          . System-function overhead (from Message passing) causes the system to slow down
 
 
 
