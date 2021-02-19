@@ -3,9 +3,6 @@
 
 
 
-
-
-
 Names and Denotable Objects
     ' Names defined by user:
         variable, formal parameteres, precedures,
