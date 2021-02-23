@@ -1,0 +1,27 @@
+What are the 4 components in a process (in memory)
+    Text, data, heap, stack
+
+Provide atlest 3 states that a process can be in
+    Running, Wait, Ready, Terminated
+
+What is a Process Control Block (PCB)
+    The datastructure in the kernel, that represent the kernel
+    The meta-information
+    Where you save the data, when you do a context switch
+
+What is another term for process?
+    
+
+What is the role of the process scheduler?
+    The scheduler chooses a process from the ready queue
+
+What is the degree of multiprogramming?
+    The number of processes running on the system
+    eg, 200 process running at the same time
+
+What system call creates a new process on a UNIX system?
+    fork();
+
+What are the two fundemental model of interprocess communication?
+    Message passing
+    Shared memory

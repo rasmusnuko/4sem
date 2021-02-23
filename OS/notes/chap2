@@ -1,0 +1,71 @@
+Process control
+    - End, abort
+    - load, execute
+    - create process, teminate process
+    - Get process attributes, set process attributes
+    - Wait for time
+    - Wait event, signal event
+    - Allocate and free memory
+
+
+File management
+    - Create, delete
+    - open, close
+    - read, write, reposition
+
+
+Protection
+    - Control access to resources
+    - Get and set permissions
+
+
+Linkers and Loaders
+    - Linker combines object files to a single executable
+    - Loader starts the executable
+
+
+Difference between Policy and Mechanism
+    - Policy: WHAT will be done?
+        ' Policies decide what will be done
+    - Mechanism: HOW to do it?
+        ' Mechanisms determine how to do something
+    - The sepearation of policy and mechanism is a very
+      important principle, it allows maximum flexibility
+      if policy decisions are to be changed later.
+
+
+Implementation
+    - Main body of a OS is written in C
+    - Lowest level implementations are done i ASM
+
+
+System Structures
+    Linux System Structure
+         - Monolithic: One address space
+    Layered Approach
+         - Slow, because you have to go through all the layers
+    Microkernel
+         - 3 Kernel opeations:
+             Basic IPC, Virtual Memory, Scheduling
+         - Moves as much from the kernel into user space
+         - Example: Mach (Darwin is partly based on Mach)
+         - Benefits:
+             Easier to extend
+             Eaiser to port the OS to new systems
+             More reliable (Less code running in Kernel mode)
+             More secure (Less places it can go wrong)
+         - Detriments:
+             Performance overheda of user space to kernel
+             space communication
+    Kernel Modules
+         - Object Oriented approach
+         - F.eks. Interfacing for hardware
+    Hybrid Systems
+         - Most modern OSs are actually not one pure structure
+
+
+Opeating-System debugging
+    - OSes generate log files, containing error information
+    - Tracing: Collecting data for specific events
+      Terminal instrumentation
+        ' STrace, DTrace, BPFTrace, GDB, perf, tcpdump
