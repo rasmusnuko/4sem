@@ -26,26 +26,25 @@ transactions do we have now?
 Exercise 2.2
 
 (a) What are the support and the conﬁdence of {Milk} ⇒ {Diapers}?
-      - Support = 5
-      - Confidence = 80%
+      - Support = 4
+      - Confidence = 4/5 = 80%
 
 (b) What are the support and the conﬁdence of {Diapers} ⇒ {Milk}?
-      - Support = 7
-      - Confidence = 57%
+      - Support = 4
+      - Confidence = 4/7 57%
 
 (c) What is the maximum number of size-3 itemsets that can be derived from this data set?
       - 6! / 3! * (6-3)! = 20
 
 (d) What is the maximum number of association rules that can be extracted from this dataset
       (including rules, that have zero support)?
-      - super set, minus 2 (no empty / full set)
-        (2^6)-2 = 62
+      - (3^d - 2^d)-1 = (3^6 - 2^7)-1 = 602
 
 (e) What is the maximum size of frequent itemsets that can be extracted (assuming σ > 0)?
       - 4
 
 (f) Find an itemset (of size 2 or larger) that has the largest support.
-      - 
+      - Bread & Butter
 
 (g) Find a pair of items, a and b, such that the rules {a} ⇒ {b} and {b} ⇒ {a} have the same conﬁdence.
       - Bread & Butter
@@ -68,6 +67,12 @@ Exercise 2.3
       {1,3,4,5},
       {2,3,4,5}
 
+Pruning
+      {1,2,3,4}
+      {1,2,3,5}
+      {2,4,5} missing, so no {1,2,4,5}
+      {1,4,5} missing, so no {1,3,4,5}
+      {2,4,5} missing, so no {2,3,4,5}
 
 Exercise 2.4
 
@@ -81,19 +86,19 @@ Exercise 2.4
 (b) Sketch an algorithm (pseudo code) that generates all association rules 
     with support σ or above and a minimum conﬁdence of c, provided 
     the set F of all frequent itemsets (w.r.t. σ) with their support,
-    efﬁciently using the pruning power of the given theorem.
+    efficiently using the pruning power of the given theorem.
 
-      T: list of transactions
-      n: itemset size
-      sigma: threshold
-      c: confidence
-      F: set of all frequent itemsets (w.r.t. sigma)
-      S: set of association rules with support and confidence
-        
-        while n < len(max((F))):
-          
-          
-          
-          
-          n++
-        
+AssociationRules(F,c):
+    foreach Z € F,|Z| >= 2 do:
+        A <- {X|x c Z,X =/= Ø}
+        while A =/= Ø do:
+            X <- maximal element in A
+            A <- A \ {X}
+            c_temp <- s(>)/s(X)
+            if c_temp >= c then
+                print X => (Z\X),s(Z),c_temp
+            else
+                A <- A\{W|W c X}
+            end if
+        end while
+     end foreach

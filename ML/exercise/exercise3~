@@ -1,0 +1,186 @@
+3.1
+The database from the lecture grew by one transaction.
+We computed the corresponding support of allitemsets in the lattice
+
+TID     A       B       C       D       E
+1       0       1       0       0       0
+2       1       0       1       1       1
+3       1       1       1       0       1
+4       0       0       1       1       0	
+5       1       1       1       1       1
+6       1       0       1       1       1	
+7       1       1       0       0       0
+8       1       1       1       1       0
+
+
+Identify the closed frequent itemsets for the support
+thresholds iƒ = 4 and iƒ = 2, respectively.
+
+Threshold 4 Closed frequent itemsets:
+  A
+  B
+  C
+  AB
+  AC
+  CD
+  ACD
+  ACE
+
+Threshold 2 Closed frequent itemsets:
+  A
+  B
+  C
+  AB
+  AC
+  CD
+  ABC
+  ACD
+  ACE
+  ABCD
+  ABCE
+  ACDE
+
+What do you observe?
+  We get more Closed frequent itemsets when we lower the
+  threshold, as one would expect
+
+
+Sketch an algorithm (pseudo code) to find the support for all
+frequent itemsets, using only the set of closed frequent itemsets
+as information.
+
+  C := list of closed frequent itemsets
+  L := list of all frequent itemsets
+  foreach itemset in C:
+      # Find frequent itemsets
+      subsets = getSubsets(itemset)
+      foreach set in subsets:
+          if set not in L:
+              L.append(set)
+
+      # Find support for frequent itemsets
+      foreach set in L:
+          includedIn = []
+          foreach closedSet in C:
+              if set part of closedSet:
+                  includedIn.append(closedSet)
+          set.support = min(includedIn)
+
+
+
+3.3
+  dist_2(p,q) = sqrt(|2-4|^2+|3-7|^2+|5-8|^2) = sqrt(4+16+9)
+              = sqrt(29)
+
+  dist_1(p,q) = |2-4|+|3-7|+|5-8| = 2+4+3 = 9
+
+  dist_inf(p,q) = max(|2-4|,|3-7|,|5-8|) = max(2,4,3) = 4
+
+  dist_w(p,q) = ((1, 1.5, 2.5)4 + (1, 1.5, 2.5)16 + (1, 1.5 2.5)9)
+              = (4, 6, 10) + (16, 24, 40) + (9, 12, 22.5)
+
+  dist_M1(p,q) = ((p-q)M1(p-q)^T)^0.5
+               = ((-2,-4,-3)M_id((-2,-4,-3)^T))^0.5
+
+                               -2
+               = (-2,-4,-3) * (-4) = sqrt( (-2)^2+(-4)^2+(-3)^2 ) = sqrt(4+16+9)
+               = sqrt(29)      -3
+            
+
+  dist_M2(p,q) = ((p-q)M2(p-q)^T)^0.5
+               = ((-2,-4,-3)M2((-2,-4,-3)^T))^0.5
+
+                                       -2
+               = (-7.7, -8.2, -7.6) * (-4)
+                                       -3
+ 
+               = sqrt( (-7.7 * 2) + (-8.2 * -4) + (-7.6 * -3) ) 
+               = sqrt(15.4 + 32.8 + 22.8)
+               = sqrt(71)
+
+a)
+Extract from each picture a color histogram with the
+bins red, orange, and blue (the white pixels areignored).
+
+q: red    : 1
+   orange : 8
+   blue   : 7
+
+a: red    : 1
+   orange : 4
+   blue   : 4
+
+b: red    : 8
+   orange : 1
+   blue   : 7
+
+c: red    : 2
+   orange : 4
+   blue   : 9
+
+d: red    : 1
+   orange : 2
+   blue   : 13
+
+b)
+Which pictures are most similar to the query q,
+using Euclidean distance?
+Give a ranking according to similarity to q.
+
+dist_2(q,a) = sqrt(|1-1|^2 + |8-4|^2 + |7-4|^2) 
+            = sqrt(16+9) = sqrt(25)
+
+dist_2(q,b) = sqrt(|1-8|^2 + |8-1|^2 + |7-7|^2)
+            = sqrt(49+49) = sqrt(98)
+
+dist_2(q,c) = sqrt(|1-2|^2 + |8-4|^2 + |7-9|^2)
+            = sqrt(1+16+4) = sqrt(21)
+
+dist_2(q,d) = sqrt(|1-1|^2 + |8-2|^2 + |7-13|^2)
+            = sqrt(36+36) = sqrt(72)
+
+Ranking: c, a, d, b
+
+
+c)
+Normalization:
+
+q: red    : 1/8
+   orange : 8/8
+   blue   : 7/8
+
+a: red    : 1/4
+   orange : 4/4
+   blue   : 4/4
+
+b: red    : 8/8
+   orange : 1/8
+   blue   : 7/8
+
+c: red    : 2/10
+   orange : 4/10
+   blue   : 10/10
+
+d: red    : 1/13
+   orange : 2/13
+   blue   : 13/13
+
+
+dist_2(q,a) = sqrt(|(1/8)-(1/4)|^2 + |1-1|^2 + |(7/8)-1|^2) 
+		= sqrt(0.625+0.015625) = sqrt(0.640625)
+                = 0.8
+
+dist_2(q,b) = sqrt(|(1/8)-1|^2 + |1-(1/8)|^2 + |(7/8)-(7/8)|^2) 
+		= sqrt(0.625+0.015625) = sqrt(0.640625)
+                = 1.2374
+
+dist_2(q,c) = sqrt(|(1/8)-(2/10)|^2 + |1-(4/10)|^2 + |(7/8)-1|^2) 
+	        = sqrt(0.005625 + 0.36 + 0.01563) = sqrt(0.38125)
+                = 0.61745
+
+dist_2(q,d) = sqrt(|(1/8)-(1/13)|^2 + |1-(2/13)|^2 + |(7/8)-1|^2) 
+		= sqrt(0.00231 + 0.71597 + 0.01562) = sqrt(0.75469)
+                = 0.86872
+
+With normalization, c is the closest to q
+Ranking: c, a, d, b
