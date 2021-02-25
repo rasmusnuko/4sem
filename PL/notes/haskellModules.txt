@@ -1,0 +1,18 @@
+Code that can be called by other code
+
+Importing Modules
+    import Module.Submodule
+        - is used to import modules (first letter of module is uppercase)
+
+    GHCI: " :m + Module.Submodule "
+    
+    import Data.List (num,sort) will import sort and num from the Module Data
+    import Data.List hiding (num,sort) will import everything but num&sort
+    import qualified Data.List as M, will import Data.List and referenced by M
+
+Writing modules
+    module MyModule (myf1, myf2) where
+        - will make a module, making myf1 and myf2 importable
+    The name of the file will have to be MyModule.hs
+
+

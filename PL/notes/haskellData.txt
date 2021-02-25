@@ -1,0 +1,19 @@
+Keyword: data
+
+eg.
+data Bool = False | True
+
+{ data } { Bool } = { False | True }
+ keyword   name     All posible values
+
+
+
+Example of a 'Shape' datatype that can store a Circle or Rectangle
+
+data Shape = Circle Float Float Float |
+             Rectangle Float Float Float Float
+
+Circle :: Float -> Float -> Float -> Shape
+Rectangle :: Float -> Float -> Float -> Float -> Shape
+
+
