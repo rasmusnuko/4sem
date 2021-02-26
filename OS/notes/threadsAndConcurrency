@@ -101,3 +101,8 @@ Operating System Threads
         - Thread creation is done through clone() system call
         - clone() allows a child task to share the address
           space of the parent task (process)
+
+
+CPU Scheduling
+Basics Concept
+    . Maximum CPU utilization obtained with multiprogramming
