@@ -85,9 +85,11 @@ Pipes
   - Takes the output of one process and pipes it to the input of another process
     . Ordinary pipes
         - Allows coomunication in standard producer-consomer style
-        - Unidirectional
-    . 
-
-
-
-
+            . Producer writes to the write-end of the pipe
+            . Consumer reads from the read-end of the pipe
+            - Unidirectional
+        - Buffered (Bounded capacity)
+    . Named pipes
+        - Filebased (mkfifo command Creates a pipe file)
+        - Synchronous (Blocking)
+        - Bidirectional

@@ -27,7 +27,31 @@ What are the two fundemental model of interprocess communication?
     Message passing
     Shared memory
 
+What are the two sstem calls used with message-passing systems?
+    Send & Recieve
 
+True or False? Message passing is typically faster than shared memory
+    False
+
+What system call is used to create a PORIX shared memory obejct?
+    Open
+
+Provide at least two types of communication mechanism in
+client-server systems
+    Socket communication
+
+
+________ abstract procedure calls for use between systems with network
+connections
+    ________ = Remote procedure calls
+
+
+What is parameter marshaling?
+    Making sure that the data you send, has the correct format
+    eg. little-Endian / Big-Endian
+
+What are the two types of pipes?
+    Ordinary pipes & Named pipes
 
 
 Process creation
