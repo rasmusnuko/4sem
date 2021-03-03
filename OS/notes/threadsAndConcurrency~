@@ -195,13 +195,13 @@ Real-Time CPU scheduling
     
 Operating System Examples
     . Linux scheduling
-         - Priority
+         - 'Completely Fair Scheduler'
              . Lower priority = most important
              . Priority 0-100: 'Real-time tasks'
              . Priority 101-140: 'User tasks'
              - 'PR' in top calculated as (priority-100)
-         - 'Completely Fair Scheduler'
-             .  
+         - 
+         - 
     . Windows scheduling
          - 
     . Solaris scheduling
