@@ -1,16 +1,22 @@
+# Initialization
 u = [2,4,6]                         # centroid1, centroid2, centroid3
 uPoints = []                        # points belonging to centroid1, centroid2, centroid3
 points = [2,3,4,10,11,12,20,25,30]  # Our data
-print("\n=== Initialization ===")
+
+# First print
+print("K-means\n=== Initialization ===")
 for x in range(len(u)):
     print(f'Centroid {x+1}: {u[x]}')
-change = True                       # True iff centroids change
+
+# Iteration loop
+change = True       # True iff centroids change
 iteration = 0
 while(change):
+    # Misc. loop start
+    change = False
     iteration += 1
     print("\n=== Iteration:", iteration, "===")
-    change = False
-    
+
     # Reset uPoints
     uPoints = []
     for x in range(len(u)):
@@ -25,12 +31,12 @@ while(change):
                 min = abs(u[x] - point)
                 lowestDist = x
         uPoints[lowestDist].append(point)
-    
+        
+    # Calculate new centroids
     for x in range(len(u)):
         # Print values
         print(f'Centroid {x+1}: {u[x]} | Points: {uPoints[x]}')
 
-        # Calculate new centroids
         # Check if centroids change
         oldValue = u[x]
         u[x] = sum(uPoints[x])/len(uPoints[x])
