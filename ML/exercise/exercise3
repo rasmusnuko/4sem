@@ -64,7 +64,7 @@ as information.
           foreach closedSet in C:
               if set part of closedSet:
                   includedIn.append(closedSet)
-          set.support = min(includedIn)
+          set.support = minSupport(includedIn)
 
 
 3.2
