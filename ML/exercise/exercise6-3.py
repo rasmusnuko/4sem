@@ -7,10 +7,14 @@ def dist(p,q):
     # Manhattan dist
     return abs(p[0]-q[0])+abs(p[1]-q[1])
 
+# Different k's for k-nearest neighbour
 for k in ks:
     list = [None] * k
+    # Find distance to all circles and squares
     distCircles = sorted([dist(circle, triangle) for circle in circles])
     distSquares = sorted([dist(square, triangle) for square in squares])
+
+    # if a circle is closest neighbour: distances[0]++
     distances = [0,0]
     for x in range(k):
         if(distCircles[0] < distSquares[0]):
@@ -20,6 +24,7 @@ for k in ks:
             distances[1] += 1
             distSquares = distSquares[1:]
 
+    # Found out if most closest neighbours are circles or squares
     if distances[0] > distances[1]:
         print("When k =",k, "The triangle is a circle")
     else:
