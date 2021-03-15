@@ -1,0 +1,198 @@
+1.
+Provide three programming examples in which multithreading provides better
+performance than a single-threaded solution.
+    . Web servers
+    . Video game: Video + Sound on a thread each
+    . Everything that can be done in parallel
+    . CPU + I/O at the same time 
+
+2.
+Using Amdahl's Law, calculate the speedup gain of an application that has
+a 60 percent parallel component for 
+        - (1 / (1-p) + p/N) = 1 / (0.4 + 0.3) = 1 / 0.7
+                            = 1.429
+    . four processing cores
+        - (1 / (1-p) + p/N) = 1 / (0.4 + 0.15) = 1 / 0.55
+                            = 1.818
+
+3.
+Does the multithreaded web server described in Section 4.1 exhibit task
+or data parallelism?
+
+
+4.
+What are two differences between user-level threads and kernel-level threads?
+Under what circumstances is one type better than the other?
+
+
+5.
+Describe the actions taken by a kernel to context-switch between
+kernel-level threads.
+    . Save the stack of the running thread and retrieve the stack of
+      the 'new' thread
+
+
+6.
+What resources are used when a thread is created?
+How do they differ from those used when a process is created?
+    . Threads only needs a new register set and a new stack
+
+
+7.
+Assume that an operating system maps user-level threads to the kernel
+using the many-to-many model and that the mapping is done through LWPs.
+Furthermore, the system allows developers to create real-time threads for
+use in real-time systems.
+Is it necessary to bind a real-time thread to an LWP? Explain.
+    . It is important to have a distinction between LWPs and Real Time LWPs
+
+
+8.
+Under what circumstances does a multithreaded solution using multiple
+kernel threads provide better performance than a single-threaded solution
+on a single-processor system?
+    . It is faster to switch between threads, than to context switch
+
+9.
+Which of the following components of program state are shared across
+threads in a multithreaded process?
+    . Register values
+        - Not shared
+    . Heap Memory
+        - Shared
+    . Global variables
+        - Shared
+    . Stack memory
+        - Shared 
+
+10.
+Using Amdahl Law, calculate the speedup gain for the following applications: 
+    . 40% parallel
+        (a) eight processing cores
+            . (1 / 1-0.4 + 0.4/8) = 1/(0.6+0.05) = 1/0.65
+              = 1.538
+
+        (b) sixteen processing cores
+            . (1 / 1-0.4 + 0.4/16) = 1/(0.6+0.025) = 1/0.475
+              = 1.6
+
+    . 67% parallel
+        (a) two processing cores
+            . 1/ ((1-0.67) + (0.67/2))
+              = 1.504
+
+        (b) four processing cores
+            . 1/ ((1-0.67) + (0.67/4))
+              = 2.010
+
+    . 90% parallel
+        (a) four processing cores
+            . 1/ ((1-0.90) + (0.90/4))
+              = 3.077
+
+        (b) eight processing cores
+            . 1/ ((1-0.90) + (0.90/8))
+              = 4.706
+     
+11.
+Determine if the following problems exhibit task or data parallelism: 
+ - Task parallelism does different task
+      . Different tasks for diffrent threads
+ - Data task is the same task
+      . Same tasks for different threads
+
+    . Using a separate thread to generate a thumbnail for
+      each photo in a collection
+        - Data parallelism (Can be done with one task)
+
+    . Transposing a matrix in parallel
+        - Data parallelism (Simple, and done with the same task)
+
+    . A networked application where one thread reads from the network,
+      and another thread writes from the network
+        - Task parallelism (Different tasks)
+
+    . The fork-join array summation application
+      described in Section 4.5.2
+        - Data (Code is very reusable / scalable)
+
+    . The Grand Central Dispatch system
+        - Tasks 
+
+
+12.
+    pid t pid;
+    pid = fork();
+    if (pid == 0) { /* child process */
+        fork();
+        thread create( . . .);
+    }
+    fork()
+
+Consider the code segment
+    . How many unique processes are created?
+        - 6
+            . Fork = 2 -> child forks = 3 -> all fork = 6
+ 
+                        |
+                       / \
+                      /\  |
+                     /\/\ /\
+
+    . How many unique threads are created?
+        - 2
+
+
+
+13.
+The following program uses the Pthreads API.
+What would be the output from the program at LINE C and LINE P? 
+    . 
+
+
+    #include <pthread.h>
+    #include <stdio.h>
+    int value = 0;
+    void *runner(void *param); /* the thread */
+    int main(int argc, char *argv[])
+    {
+        pid t pid;
+        pthread t tid;
+        pthread attr t attr;
+    
+        pid = fork();
+    
+        if (pid == 0) { /* child process */
+            pthread attr init(&attr);
+            pthread create(&tid,&attr,runner,NULL);
+            pthread join(tid,NULL);
+            printf("CHILD: value = %d",value); /* LINE C */
+        } else if (pid > 0) { /* parent process */
+            wait(NULL);
+            printf("PARENT: value = %d",value); /* LINE P */
+        }
+    }
+    
+    void *runner(void *param) {
+        value = 5;
+        pthread exit(0);
+    }
+
+
+
+
+
+Consider a multicore system and a multithreaded program written
+using the many-to-many threading model.
+Let the number of user-level threads in the program be greater than
+the number of processing cores in the system.
+Discuss the performance implications of the following scenarios. 
+    . The number of kernel threads allocated to the program is less
+      than the number of processing cores.
+
+    . The number of kernel threads allocated to the program is equal
+      to the number of processing cores.
+
+    . The number of kernel threads allocated to the program is
+      greater than the number of processing cores but less than the
+      number of user-level threads.
