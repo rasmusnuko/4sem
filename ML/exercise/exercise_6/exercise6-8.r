@@ -1,0 +1,3 @@
+plot(AirPassengers)
+hist(AirPassengers)
+

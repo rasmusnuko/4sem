@@ -1,0 +1,28 @@
+print("====Exercise 6-7A====")
+vec1 <- c(1,2,3)
+print("vec1:")
+print(vec1)
+vec2 <- c(4,5,6)
+print("vec2:")
+print(vec2)
+print("rbind()-ing the two vectors")
+M1 <- rbind(vec1, vec2)
+print(M1)
+
+print("")
+print("====Exercise 6-7B====")
+vec3 <- -vec1
+vec4 <- -vec2
+M2 <- rbind(vec3, vec4)
+print(M2)
+print("Nullifying:")
+print(M1+M2)
+
+print("")
+print("====Exercise 6-7C====")
+vec5 = c(2,2,2)
+M3 = rbind(vec5, vec5)
+print("Matrix:")
+print(M3)
+print("Matrix x M1:")
+print(M3 * M1)
