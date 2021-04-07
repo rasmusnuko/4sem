@@ -8,6 +8,16 @@ module Lib (
 import System.IO
 import Control.Monad
 import System.Random
+import Data.List
+
+testState = State ["Rooster", "Tiger", "Dragon", "Elephant", "Ox"] [(0,2), (0,0), (0,1), (0,3), (0,4)] [(4,2), (4,0), (4,1), (4,3), (4,4)] 0
+move1 = Move (0,2) (2,2) "Tiger"
+move2 = Move (4,1) (3,0) "Elephant"
+move3 = Move (0,1) (1,1) "Ox"
+move4 = Move (4,2) (2,2) "Tiger"
+moves = [move1, move2, move3, move4]
+
+testRun = isValidAux' testState moves
 
 data Move = Move {
     start :: (Int, Int),
@@ -43,18 +53,20 @@ applyMove :: State -> Move -> State
 applyMove (State cards piecesA piecesB turn) (Move start end card)
     = (State cards' piecesA' piecesB' turn')
     where
-        cards' = swapCards cards card
+        cards' = sortCards (swapCards cards card)
         piecesA' = getFirst (applyPieces start end turn piecesA piecesB)
         piecesB' = getSecond (applyPieces start end turn piecesA piecesB)
         turn' = (if turn == 0 then 1 else 0)
 
--- Takes the list of cards and the card played,
--- and swaps the last in the list and played card
-swapCards :: [[Char]] -> [Char] -> [[Char]]
+-- Swaps played card with the last card
 swapCards (x:xs) card
     | x == card = (last (x:xs)):(swapCards xs card)
     | null xs = card:[]
     | otherwise = x:(swapCards xs card)
+
+-- Sorts first and second, and third and fourth cards, lexicographically repectively
+sortCards :: [[Char]] -> [[Char]]
+sortCards cards = (sort(take 2 cards)) ++ (sort((cards !! 2):(cards !! 3):[])) ++ (last cards):[]
 
 -- Checks if any player has won
 applyPieces :: (Int, Int) -> (Int, Int) -> Int -> [(Int, Int)] -> [(Int, Int)] -> ([(Int, Int)], [(Int, Int)])
@@ -80,7 +92,7 @@ applyPiecesA start end turn piecesA
 applyPiecesB :: (Int, Int) -> (Int, Int) -> Int -> [(Int, Int)] -> [(Int, Int)]
 applyPiecesB start end turn piecesB
     | turn ==  0 = piecesB
-    | otherwise = swapPieces piecesB end
+    | otherwise = swapPieces piecesB start end
 
 -- Swaps start with end and returns the new list
 swapPieces :: [(Int, Int)] -> (Int, Int) -> (Int, Int) -> [(Int, Int)]
@@ -91,9 +103,10 @@ swapPieces (x:xs) start end
 
 -- Removes a piece from a list
 hitDetected :: [(Int, Int)] -> (Int, Int) -> [(Int, Int)]
-hitDetected pieces end
-    | length pieces == 1 = []
-    | otherwise = ((takeWhile (/= end) pieces) ++ end:[] ++ (tail (dropWhile (/= end) pieces)))
+hitDetected (x:xs) end
+    | null xs = []
+    | x == end = (hitDetected xs end)
+    | otherwise = x:(hitDetected xs end)
 
 -- Gets first element i (Int, Int) tuple
 getFirst :: ([(Int, Int)], [(Int, Int)]) -> [(Int, Int)]
@@ -116,6 +129,7 @@ errorInState (State cards piecesA piecesB turn)
 errorInCards :: [[Char]] -> Bool
 errorInCards [] = True
 errorInCards cards
+    | cards /= (sortCards cards) = True
     | length cards /= 5 = True
     | otherwise = errorInCards' [getLegalMoves card | card <- cards]
 
