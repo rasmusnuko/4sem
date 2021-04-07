@@ -1,0 +1,13 @@
+data Card = Card {
+    name :: [Char],
+    legalMoves :: [(Int, Int)]
+}
+
+data Move = Move ((Int, Int), (Int, Int), Card) 
+
+data State = State {
+    cards :: [[Char]],
+    piecesA :: [(Int, Int)],
+    piecesB :: [(Int, Int)],
+    turn :: Int
+} 
