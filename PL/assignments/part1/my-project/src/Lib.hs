@@ -9,19 +9,26 @@ import System.IO
 import Control.Monad
 import System.Random
 import Data.List
+import Text.Read
 
 data Move = Move {
     start :: (Int, Int),
     end :: (Int, Int),
     card :: [Char]
-} deriving Show
+} deriving (Show, Read)
 
 data State = State {
     cards :: [[Char]],
     piecesA :: [(Int, Int)],
     piecesB :: [(Int, Int)],
     turn :: Int
-} deriving Show
+} deriving (Show, Read)
+
+isValid :: String -> IO (String)
+isValid filePath = isValid filePath
+isValid filePath = isValidAux (read State linesAsList !! 0) [read Move x | x <- (tail linesAsList)]
+	where linesAsList = lines (readFile filePath)
+
 
 -- Passes the State and list of Move's on to isValidAux',
 -- along side a counter used to keep track of the amount of moves played
