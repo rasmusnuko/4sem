@@ -30,7 +30,7 @@ isValid filePath = do
     let linesAsList = lines contents
     let state = read (linesAsList !! 0) :: State
     let moves = [read x :: Move | x <- (tail linesAsList)]
-    if (null moves) || (errorInState state /= 0)  then (return "Parsing Error")
+    if /(null moves) || (errorInState state /= 0)  then (return "Parsing Error")
     else return (isValidAux state moves) 
 
 -- Passes the State and list of Move's on to isValidAux',
