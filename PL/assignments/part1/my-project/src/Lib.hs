@@ -31,8 +31,8 @@ isValid :: String -> IO (String)
 isValid filePath = do
     contents <- readFile filePath
     let linesAsList = lines contents
-    let state = linesAsList !! 0
-    let moves = tail linesAsList
+    let state = ("State " ++ (head linesAsList))
+    let moves = ["Move " ++ x | x <- (tail linesAsList)]
     let maybeState = readMaybe state :: Maybe State
     let maybeMoves = [readMaybe x :: Maybe Move | x <- moves]
     -- Getting maybe state
