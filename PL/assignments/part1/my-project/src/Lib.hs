@@ -8,6 +8,7 @@ module Lib (
 import System.IO
 import Control.Monad
 import System.Random
+import Data.Maybe
 import Data.List
 import Text.Read
 
@@ -24,14 +25,26 @@ data State = State {
     turn :: Int
 } deriving (Show, Read)
 
+-- Parses State and [Moves] from a filePath
+-- and passes the data to isValidAux
 isValid :: String -> IO (String)
 isValid filePath = do
     contents <- readFile filePath
     let linesAsList = lines contents
-    let state = read (linesAsList !! 0) :: State
-    let moves = [read x :: Move | x <- (tail linesAsList)]
-    if /(null moves) || (errorInState state /= 0)  then (return "Parsing Error")
-    else return (isValidAux state moves) 
+    let state = linesAsList !! 0
+    let moves = tail linesAsList
+    let maybeState = readMaybe state :: Maybe State
+    let maybeMoves = [readMaybe x :: Maybe Move | x <- moves]
+    -- Getting maybe state
+    if (isNothing maybeState)
+    then return "Parsing Error"
+    -- Getting maybe moves
+    else if any (&&True) [isNothing x | x <- maybeMoves]
+    then return "Parsing Error"
+    -- Checking for empty moves list or invalid state
+    else if (null maybeMoves) || (errorInState (read state :: State) /= 0)
+    then return "Parsing Error"
+    else return (isValidAux (read state :: State) [ read x :: Move | x <- moves]) 
 
 -- Passes the State and list of Move's on to isValidAux',
 -- along side a counter used to keep track of the amount of moves played
