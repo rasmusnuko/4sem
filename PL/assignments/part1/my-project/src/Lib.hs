@@ -25,26 +25,25 @@ data State = State {
 } deriving (Show, Read)
 
 isValid :: String -> IO (String)
-isValid filePath = isValid filePath
-isValid filePath = isValidAux (read State linesAsList !! 0) [read Move x | x <- (tail linesAsList)]
-	where linesAsList = lines (readFile filePath)
-
+isValid filePath = do
+    contents <- readFile filePath
+    let linesAsList = lines contents
+    let state = read (linesAsList !! 0) :: State
+    let moves = [read x :: Move | x <- (tail linesAsList)]
+    if (null moves) || (errorInState state /= 0)  then (return "Parsing Error")
+    else return (isValidAux state moves) 
 
 -- Passes the State and list of Move's on to isValidAux',
 -- along side a counter used to keep track of the amount of moves played
 isValidAux :: State -> [Move] -> [Char]
-isValidAux state moves = isValidAux' state moves 1
-
-isValidAux' :: State -> [Move] -> Int -> [Char]
-isValidAux' (State cards piecesA piecesB turn) [] count
-    | errorInState (State cards piecesA piecesB turn) /= 0 = "NonValid Statess " ++ show (count-1)
-    | null piecesA || null piecesB = show (State cards piecesA piecesB turn)
-
-isValidAux' (State cards piecesA piecesB turn) (move:moves) count
-    | errorInState (State cards piecesA piecesB turn) /= 0 = "NonValid State " ++ show (count-1)
-    | null piecesA || null piecesB = show (State cards piecesA piecesB turn)
-    | errorInMove cards move piecesA piecesB turn = "NonValid Move " ++ (show count)
-    | otherwise = isValidAux' (applyMove (State cards piecesA piecesB turn) move) moves (count+1)
+isValidAux (State cards piecesA piecesB turn) (move:moves) 
+    | null piecesA || null piecesB = show state
+    | errorInMove cards move piecesA piecesB turn = "NonValid " ++ (show move)
+    | errorInState newState /= 0 = "NonValid " ++ (show move)
+    | otherwise = isValidAux newState moves
+    where
+        state = (State cards piecesA piecesB turn)
+        newState = applyMove (State cards piecesA piecesB turn) move 
 
 -- Takes a State and a Move, and returns a new State where the Move has been performed
 applyMove :: State -> Move -> State
@@ -195,8 +194,8 @@ getLegalMoves card
     | card == "Eel" = [(1,-1), (-1,-1), (0,1)]
     | otherwise = []
 
-isValid :: FilePath -> IO (String)
-isValid _ = return "ParsingError"
+isValid' :: FilePath -> IO (String)
+isValid' _ = return "ParsingError"
 
 generateRandom :: Int -> Int -> IO (String)
 generateRandom _ _ = return "Not yet implemented"
