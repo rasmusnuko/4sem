@@ -36,7 +36,7 @@ isValid filePath = do
     let maybeState = readMaybe state :: Maybe State
     let maybeMoves = [readMaybe x :: Maybe Move | x <- moves]
     let err1 = isNothing maybeState
-    let err2 = (&&True) [isNothing x | x <- maybeMoves]
+    let err2 = any (&&True) [isNothing x | x <- maybeMoves]
     if err1 && err2
     then return "Both fail"
     -- Getting maybe state
