@@ -12,18 +12,23 @@ import Data.Maybe
 import Data.List
 import Text.Read
 
-data Move = Move {
-    start :: (Int, Int),
-    end :: (Int, Int),
-    card :: [Char]
-} deriving (Show, Read)
+-- data Move = Move {
+--     start :: (Int, Int),
+--     end :: (Int, Int),
+--     card :: [Char]
+-- } deriving (Show, Read)
+-- 
+-- data State = State {
+--     cards :: [[Char]],
+--     piecesA :: [(Int, Int)],
+--     piecesB :: [(Int, Int)],
+--     turn :: Int
+-- } deriving (Show, Read)
 
-data State = State {
-    cards :: [[Char]],
-    piecesA :: [(Int, Int)],
-    piecesB :: [(Int, Int)],
-    turn :: Int
-} deriving (Show, Read)
+data State = State ([String], [(Int, Int)], [(Int, Int)], Int) deriving (Show, Read)
+data Move = Move ((Int, Int), (Int,Int), String) deriving (Show, Read)
+
+testMove = (Move ((0,2), (1,3), "Rabbit"))
 
 -- Parses State and [Moves] from a filePath
 -- and passes the data to isValidAux
@@ -49,19 +54,19 @@ isValid filePath = do
 -- Passes the State and list of Move's on to isValidAux',
 -- along side a counter used to keep track of the amount of moves played
 isValidAux :: State -> [Move] -> [Char]
-isValidAux (State cards piecesA piecesB turn) (move:moves) 
+isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
     | null piecesA || null piecesB = show state
     | errorInMove cards move piecesA piecesB turn = "NonValid " ++ (show move)
     | errorInState newState /= 0 = "NonValid " ++ (show move)
     | otherwise = isValidAux newState moves
     where
-        state = (State cards piecesA piecesB turn)
-        newState = applyMove (State cards piecesA piecesB turn) move 
+        state = (State (cards, piecesA, piecesB, turn))
+        newState = applyMove (State (cards, piecesA, piecesB, turn)) move 
 
 -- Takes a State and a Move, and returns a new State where the Move has been performed
 applyMove :: State -> Move -> State
-applyMove (State cards piecesA piecesB turn) (Move start end card)
-    = (State cards' piecesA' piecesB' turn')
+applyMove (State (cards, piecesA, piecesB, turn)) (Move (start, end, card))
+    = (State (cards', piecesA', piecesB', turn'))
     where
         cards' = sortCards (swapCards cards card)
         piecesA' = getFirst (applyPieces start end turn piecesA piecesB)
@@ -128,7 +133,7 @@ getSecond (_,a) = a
 
 -- Passes on the state to be checked in a lot of ways
 errorInState :: State -> Int
-errorInState (State cards piecesA piecesB turn)
+errorInState (State (cards, piecesA, piecesB, turn))
     | errorInCards cards = 1
     | (errorInPieces piecesA) || (errorInPieces piecesB) = 2
     | hasDuplicates (piecesA++piecesB) = 3
@@ -168,7 +173,7 @@ hasDuplicates (x:xs)
 
 -- Checks if anything is fundamentally invalid in the move
 errorInMove :: [[Char]] -> Move -> [(Int, Int)] -> [(Int, Int)] -> Int -> Bool
-errorInMove cards (Move start end card) piecesA piecesB turn
+errorInMove cards (Move (start, end, card)) piecesA piecesB turn
     | (turn == 0) && not (elem card (take 2 cards)) = True
     | (turn == 1) && not (elem card (cards !! 2 :[cards !! 3])) = True
     | (turn == 0) && not (elem start piecesA) = True
