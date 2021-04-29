@@ -50,7 +50,7 @@ isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves)
     | otherwise = isValidAux newState moves
     where
         state = (State (cards, piecesA, piecesB, turn))
-        newState = applyMove (State (cards, (sortPieces piecesA), (sortPieces piecesB), turn)) move 
+        newState = applyMove (State (cards, piecesA, piecesB, turn)) move 
 
 -- Removes everything up to and including the first space
 removeFirstWord :: [Char] -> String 
@@ -65,8 +65,8 @@ applyMove (State (cards, piecesA, piecesB, turn)) (Move (start, end, card))
     = (State (cards', piecesA', piecesB', turn'))
     where
         cards' = sortCards (swapCards cards card)
-        piecesA' = getFirst (applyPieces start end turn piecesA piecesB)
-        piecesB' = getSecond (applyPieces start end turn piecesA piecesB)
+        piecesA' = sortPieces (getFirst (applyPieces start end turn piecesA piecesB))
+        piecesB' = sortPieces (getSecond (applyPieces start end turn piecesA piecesB))
         turn' = (if turn == 0 then 1 else 0)
 
 -- Swaps played card with the last card
