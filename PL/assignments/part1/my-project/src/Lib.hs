@@ -35,12 +35,8 @@ isValid filePath = do
     let moves = ["Move " ++ x | x <- (tail linesAsList)]
     let maybeState = readMaybe state :: Maybe State
     let maybeMoves = [readMaybe x :: Maybe Move | x <- moves]
-    let err1 = isNothing maybeState
-    let err2 = any (&&True) [isNothing x | x <- maybeMoves]
-    if err1 && err2
-    then return "Both fail"
     -- Getting maybe state
-    else if (isNothing maybeState)
+    if (isNothing maybeState)
     then return "Parsing Error State"
     -- Getting maybe moves
     else if any (&&True) [isNothing x | x <- maybeMoves]
