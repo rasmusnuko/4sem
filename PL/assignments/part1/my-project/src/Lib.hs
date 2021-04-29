@@ -12,19 +12,6 @@ import Data.Maybe
 import Data.List
 import Text.Read
 
--- data Move = Move {
---     start :: (Int, Int),
---     end :: (Int, Int),
---     card :: [Char]
--- } deriving (Show, Read)
--- 
--- data State = State {
---     cards :: [[Char]],
---     piecesA :: [(Int, Int)],
---     piecesB :: [(Int, Int)],
---     turn :: Int
--- } deriving (Show, Read)
-
 data State = State ([String], [(Int, Int)], [(Int, Int)], Int) deriving (Show, Read)
 data Move = Move ((Int, Int), (Int,Int), String) deriving (Show, Read)
 
@@ -42,15 +29,15 @@ isValid filePath = do
     let maybeMoves = [readMaybe x :: Maybe Move | x <- moves]
     -- Getting maybe state
     if (isNothing maybeState)
-    then return "Parsing Error State"
+    then return "Parsing Error"
     -- Getting maybe moves
     else if any (&&True) [isNothing x | x <- maybeMoves]
-    then return "Parsing Error Moves"
+    then return "Parsing Error"
     -- Checking for empty moves list or invalid state
     else if (null maybeMoves)
-    then return "Parsing Error maybe drenge"
+    then return "Parsing Error"
     else if (errorInState (read state :: State) /= 0)
-    then return "Parsing Error finale State check"
+    then return "Parsing Error"
     else return (isValidAux (read state :: State) [ read x :: Move | x <- moves]) 
 
 -- Passes the State and list of Move's on to isValidAux',
