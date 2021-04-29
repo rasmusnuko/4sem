@@ -29,12 +29,12 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "C:\\Users\\nuko\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\bin"
-libdir     = "C:\\Users\\nuko\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\lib\\x86_64-windows-ghc-8.6.5\\my-project-0.1.0.0-9LgkfSHUZcMLMG5hatuVR8-my-project-exe"
-dynlibdir  = "C:\\Users\\nuko\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\lib\\x86_64-windows-ghc-8.6.5"
-datadir    = "C:\\Users\\nuko\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\share\\x86_64-windows-ghc-8.6.5\\my-project-0.1.0.0"
-libexecdir = "C:\\Users\\nuko\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\libexec\\x86_64-windows-ghc-8.6.5\\my-project-0.1.0.0"
-sysconfdir = "C:\\Users\\nuko\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\etc"
+bindir     = "C:\\Users\\nuko\\5sem\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\bin"
+libdir     = "C:\\Users\\nuko\\5sem\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\lib\\x86_64-windows-ghc-8.6.5\\my-project-0.1.0.0-9LgkfSHUZcMLMG5hatuVR8-my-project-exe"
+dynlibdir  = "C:\\Users\\nuko\\5sem\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\lib\\x86_64-windows-ghc-8.6.5"
+datadir    = "C:\\Users\\nuko\\5sem\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\share\\x86_64-windows-ghc-8.6.5\\my-project-0.1.0.0"
+libexecdir = "C:\\Users\\nuko\\5sem\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\libexec\\x86_64-windows-ghc-8.6.5\\my-project-0.1.0.0"
+sysconfdir = "C:\\Users\\nuko\\5sem\\4sem\\PL\\assignments\\part1\\my-project\\.stack-work\\install\\fabae29d\\etc"
 
 getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "my_project_bindir") (\_ -> return bindir)
