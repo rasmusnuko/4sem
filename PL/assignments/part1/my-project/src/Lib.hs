@@ -135,9 +135,10 @@ getSecond (_,a) = a
 errorInState :: State -> Int
 errorInState (State (cards, piecesA, piecesB, turn))
     | errorInCards cards = 1
-    | (errorInPieces piecesA) || (errorInPieces piecesB) = 2
-    | hasDuplicates (piecesA++piecesB) = 3
-    | (turn /= 0) && (turn /= 1) = 4
+    | piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = 2
+    | (errorInPieces piecesA) || (errorInPieces piecesB) = 3
+    | hasDuplicates (piecesA++piecesB) = 4
+    | (turn /= 0) && (turn /= 1) = 5
     | otherwise = 0
 
 -- Checks for 5 cards in total
