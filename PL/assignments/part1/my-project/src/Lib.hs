@@ -45,7 +45,6 @@ isValidAux :: State -> [Move] -> [Char]
 isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
     | (null piecesA || null piecesB) && not (null (move:moves)) = "NonValid " ++ removeFirstWord (show move)
     | null piecesA || null piecesB = removeFirstWord (show state)
-    | piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = "NonValid " ++ removeFirstWord (show move)
     | errorInMove cards move piecesA piecesB turn = "NonValid " ++ removeFirstWord (show move)
     | errorInState newState /= 0 = "NonValid " ++ removeFirstWord (show move)
     | otherwise = isValidAux newState moves
@@ -137,6 +136,7 @@ getSecond (_,a) = a
 errorInState :: State -> Int
 errorInState (State (cards, piecesA, piecesB, turn))
     | errorInCards cards = 1
+    | piecesA == (sortPieces piecesA) && piecesB == (sortPieces piecesB) = 2
     | (errorInPieces piecesA) || (errorInPieces piecesB) = 3
     | hasDuplicates (piecesA++piecesB) = 4
     | (turn /= 0) && (turn /= 1) = 5
