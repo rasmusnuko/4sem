@@ -42,6 +42,8 @@ isValid filePath = do
 -- Passes the State and list of Move's on to isValidAux',
 -- along side a counter used to keep track of the amount of moves played
 isValidAux :: State -> [Move] -> [Char]
+isValidAux (State ([], _, _, _)) _ = "ParsingError"
+isValidAux _ [] = "ParsingError"
 isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
     | (null piecesA || null piecesB) && not (null (move:moves)) = "NonValid " ++ removeFirstWord (show move)
     | null piecesA || null piecesB = removeFirstWord (show state)
