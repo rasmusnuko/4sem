@@ -47,8 +47,10 @@ isValid filePath = do
     else if any (&&True) [isNothing x | x <- maybeMoves]
     then return "Parsing Error Moves"
     -- Checking for empty moves list or invalid state
-    else if (null maybeMoves) || (errorInState (read state :: State) /= 0)
-    then return "Parsing Error finale"
+    else if (null maybeMoves)
+    then return "Parsing Error maybe drenge"
+    else if (errorInState (read state :: State) /= 0)
+    then return "Parsing Error finale State check"
     else return (isValidAux (read state :: State) [ read x :: Move | x <- moves]) 
 
 -- Passes the State and list of Move's on to isValidAux',
