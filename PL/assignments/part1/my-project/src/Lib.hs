@@ -29,15 +29,15 @@ isValid filePath = do
     let maybeMoves = [readMaybe x :: Maybe Move | x <- moves]
     -- Getting maybe state
     if (isNothing maybeState)
-    then return "Parsing Error"
+    then return "ParsingError"
     -- Getting maybe moves
     else if any (&&True) [isNothing x | x <- maybeMoves]
-    then return "Parsing Error"
+    then return "ParsingError"
     -- Checking for empty moves list or invalid state
     else if (null maybeMoves)
-    then return "Parsing Error"
+    then return "ParsingError"
     else if (errorInState (read state :: State) /= 0)
-    then return "Parsing Error"
+    then return "ParsingError"
     else return (isValidAux (read state :: State) [ read x :: Move | x <- moves]) 
 
 -- Passes the State and list of Move's on to isValidAux',
