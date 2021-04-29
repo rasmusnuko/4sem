@@ -57,18 +57,18 @@ isValid filePath = do
 -- along side a counter used to keep track of the amount of moves played
 isValidAux :: State -> [Move] -> [Char]
 isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
-    | null piecesA || null piecesB = show (removeFirstWord state)
-    | errorInMove cards move piecesA piecesB turn = "NonValid " ++ (show (removeFirstWord move))
-    | errorInState newState /= 0 = "NonValid " ++ (show (removeFirstWord move))
+    | null piecesA || null piecesB = removeFirstWord (show state)
+    | errorInMove cards move piecesA piecesB turn = "NonValid " ++ removeFirstWord (show move)
+    | errorInState newState /= 0 = "NonValid " ++ removeFirstWord (show move)
     | otherwise = isValidAux newState moves
     where
         state = (State (cards, piecesA, piecesB, turn))
         newState = applyMove (State (cards, piecesA, piecesB, turn)) move 
 
-removeFirstWord :: String -> String 
+removeFirstWord :: [Char] -> String 
 removeFirstWord [] = []
-removeFirstWord x:xs
-    | (x == " ") = xs
+removeFirstWord (x:xs)
+    | (x == ' ') = xs
     | otherwise = removeFirstWord xs
 
 -- Takes a State and a Move, and returns a new State where the Move has been performed
