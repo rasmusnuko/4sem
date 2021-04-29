@@ -16,8 +16,6 @@ import Text.Read
 data State = State ([String], [(Int, Int)], [(Int, Int)], Int) deriving (Show, Read)
 data Move = Move ((Int, Int), (Int,Int), String) deriving (Show, Read)
 
-testMove = (Move ((0,2), (1,3), "Rabbit"))
-
 -- Parses State and [Moves] from a filePath
 -- and passes the data to isValidAux
 isValid :: String -> IO (String)
