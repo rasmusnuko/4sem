@@ -1,4 +1,3 @@
--- YEHAW
 module Lib (
  generateRandom,
  isValid,
