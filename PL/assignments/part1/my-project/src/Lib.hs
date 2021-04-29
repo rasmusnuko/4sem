@@ -43,16 +43,17 @@ isValid filePath = do
 -- along side a counter used to keep track of the amount of moves played
 isValidAux :: State -> [Move] -> [Char]
 isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
+    | (null piecesA || null piecesB) && (not (null moves)) = "NonValid" ++ removeFirstWord (show (head moves))
     | null piecesA || null piecesB = removeFirstWord (show state)
     | piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = "NonValid " ++ removeFirstWord (show move)
     | errorInMove cards move piecesA piecesB turn = "NonValid " ++ removeFirstWord (show move)
     | errorInState newState /= 0 = "NonValid " ++ removeFirstWord (show move)
-    | (null piecesA || null piecesB) && (not (null moves)) = "NonValid" ++ removeFirstWord (show move)
     | otherwise = isValidAux newState moves
     where
         state = (State (cards, piecesA, piecesB, turn))
         newState = applyMove (State (cards, (sortPieces piecesA), (sortPieces piecesB), turn)) move 
 
+-- Removes everything up to and including the first space
 removeFirstWord :: [Char] -> String 
 removeFirstWord [] = []
 removeFirstWord (x:xs)
