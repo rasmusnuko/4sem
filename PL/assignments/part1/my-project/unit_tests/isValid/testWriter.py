@@ -38,7 +38,6 @@ def chooseCards(cards, card):
   for anyCard in cards:
     if card != anyCard and (len(result) < 5):
       result.append(anyCard)
-  print(result)
   return result
 
 
@@ -78,15 +77,20 @@ eel = ["Eel", (1,-1), (-1,-1), (0,1)]
 allCards = [rabbit, cobra, rooster, tiger, monkey, crab, crane, frog, boar, horse, elephant, ox, goose, dragon, mantis, eel]
 
 # Creating .in & .out files
+state = 0
 for card in allCards:
   for i in range(1,len(card)):
     piecesA = [[1,2]]
     piecesB = [[4,2]]
     cards = chooseCards(allCards, card)
-    fileName = ("NUKO_" + card[0].lower() + str(i))
+    fileName = ("MOVES_" + card[0].lower() + str(i))
     f = open((fileName + ".in"), "w")   # .in file
-    f.write(makeState(cards, piecesA, piecesB, 0))
+    state = makeState(cards, piecesA, piecesB, 0)
+    f.write(state)
     move = performMove(cards, card, i, piecesA)
     f.write(move[0])
     f = open((fileName + ".out"), "w")  # .out file
-    f.write(makeState(move[1], move[2], piecesB, 1))
+    state = makeState(move[1], move[2], piecesB, 1)
+    f.write(state)
+
+print("Have a nice day (^:")
