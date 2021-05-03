@@ -51,7 +51,9 @@ def performMove(cards, movePlayed, piecesA):
   newCards = arrangeCards(newCards)
   newPieces = piecesA
   newPieces[0][0] = (newPieces[0][0] + cards[0][1][0])
+  print(str(newPieces[0][0]) + "[0][0]")
   newPieces[0][1] = (newPieces[0][1] + cards[0][1][1])
+  print(str(newPieces[0][1]) + "[0][1]")
   moveString = "(({},{}), ({},{}), \"{}\")".format(cards[0][movePlayed][0], cards[0][movePlayed][1], newPieces[0][0], newPieces[0][1], cards[0][0]) 
   return (newCards, newPieces, moveString)
 
@@ -73,12 +75,12 @@ mantis = ["Mantis", (1,-1), (-1,0), (1,1)]
 eel = ["Eel", (1,-1), (-1,-1), (0,1)]
 allCards = [rabbit, cobra, rooster, tiger, monkey, crab, crane, frog, boar, horse, elephant, ox, goose, dragon, mantis, eel]
 
-piecesA = [[1,2], [0,0], [0,1], [0,3], [0,4]]
-piecesB = [[4,2], [4,0], [4,1], [4,3], [4,4]]
 
 
 for card in allCards:
   for i in range(1,len(card)):
+    piecesA = [[1,2], [0,0], [0,1], [0,3], [0,4]]
+    piecesB = [[4,2], [4,0], [4,1], [4,3], [4,4]]
     cards = chooseCards(allCards, card[0])
     fileName = ("NUKO_" + card[0].lower() + str(i))
     f = open((fileName + ".in"), "w")   # .in file
