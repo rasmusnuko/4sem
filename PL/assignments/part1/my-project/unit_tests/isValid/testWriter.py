@@ -1,3 +1,4 @@
+# Sort players' cards lexicographically
 def arrangeCards(cards):
   p1Names = sorted([card[0] for card in cards[:2]])
   p2Names = sorted([card[0] for card in cards[2:4]])
@@ -28,33 +29,38 @@ def makePieces(pieces):
 def makeState(cards, piecesA, piecesB, turn):
   return "({},{},{},{})\n".format(makeCards(arrangeCards(cards)), makePieces(piecesA), makePieces(piecesB), turn)
 
-def chooseCards(cards, cardName):
+def chooseCards(cards, card):
   result = []
   foundCard = 0
-  for card in cards:
-    if cardName == card[0]:
-      foundCard = card
-  result.append(foundCard)
-  for card in cards:
-    if cardName != card[0]:
+  for anyCard in cards:
+    if card == anyCard:
+       result.append(anyCard)
+  for anyCard in cards:
+    if card != anyCard and (len(result) < 5):
       result.append(card)
-    if (len(result) > 4):
-      break
-  return result
+  return arrangeCards(result)
 
-def performMove(cards, movePlayed, piecesA):
+def performMove(cards, card, movePlayed, piecesA):
+  # moving piece
+  newPieces = piecesA
+  newPieces[0][0] = (newPieces[0][0] + card[movePlayed][0])
+  newPieces[0][1] = (newPieces[0][1] + card[movePlayed][1])
+  # Making move string
+  moveString = "(({},{}), ({},{}), \"{}\")\n".format(piecesA[0][0], piecesA[0][1], newPieces[0][0], newPieces[0][1], cards[0][0]) 
+  # Rearranging cards
   newCards = []
   newCards.append(cards[4])
-  newCards.append(cards[1])
+  if cards[0] == card:
+      newCards.append(cards[1])
+  else: 
+      newCards.append(cards[0])
   newCards.extend(cards[2:4])
-  newCards.append(cards[0])
+  newCards.append(card)
   newCards = arrangeCards(newCards)
-  newPieces = piecesA
-  newPieces[0][0] = (newPieces[0][0] + cards[0][1][0])
-  newPieces[0][1] = (newPieces[0][1] + cards[0][1][1])
-  moveString = "(({},{}), ({},{}), \"{}\")\n".format(piecesA[0][0], piecesA[0][1], newPieces[0][0], newPieces[0][1], cards[0][0]) 
-  return (newCards, newPieces, moveString)
 
+  return (newPieces, moveString, newCards)
+
+# All cards and their moves
 rabbit = ["Rabbit", (-1,-1), (1,1), (0,2)]
 cobra = ["Cobra", (0,-1), (1,-1), (1,1)]
 rooster = ["Rooster", (-1,-1), (0,-1), (0,1), (1,1)]
@@ -73,6 +79,7 @@ mantis = ["Mantis", (1,-1), (-1,0), (1,1)]
 eel = ["Eel", (1,-1), (-1,-1), (0,1)]
 allCards = [rabbit, cobra, rooster, tiger, monkey, crab, crane, frog, boar, horse, elephant, ox, goose, dragon, mantis, eel]
 
+# Creating .in & .out files
 for card in allCards:
   for i in range(1,len(card)):
     piecesA = [[1,2], [0,0], [0,1], [0,3], [0,4]]
@@ -81,7 +88,7 @@ for card in allCards:
     fileName = ("NUKO_" + card[0].lower() + str(i))
     f = open((fileName + ".in"), "w")   # .in file
     f.write(makeState(cards, piecesA, piecesB, 0))
-    move = performMove(cards, i, piecesA)
-    f.write(move[2])
+    move = performMove(cards, card, i, piecesA)
+    f.write(move[1])
     f = open((fileName + ".out"), "w")  # .out file
-    f.write(makeState(move[0], move[1], piecesB, 1))
+    f.write(makeState(move[2], move[0], piecesB, 1))
