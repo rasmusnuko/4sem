@@ -24,7 +24,7 @@ def makeCards(cards):
   return "[\"{}\",\"{}\",\"{}\",\"{}\",\"{}\"]".format(cards[0][0], cards[1][0], cards[2][0], cards[3][0], cards[4][0])
 
 def makePieces(pieces):
-  return "[({},{}),({},{}),({},{}),({},{}),({},{})]".format(pieces[0][0], pieces[0][1], pieces[1][0], pieces[1][1], pieces[2][0], pieces[2][1], pieces[3][0], pieces[3][1], pieces[4][0], pieces[4][1])
+  return "[({},{})]".format(pieces[0][0], pieces[0][1])
 
 def makeState(cards, piecesA, piecesB, turn):
   return "({},{},{},{})\n".format(makeCards(arrangeCards(cards)), makePieces(piecesA), makePieces(piecesB), turn)
@@ -80,8 +80,8 @@ allCards = [rabbit, cobra, rooster, tiger, monkey, crab, crane, frog, boar, hors
 # Creating .in & .out files
 for card in allCards:
   for i in range(1,len(card)):
-    piecesA = [[1,2], [0,0], [0,1], [0,3], [0,4]]
-    piecesB = [[4,2], [4,0], [4,1], [4,3], [4,4]]
+    piecesA = [[1,2]]
+    piecesB = [[4,2]]
     cards = chooseCards(allCards, card)
     fileName = ("NUKO_" + card[0].lower() + str(i))
     f = open((fileName + ".in"), "w")   # .in file
