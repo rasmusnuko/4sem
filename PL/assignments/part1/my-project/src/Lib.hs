@@ -150,7 +150,7 @@ errorInCards cards
     | length cards /= 5 = True
     | otherwise = errorInCards' [getLegalMoves card | card <- cards]
 
-duplicateCards :: [String] -> [Bool]
+duplicateCards :: [String] -> Bool
 duplicateCards [] = False
 duplicateCards (x:xs)
     | elem x xs = True
