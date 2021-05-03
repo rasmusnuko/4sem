@@ -220,75 +220,75 @@ getLegalMoves card
     | card == "Eel" = [(1,-1), (-1,-1), (0,1)]
     | otherwise = []
 
-generateRandom :: Int -> Int -> IO (String)
-generateRandom seed n = show (State (cards, piecesA, piecesB))
-    where
-    cards = getCardNames (getRandomCards seed)
-    piecesA = getRandomPieces seed
-    piecesB = getRandomPieces (seed*3)
-
--- Returns 5 Int values [0 - 15] with no duplicates
-getRandomCards :: Int -> [String]
-getRandomCards seed
-    | (seed `mod` 16) == 0 = getRandomCards (seed + 1)
-    | hasDuplicateCards cards = getRandomCards (seed + 1)
-    | otherwise = cards
-    where
-        card0 = (seed*seed) `mod` 16
-        card1 = (seed*seed*3) `mod` 16
-        card2 = (seed*seed*5) `mod` 16
-        card3 = (seed*seed*7) `mod` 16
-        card4 = (seed*seed*11) `mod` 16
-        cards = [card0, card1, card2, card3, card4]
-
--- Gets cards names from a index
--- empty string, if the index is not described  
-getCardNames :: Int -> String
-getCardNames index
-    | index == 0  = "Rabbit" 
-    | index == 1  = "Cobra" 
-    | index == 2  = "Rooster"
-    | index == 3  = "Tiger" 
-    | index == 4  = "Monkey" 
-    | index == 5  = "Crab" 
-    | index == 6  = "Crane" 
-    | index == 7  = "Frog" 
-    | index == 8  = "Boar" 
-    | index == 9  = "Horse" 
-    | index == 10 = "Elephant" 
-    | index == 11 = "Ox" 
-    | index == 12 = "Goose" 
-    | index == 13 = "Dragon" 
-    | index == 14 = "Mantis" 
-    | index == 15 = "Eel" 
-    | otherwise = ""
-
--- Checks if a list of integers have any duplicate values
-hasDuplicateCards :: [Int] -> Bool
-hasDuplicateCards [] = False
-hasDuplicateCards (x:xs)
-    | elem x xs = True
-    | otherwise = hasDuplicateCards xs
-
--- Returns 5 random (Int, Int)
-getRandomPieces :: Int -> [(Int, Int)]
-getRandomPieces seed
-    | (seed `mod` 5) == 0 = getRandomPieces (seed + 1)
-    | hasDuplicatePieces pieces = getRandomPieces (seed + 1)
-    | otherwise = pieces
-    where
-        piece0 = ((seed `mod` 5), ((seed*3) `mod` 5))
-        piece1 = (((seed * 7) `mod` 5), ((seed*9) `mod` 5))
-        piece2 = (((seed - 1)`mod` 5), ((seed*13) `mod` 5))
-        piece3 = (((seed * 17) `mod` 5), ((seed*2) `mod` 5))
-        piece4 = (((seed * 31) `mod` 5), ((seed*71) `mod` 5))
-        pieces = [card0, card1, card2, card3, card4]
-
-removeDuplicates :: [(Int, Int)] -> [(Int, Int)]
-removeDuplicates [] = []
-removeDuplicates (x:xs)
-    | elem x xs = xs
-    | otherwise = x:(removeDuplicates xs)
+-- generateRandom :: Int -> Int -> IO (String)
+-- generateRandom seed n = show (State (cards, piecesA, piecesB))
+--     where
+--     cards = getCardNames (getRandomCards seed)
+--     piecesA = getRandomPieces seed
+--     piecesB = getRandomPieces (seed*3)
+-- 
+-- -- Returns 5 Int values [0 - 15] with no duplicates
+-- getRandomCards :: Int -> [String]
+-- getRandomCards seed
+--     | (seed `mod` 16) == 0 = getRandomCards (seed + 1)
+--     | hasDuplicateCards cards = getRandomCards (seed + 1)
+--     | otherwise = cards
+--     where
+--         card0 = (seed*seed) `mod` 16
+--         card1 = (seed*seed*3) `mod` 16
+--         card2 = (seed*seed*5) `mod` 16
+--         card3 = (seed*seed*7) `mod` 16
+--         card4 = (seed*seed*11) `mod` 16
+--         cards = [card0, card1, card2, card3, card4]
+-- 
+-- -- Gets cards names from a index
+-- -- empty string, if the index is not described  
+-- getCardNames :: Int -> String
+-- getCardNames index
+--     | index == 0  = "Rabbit" 
+--     | index == 1  = "Cobra" 
+--     | index == 2  = "Rooster"
+--     | index == 3  = "Tiger" 
+--     | index == 4  = "Monkey" 
+--     | index == 5  = "Crab" 
+--     | index == 6  = "Crane" 
+--     | index == 7  = "Frog" 
+--     | index == 8  = "Boar" 
+--     | index == 9  = "Horse" 
+--     | index == 10 = "Elephant" 
+--     | index == 11 = "Ox" 
+--     | index == 12 = "Goose" 
+--     | index == 13 = "Dragon" 
+--     | index == 14 = "Mantis" 
+--     | index == 15 = "Eel" 
+--     | otherwise = ""
+-- 
+-- -- Checks if a list of integers have any duplicate values
+-- hasDuplicateCards :: [Int] -> Bool
+-- hasDuplicateCards [] = False
+-- hasDuplicateCards (x:xs)
+--     | elem x xs = True
+--     | otherwise = hasDuplicateCards xs
+-- 
+-- -- Returns 5 random (Int, Int)
+-- getRandomPieces :: Int -> [(Int, Int)]
+-- getRandomPieces seed
+--     | (seed `mod` 5) == 0 = getRandomPieces (seed + 1)
+--     | hasDuplicatePieces pieces = getRandomPieces (seed + 1)
+--     | otherwise = pieces
+--     where
+--         piece0 = ((seed `mod` 5), ((seed*3) `mod` 5))
+--         piece1 = (((seed * 7) `mod` 5), ((seed*9) `mod` 5))
+--         piece2 = (((seed - 1)`mod` 5), ((seed*13) `mod` 5))
+--         piece3 = (((seed * 17) `mod` 5), ((seed*2) `mod` 5))
+--         piece4 = (((seed * 31) `mod` 5), ((seed*71) `mod` 5))
+--         pieces = [card0, card1, card2, card3, card4]
+-- 
+-- removeDuplicates :: [(Int, Int)] -> [(Int, Int)]
+-- removeDuplicates [] = []
+-- removeDuplicates (x:xs)
+--     | elem x xs = xs
+--     | otherwise = x:(removeDuplicates xs)
 
 movesNumbers :: Int -> String -> IO (String)
 movesNumbers _ _ = return "Not yet implemented"
