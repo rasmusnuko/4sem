@@ -145,7 +145,7 @@ errorInState (State (cards, piecesA, piecesB, turn))
 errorInCards :: [[Char]] -> Bool
 errorInCards [] = True
 errorInCards cards
-    | duplicateCards = True
+    | duplicateCards cards = True
     | cards /= (sortCards cards) = True
     | length cards /= 5 = True
     | otherwise = errorInCards' [getLegalMoves card | card <- cards]
