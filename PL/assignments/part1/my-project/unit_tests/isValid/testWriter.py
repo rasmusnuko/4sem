@@ -37,8 +37,10 @@ def chooseCards(cards, card):
        result.append(anyCard)
   for anyCard in cards:
     if card != anyCard and (len(result) < 5):
-      result.append(card)
-  return arrangeCards(result)
+      result.append(anyCard)
+  print(result)
+  return result
+
 
 def performMove(cards, card, movePlayed, piecesA):
   # moving piece
@@ -50,15 +52,11 @@ def performMove(cards, card, movePlayed, piecesA):
   # Rearranging cards
   newCards = []
   newCards.append(cards[4])
-  if cards[0] == card:
-      newCards.append(cards[1])
-  else: 
-      newCards.append(cards[0])
+  newCards.append(cards[1])
   newCards.extend(cards[2:4])
-  newCards.append(card)
-  newCards = arrangeCards(newCards)
+  newCards.append(cards[0])
 
-  return (newPieces, moveString, newCards)
+  return (newPieces, moveString, arrangeCards(newCards))
 
 # All cards and their moves
 rabbit = ["Rabbit", (-1,-1), (1,1), (0,2)]
@@ -84,7 +82,7 @@ for card in allCards:
   for i in range(1,len(card)):
     piecesA = [[1,2], [0,0], [0,1], [0,3], [0,4]]
     piecesB = [[4,2], [4,0], [4,1], [4,3], [4,4]]
-    cards = chooseCards(allCards, card[0])
+    cards = chooseCards(allCards, card)
     fileName = ("NUKO_" + card[0].lower() + str(i))
     f = open((fileName + ".in"), "w")   # .in file
     f.write(makeState(cards, piecesA, piecesB, 0))
