@@ -51,10 +51,8 @@ def performMove(cards, movePlayed, piecesA):
   newCards = arrangeCards(newCards)
   newPieces = piecesA
   newPieces[0][0] = (newPieces[0][0] + cards[0][1][0])
-  print(str(newPieces[0][0]) + "[0][0]")
   newPieces[0][1] = (newPieces[0][1] + cards[0][1][1])
-  print(str(newPieces[0][1]) + "[0][1]")
-  moveString = "(({},{}), ({},{}), \"{}\")\n".format(cards[0][movePlayed][0], cards[0][movePlayed][1], newPieces[0][0], newPieces[0][1], cards[0][0]) 
+  moveString = "(({},{}), ({},{}), \"{}\")\n".format(piecesA[0][0], piecesA[0][1], newPieces[0][0], newPieces[0][1], cards[0][0]) 
   return (newCards, newPieces, moveString)
 
 rabbit = ["Rabbit", (-1,-1), (1,1), (0,2)]
@@ -74,8 +72,6 @@ dragon = ["Dragon", (1,-2), (-1,-1), (-1,1), (1,2)]
 mantis = ["Mantis", (1,-1), (-1,0), (1,1)]
 eel = ["Eel", (1,-1), (-1,-1), (0,1)]
 allCards = [rabbit, cobra, rooster, tiger, monkey, crab, crane, frog, boar, horse, elephant, ox, goose, dragon, mantis, eel]
-
-
 
 for card in allCards:
   for i in range(1,len(card)):
