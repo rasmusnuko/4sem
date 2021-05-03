@@ -43,20 +43,20 @@ def chooseCards(cards, card):
 
 
 def performMove(cards, card, movePlayed, piecesA):
-  # moving piece
-  newPieces = piecesA
-  newPieces[0][0] = (newPieces[0][0] + card[movePlayed][0])
-  newPieces[0][1] = (newPieces[0][1] + card[movePlayed][1])
   # Making move string
-  moveString = "(({},{}), ({},{}), \"{}\")\n".format(piecesA[0][0], piecesA[0][1], newPieces[0][0], newPieces[0][1], cards[0][0]) 
+  moveString = "(({},{}), ({},{}), \"{}\")\n".format(piecesA[0][0], piecesA[0][1], (piecesA[0][0] + card[movePlayed][0]), (piecesA[0][1] + card[movePlayed][1]), cards[0][0]) 
   # Rearranging cards
   newCards = []
   newCards.append(cards[4])
   newCards.append(cards[1])
   newCards.extend(cards[2:4])
   newCards.append(cards[0])
+  # moving piece
+  newPieces = piecesA
+  newPieces[0][0] = (piecesA[0][0] + card[movePlayed][0])
+  newPieces[0][1] = (newPieces[0][1] + card[movePlayed][1])
 
-  return (newPieces, moveString, arrangeCards(newCards))
+  return (moveString, arrangeCards(newCards), newPieces)
 
 # All cards and their moves
 rabbit = ["Rabbit", (-1,-1), (1,1), (0,2)]
@@ -87,6 +87,6 @@ for card in allCards:
     f = open((fileName + ".in"), "w")   # .in file
     f.write(makeState(cards, piecesA, piecesB, 0))
     move = performMove(cards, card, i, piecesA)
-    f.write(move[1])
+    f.write(move[0])
     f = open((fileName + ".out"), "w")  # .out file
-    f.write(makeState(move[2], move[0], piecesB, 1))
+    f.write(makeState(move[1], move[2], piecesB, 1))
