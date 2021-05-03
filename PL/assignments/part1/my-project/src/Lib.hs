@@ -220,7 +220,8 @@ getLegalMoves card
     | card == "Eel" = [(1,-1), (-1,-1), (0,1)]
     | otherwise = []
 
--- generateRandom :: Int -> Int -> IO (String)
+generateRandom :: Int -> Int -> IO (String)
+generateRandom _ _ = return "Not yet implemented"
 -- generateRandom seed n = show (State (cards, piecesA, piecesB))
 --     where
 --     cards = getCardNames (getRandomCards seed)
