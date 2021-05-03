@@ -172,7 +172,7 @@ errorInPieces ((x1, x2):pieces)
     | (x1 < 0) || (x2 < 0) || (x1 > 4) || (x2 > 4) = True
     | otherwise = errorInPieces pieces
 
-tack test --coverage- Checks if any two pieces are on the same tile on the board
+-- Checks if any two pieces are on the same tile on the board
 hasDuplicatePieces :: [(Int, Int)] -> Bool
 hasDuplicatePieces [] = False
 hasDuplicatePieces (x:xs)
