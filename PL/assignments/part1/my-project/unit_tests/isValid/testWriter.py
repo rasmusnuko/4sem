@@ -1,3 +1,22 @@
+# All cards and their moves
+rabbit = ["Rabbit", (-1,-1), (1,1), (0,2)]
+cobra = ["Cobra", (0,-1), (1,-1), (1,1)]
+rooster = ["Rooster", (-1,-1), (0,-1), (0,1), (1,1)]
+tiger = ["Tiger", (-1,0), (2, 0)]
+monkey = ["Monkey", (-1,-1), (-1,1), (1,-1), (1,1)]
+crab = ["Crab", (0,-2), (1,0), (0,2)]
+crane = ["Crane", (-1,-1), (1,0), (-1,1)]
+frog = ["Frog", (0,-2), (1,-1), (-1,1)]
+boar = ["Boar", (0,-1), (0,1), (1,0)]
+horse = ["Horse", (-1,0), (0,-1), (1,0)]
+elephant = ["Elephant", (1,-1), (0,-1), (0,1), (1,1)]
+ox = ["Ox", (0,1), (-1,0), (1,0)]
+goose = ["Goose", (-1,1), (0,-1), (0,1), (1,-1)]
+dragon = ["Dragon", (1,-2), (-1,-1), (-1,1), (1,2)]
+mantis = ["Mantis", (1,-1), (-1,0), (1,1)]
+eel = ["Eel", (1,-1), (-1,-1), (0,1)]
+allCards = [rabbit, cobra, rooster, tiger, monkey, crab, crane, frog, boar, horse, elephant, ox, goose, dragon, mantis, eel]
+
 # Sort players' cards lexicographically
 def arrangeCards(cards):
   p1Names = sorted([card[0] for card in cards[:2]])
@@ -56,25 +75,6 @@ def performMove(cards, card, movePlayed, piecesA):
   newPieces[0][1] = (newPieces[0][1] + card[movePlayed][1])
 
   return (moveString, arrangeCards(newCards), newPieces)
-
-# All cards and their moves
-rabbit = ["Rabbit", (-1,-1), (1,1), (0,2)]
-cobra = ["Cobra", (0,-1), (1,-1), (1,1)]
-rooster = ["Rooster", (-1,-1), (0,-1), (0,1), (1,1)]
-tiger = ["Tiger", (-1,0), (2, 0)]
-monkey = ["Monkey", (-1,-1), (-1,1), (1,-1), (1,1)]
-crab = ["Crab", (0,-2), (1,0), (0,2)]
-crane = ["Crane", (-1,-1), (1,0), (-1,1)]
-frog = ["Frog", (0,-2), (1,-1), (-1,1)]
-boar = ["Boar", (0,-1), (0,1), (1,0)]
-horse = ["Horse", (-1,0), (0,-1), (1,0)]
-elephant = ["Elephant", (1,-1), (0,-1), (0,1), (1,1)]
-ox = ["Ox", (0,1), (-1,0), (1,0)]
-goose = ["Goose", (-1,1), (0,-1), (0,1), (1,-1)]
-dragon = ["Dragon", (1,-2), (-1,-1), (-1,1), (1,2)]
-mantis = ["Mantis", (1,-1), (-1,0), (1,1)]
-eel = ["Eel", (1,-1), (-1,-1), (0,1)]
-allCards = [rabbit, cobra, rooster, tiger, monkey, crab, crane, frog, boar, horse, elephant, ox, goose, dragon, mantis, eel]
 
 # Creating .in & .out files
 state = 0
