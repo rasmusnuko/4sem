@@ -1,4 +1,3 @@
--- asdasd
 module Lib (
  generateRandom,
  isValid,
@@ -95,8 +94,10 @@ applyPieces start end turn piecesA piecesB
 
 -- Sorts a players pieces lexicographically
 sortPieces :: [(Int, Int)] -> [(Int, Int)]
---sortPieces [] = []
-sortPieces (x:xs) = x:(sort xs)
+sortPieces [] = []
+sortPieces (x:xs)
+    | null xs = [x]
+    | otherwise = x:(sort xs)
 
 -- Updating player A's pieces
 applyPiecesA :: (Int, Int) -> (Int, Int) -> Int -> [(Int, Int)] -> [(Int, Int)]
