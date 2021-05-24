@@ -267,7 +267,7 @@ getRandomCards' seed foundCards
     | newCard `elem` foundCards = getRandomCards' (seed+1) foundCards
     | otherwise = getRandomCards' (seed+1) (newCard:foundCards)
     where
-        newCard = seed*(seed+(length foundCards)) `mod` 16
+        newCard = seed*(231) `mod` 16
 
 -- Returns 5 random (Int, Int)
 getRandomPieces :: Int -> Int -> [(Int, Int)]
