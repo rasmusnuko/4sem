@@ -40,7 +40,7 @@ isValid filePath = do
 
 -- Passes the State and list of Move's on to isValidAux',
 -- along side a counter used to keep track of the amount of moves played
-isValidAux :: State -> [Move] -> [Char]
+isValidAux :: State -> [Move] -> String
 isValidAux state [] = removeFirstWord (show state)
 isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
     | (null piecesA || null piecesB) && not (null (move:moves)) = "NonValid " ++ removeFirstWord (show move)
@@ -144,7 +144,7 @@ errorInState (State (cards, piecesA, piecesB, turn))
     | otherwise = 0
 
 -- Checks for 5 cards in total
-errorInCards :: [[Char]] -> Bool
+errorInCards :: [String] -> Bool
 errorInCards [] = True
 errorInCards cards
     | duplicateCards cards = True
@@ -182,7 +182,7 @@ hasDuplicatePieces (x:xs)
     | otherwise = hasDuplicatePieces xs
 
 -- Checks if anything is fundamentally invalid in the move
-errorInMove :: String -> Move -> [(Int, Int)] -> [(Int, Int)] -> Int -> Bool
+errorInMove :: [String] -> Move -> [(Int, Int)] -> [(Int, Int)] -> Int -> Bool
 errorInMove cards (Move (start, end, card)) piecesA piecesB turn
     | (turn == 0) && not (elem card (take 2 cards)) = True
     | (turn == 1) && not (elem card ([cards !! 2] ++ [cards !! 3])) = True
