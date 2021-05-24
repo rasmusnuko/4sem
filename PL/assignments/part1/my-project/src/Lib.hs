@@ -267,7 +267,7 @@ getRandomCards' seed foundCards
     | newCard `elem` foundCards = getRandomCards' (seed+1) foundCards
     | otherwise = getRandomCards' (seed+1) (newCard:foundCards)
     where
-        newCard = seed*(seed+(length foundCards)*5) `mod` 16
+        newCard = seed*(seed+(length foundCards)) `mod` 16
 
 -- Returns 5 random (Int, Int)
 getRandomPieces :: Int -> Int -> [(Int, Int)]
@@ -286,7 +286,6 @@ getRandomPieces' seed offset foundPieces
 -- Removes pieces that are standing on the same tile
 removeDuplicates :: [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)] -> ([(Int, Int)], [(Int, Int)])
 removeDuplicates [] _ acceptedPiecesA acceptedPiecesB = (acceptedPiecesA, acceptedPiecesB)
-removeDuplicates _ [] acceptedPiecesA acceptedPiecesB = (acceptedPiecesA, acceptedPiecesB)
 removeDuplicates piecesA piecesB acceptedPiecesA acceptedPiecesB
     | x `elem` (y:ys) = removeDuplicates xs ys acceptedPiecesA (y:acceptedPiecesB)
     | y `elem` (x:xs) = removeDuplicates xs ys (x:acceptedPiecesA) acceptedPiecesB
@@ -328,9 +327,6 @@ winningMove piece card piecesA piecesB turn index
     | turn == 0 && (calcMove piece card turn index) == (head piecesB) = True
     | turn == 1 && (calcMove piece card turn index) == (head piecesA) = True
     | otherwise = False
-    where
-        moves = cardMoves card
-        cardMove = (moves !! index)
 
 -- A description has been written over the parameters:
 --             piece        entry of cards''     turn
