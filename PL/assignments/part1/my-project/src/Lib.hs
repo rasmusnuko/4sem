@@ -52,7 +52,7 @@ isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves)
         newState = applyMove (State (cards, piecesA, piecesB, turn)) move 
 
 -- Removes everything up to and including the first space
-removeFirstWord :: [Char] -> String 
+removeFirstWord :: String -> String 
 removeFirstWord [] = []
 removeFirstWord (x:xs)
     | (x == ' ') = xs
@@ -66,7 +66,7 @@ applyMove (State (cards, piecesA, piecesB, turn)) (Move (start, end, card))
         cards' = sortCards (swapCards cards card)
         piecesA' = sortPieces (getFirst (applyPieces start end turn piecesA piecesB))
         piecesB' = sortPieces (getSecond (applyPieces start end turn piecesA piecesB))
-        turn' = (if turn == 0 then 1 else 0)
+        turn' = if turn == 0 then 1 else 0
 
 -- Swaps played card with the last card
 swapCards (x:xs) card
@@ -75,7 +75,7 @@ swapCards (x:xs) card
     | otherwise = x:(swapCards xs card)
 
 -- Sorts first and second, and third and fourth cards, lexicographically repectively
-sortCards :: [[Char]] -> [[Char]]
+sortCards :: [String] -> [String]
 sortCards cards = (sort(take 2 cards)) ++ (sort((cards !! 2):(cards !! 3):[])) ++ (last cards):[]
 
 -- Checks if any player has won
@@ -182,12 +182,14 @@ hasDuplicatePieces (x:xs)
     | otherwise = hasDuplicatePieces xs
 
 -- Checks if anything is fundamentally invalid in the move
-errorInMove :: [[Char]] -> Move -> [(Int, Int)] -> [(Int, Int)] -> Int -> Bool
+errorInMove :: String -> Move -> [(Int, Int)] -> [(Int, Int)] -> Int -> Bool
 errorInMove cards (Move (start, end, card)) piecesA piecesB turn
     | (turn == 0) && not (elem card (take 2 cards)) = True
-    | (turn == 1) && not (elem card (cards !! 2 :[cards !! 3])) = True
+    | (turn == 1) && not (elem card ([cards !! 2] ++ [cards !! 3])) = True
     | (turn == 0) && not (elem start piecesA) = True
     | (turn == 1) && not (elem start piecesB) = True
+    | (turn == 0) && (elem end piecesA) = True
+    | (turn == 1) && (elem end piecesB) = True
     | otherwise = errorInMove' start end (getLegalMoves card) turn
 
 -- Checks if the move is possible, given the start- and end position,
@@ -202,10 +204,10 @@ errorInMove' (start1, start2) (end1, end2) ((x1, x2):xs) turn
 
 -- Gets legal moves associated with the cards in the game
 -- empty list, if the String is not a card in the game
-getLegalMoves :: [Char] -> [(Int, Int)]
+getLegalMoves :: String -> [(Int, Int)]
 getLegalMoves card
     | card == "Rabbit" = [(-1,-1), (1,1), (0,2)]
-    | card == "Cobra" = [(0,-1), (1,-1), (1,1)]
+    | card == "Cobra" = [(0,-1), (-1,1), (1,1)]
     | card == "Rooster" = [(-1,-1), (0,-1), (0,1), (1,1)]
     | card == "Tiger" = [(-1,0), (2, 0)]
     | card == "Monkey" = [(-1,-1), (-1,1), (1,-1), (1,1)]
@@ -222,76 +224,217 @@ getLegalMoves card
     | card == "Eel" = [(1,-1), (-1,-1), (0,1)]
     | otherwise = []
 
+-- Gets cards names from a index
+-- empty string, if the index is not described  
+getCardNames :: Int -> String
+getCardNames index
+    | index == 0  = "Rabbit" 
+    | index == 1  = "Cobra" 
+    | index == 2  = "Rooster"
+    | index == 3  = "Tiger" 
+    | index == 4  = "Monkey" 
+    | index == 5  = "Crab" 
+    | index == 6  = "Crane" 
+    | index == 7  = "Frog" 
+    | index == 8  = "Boar" 
+    | index == 9  = "Horse" 
+    | index == 10 = "Elephant" 
+    | index == 11 = "Ox" 
+    | index == 12 = "Goose" 
+    | index == 13 = "Dragon" 
+    | index == 14 = "Mantis" 
+    | index == 15 = "Eel" 
+
 generateRandom :: Int -> Int -> IO (String)
-generateRandom _ _ = return "Not yet implemented"
--- generateRandom seed n = show (State (cards, piecesA, piecesB))
---     where
---     cards = getCardNames (getRandomCards seed)
---     piecesA = getRandomPieces seed
---     piecesB = getRandomPieces (seed*3)
--- 
--- -- Returns 5 Int values [0 - 15] with no duplicates
--- getRandomCards :: Int -> [String]
--- getRandomCards seed
---     | (seed `mod` 16) == 0 = getRandomCards (seed + 1)
---     | hasDuplicateCards cards = getRandomCards (seed + 1)
---     | otherwise = cards
---     where
---         card0 = (seed*seed) `mod` 16
---         card1 = (seed*seed*3) `mod` 16
---         card2 = (seed*seed*5) `mod` 16
---         card3 = (seed*seed*7) `mod` 16
---         card4 = (seed*seed*11) `mod` 16
---         cards = [card0, card1, card2, card3, card4]
--- 
--- -- Gets cards names from a index
--- -- empty string, if the index is not described  
--- getCardNames :: Int -> String
--- getCardNames index
---     | index == 0  = "Rabbit" 
---     | index == 1  = "Cobra" 
---     | index == 2  = "Rooster"
---     | index == 3  = "Tiger" 
---     | index == 4  = "Monkey" 
---     | index == 5  = "Crab" 
---     | index == 6  = "Crane" 
---     | index == 7  = "Frog" 
---     | index == 8  = "Boar" 
---     | index == 9  = "Horse" 
---     | index == 10 = "Elephant" 
---     | index == 11 = "Ox" 
---     | index == 12 = "Goose" 
---     | index == 13 = "Dragon" 
---     | index == 14 = "Mantis" 
---     | index == 15 = "Eel" 
---     | otherwise = ""
--- 
--- -- Checks if a list of integers have any duplicate values
--- hasDuplicateCards :: [Int] -> Bool
--- hasDuplicateCards [] = False
--- hasDuplicateCards (x:xs)
---     | elem x xs = True
---     | otherwise = hasDuplicateCards xs
--- 
--- -- Returns 5 random (Int, Int)
--- getRandomPieces :: Int -> [(Int, Int)]
--- getRandomPieces seed
---     | (seed `mod` 5) == 0 = getRandomPieces (seed + 1)
---     | hasDuplicatePieces pieces = getRandomPieces (seed + 1)
---     | otherwise = pieces
---     where
---         piece0 = ((seed `mod` 5), ((seed*3) `mod` 5))
---         piece1 = (((seed * 7) `mod` 5), ((seed*9) `mod` 5))
---         piece2 = (((seed - 1)`mod` 5), ((seed*13) `mod` 5))
---         piece3 = (((seed * 17) `mod` 5), ((seed*2) `mod` 5))
---         piece4 = (((seed * 31) `mod` 5), ((seed*71) `mod` 5))
---         pieces = [card0, card1, card2, card3, card4]
--- 
--- removeDuplicates :: [(Int, Int)] -> [(Int, Int)]
--- removeDuplicates [] = []
--- removeDuplicates (x:xs)
---     | elem x xs = xs
---     | otherwise = x:(removeDuplicates xs)
+generateRandom seed n = do
+    let cards = sortCards [getCardNames card | card <- getRandomCards seed]
+    let piecesA = getRandomPieces seed 3
+    let piecesB = getRandomPieces (seed*2) 4
+    let pieces = removeDuplicates piecesA piecesB [] []
+    let finalPiecesA = sortPieces (getFirst pieces)
+    let finalPiecesB = sortPieces (getSecond pieces)
+    let turn = seed `mod` 2
+    let state = (State (cards, finalPiecesA, finalPiecesB, turn))
+    let moveList = getMovesList state seed n
+    return (makeOutputString state moveList)
+        
+-- Returns 5 Int values [0 - 15] with no duplicates
+getRandomCards :: Int -> [Int]
+getRandomCards seed = getRandomCards' seed []
+getRandomCards' :: Int -> [Int] -> [Int]
+getRandomCards' seed foundCards
+    | (length foundCards) == 5 = foundCards
+    | newCard `elem` foundCards = getRandomCards' (seed+1) foundCards
+    | otherwise = getRandomCards' (seed+1) (newCard:foundCards)
+    where
+        newCard = seed*(seed+(length foundCards)*5) `mod` 16
+
+-- Returns 5 random (Int, Int)
+getRandomPieces :: Int -> Int -> [(Int, Int)]
+getRandomPieces seed offset = getRandomPieces' seed offset []
+getRandomPieces' :: Int -> Int -> [(Int,Int)] -> [(Int, Int)]
+getRandomPieces' seed offset foundPieces
+    | (length foundPieces) == 5 = foundPieces
+    | newPiece `elem` foundPieces = getRandomPieces' (seed+offset) offset foundPieces
+    | otherwise = getRandomPieces' (seed+3) offset (newPiece:foundPieces)
+    where
+        seed' = if seed `mod` 5 == 0 then (((seed-2) `mod` 99)*offset) else seed
+        newPiece0 = seed'*(seed'+(length foundPieces)) `mod` 5
+        newPiece1 = seed'*(seed'+(length foundPieces)*3) `mod` 5
+        newPiece = if even seed' then (newPiece0, newPiece1) else (newPiece1, newPiece0)
+
+-- Removes pieces that are standing on the same tile
+removeDuplicates :: [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)] -> ([(Int, Int)], [(Int, Int)])
+removeDuplicates [] _ acceptedPiecesA acceptedPiecesB = (acceptedPiecesA, acceptedPiecesB)
+removeDuplicates _ [] acceptedPiecesA acceptedPiecesB = (acceptedPiecesA, acceptedPiecesB)
+removeDuplicates piecesA piecesB acceptedPiecesA acceptedPiecesB
+    | x `elem` (y:ys) = removeDuplicates xs ys acceptedPiecesA (y:acceptedPiecesB)
+    | y `elem` (x:xs) = removeDuplicates xs ys (x:acceptedPiecesA) acceptedPiecesB
+    | otherwise = removeDuplicates xs ys (x:acceptedPiecesA) (y:acceptedPiecesB)
+    where
+        (x:xs) = piecesA
+        (y:ys) = piecesB
+
+-- Turns State and [Move] into a formatted string, seperated with \n
+makeOutputString :: State -> [Move] -> String
+makeOutputString state moves = makeOutputString' state moves ""
+makeOutputString' state [] output = (removeFirstWord (show state)) ++ "\n" ++ output
+makeOutputString' state (move:moves) output
+    = makeOutputString' state moves (output ++ (removeFirstWord (show move)) ++ "\n")
+
+-- Returns a list of all valid moves from a given state
+-- Also keeps track of whether a move is a winning move or not
+allValidMoves :: State -> [(Bool, Move)]
+allValidMoves (State (cards, piecesA, piecesB, turn)) = validMoves
+    where
+        pieces' = if turn == 0 then piecesA else piecesB
+        cards' = [(card, getLegalMoves card) | card <- cards]
+        cards'' = if turn == 0 then (take 2 cards') else ([cards' !! 2] ++ [cards' !! 3])
+        validMoves = 
+            [
+             ((winningMove piece card piecesA piecesB turn index),  -- Check if winning move
+              Move (piece, (calcMove piece card turn index), (getCardName card))) -- Move containing valid move
+              | piece <- pieces', -- Get a piece
+                card <- cards'',  -- Get a (cardString, cardMove) tuple
+                index <- [1..((length (cardMoves card))-1)], -- List of 0 to length of number of moves-1 from card
+                (not (errorInMove cards (Move (piece, (calcMove piece card turn index), (getCardName card))) piecesA piecesB turn)) -- Only add move to list if it is valid)
+            ] 
+
+-- Returns true if provided information gives a winning move
+winningMove :: (Int, Int) -> (String, [(Int, Int)]) -> [(Int, Int)] -> [(Int, Int)] -> Int -> Int -> Bool
+winningMove piece card piecesA piecesB turn index
+    | turn == 0 && (piece == head piecesA) && (calcMove piece card turn index) == (4,2) = True
+    | turn == 1 && (piece == head piecesB) && (calcMove piece card turn index) == (0,2) = True
+    | turn == 0 && (calcMove piece card turn index) == (head piecesB) = True
+    | turn == 1 && (calcMove piece card turn index) == (head piecesA) = True
+    | otherwise = False
+    where
+        moves = cardMoves card
+        cardMove = (moves !! index)
+
+-- A description has been written over the parameters:
+--             piece        entry of cards''     turn
+calcMove :: (Int, Int) -> (String, [(Int, Int)]) -> Int -> Int -> (Int, Int)
+calcMove (start0, start1) card turn index
+    | turn == 0 = ((start0+cardMove0), (start1+cardMove1))
+    | turn == 1 = ((start0-cardMove0), (start1-cardMove1))
+    where
+        moves = cardMoves card
+        (cardMove0, cardMove1) = (moves !! index)
+        
+
+-- Extract name of card from (cardName, cardMove) tuple
+getCardName :: (String, [(Int, Int)]) -> String
+getCardName (string, cardMoves) = string
+
+-- Gets all moves from a card
+cardMoves :: (String, [(Int, Int)]) -> [(Int, Int)]
+cardMoves (string, cardMovesList) = cardMovesList
+
+-- Makes a pseudorandom list of moves
+getMovesList :: State -> Int -> Int -> [Move]
+getMovesList (State (cards, piecesA, piecesB, turn)) seed n
+    = getMovesList' (State (cards, piecesA, piecesB, turn)) seed n []
+getMovesList' :: State -> Int -> Int -> [Move] -> [Move]
+getMovesList' state seed n foundMoves
+    | n == 0 = foundMoves
+    | null validMoves = foundMoves
+    | winningMove = (foundMoves++[randomMove])
+    | otherwise = getMovesList' newState (seed+1) (n-1) (foundMoves++[randomMove]) 
+    where
+        validMoves = allValidMoves state
+        nMoves = length validMoves
+        randomMoveTuple = (validMoves !! ((seed*seed*11*17) `mod` nMoves))
+        randomMove = extractMove randomMoveTuple
+        winningMove = extractWinning randomMoveTuple
+        newState = (applyMove state randomMove)
+
+-- Extracts move from (Bool, Move) tuple
+extractMove :: (Bool, Move) -> Move
+extractMove (bool, move) = move
+
+-- Extracts winning bool from (Bool, Move) tuple
+extractWinning :: (Bool, Move) -> Bool
+extractWinning (bool, move) = bool
 
 movesNumbers :: Int -> String -> IO (String)
-movesNumbers _ _ = return "Not yet implemented"
+movesNumbers n filePath = do
+    contents <- readFile filePath
+    let linesAsList = lines contents
+    let state = ("State " ++ (head linesAsList))
+    let maybeState = readMaybe state :: Maybe State
+    -- Getting maybe state
+    if (isNothing maybeState)
+    then return (show ("ParsingError", -1, -1, -1) )
+    -- Checking for empty moves list or invalid state
+    else if (errorInState (read state :: State) /= 0)
+    then return (show ("ParsingError", -1, -1, -1))
+    else return (show (movesNumberResult n (read state :: State)))
+
+movesNumberResult :: Int -> State -> (String, Int, Int, Int)
+movesNumberResult n (State (cards, piecesA, piecesB, turn))
+    | n == 0 = ("OK", 0, 0, 0)
+    | otherwise = result
+    where
+        state = (State (cards, piecesA, piecesB, turn))
+        startingPlayer = turn
+        allSequences = [(sequencesFromState state startingPlayer) | state <- findAllStates n state]
+        resultTuple = addUpSequences allSequences
+        (resTotal, resWinning, resLosing) = resultTuple
+        result = ("OK", resTotal, resWinning, resLosing)
+
+findAllStates :: Int -> State -> [State]
+findAllStates n state = findAllStates' n [state] [] 0
+findAllStates' :: Int -> [State] -> [State] -> Int -> [State]
+findAllStates' n foundStates currentDepth index
+    | n == 1 = foundStates
+    | index == (length foundStates) = findAllStates' (n-1) (foundStates++currentDepth) [] index
+    | otherwise = findAllStates' n foundStates (currentDepth++newStates) (index+1)
+    where
+        currentState = (foundStates !! index)
+        allCurrentMoves = allValidMoves currentState
+        newStates = [applyMove currentState (extractMove move) | move <- allCurrentMoves, not (extractWinning move)]
+
+sequencesFromState :: State -> Int -> (Int, Int, Int)
+sequencesFromState (State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
+    where
+        state = (State (cards, piecesA, piecesB, turn))
+        allMovesFromState = allValidMoves state
+        total = length allMovesFromState
+        winning = if (turn == startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
+        losing  = if (turn /= startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
+
+-- Function names says it all 
+addUpSequences :: [(Int, Int, Int)] -> (Int, Int, Int)
+addUpSequences allSequences = addUpSequences' allSequences initialResult
+    where
+        initialResult = (0, 0, 0)
+addUpSequences' :: [(Int, Int, Int)] -> (Int, Int, Int) -> (Int, Int, Int)
+addUpSequences' allSequences resultCount
+    | null allSequences = resultCount
+    | otherwise = addUpSequences' seqs intermediateResult
+    where
+        (seq:seqs) = allSequences
+        (seqTotal, seqWinning, seqLosing) = seq
+        (resTotal, resWinning, resLosing) = resultCount
+        intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing)) 
