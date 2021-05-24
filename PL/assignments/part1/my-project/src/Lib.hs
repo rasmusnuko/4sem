@@ -45,15 +45,12 @@ isValidAux state [] = removeFirstWord (show state)
 isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
     | (null piecesA || null piecesB) && not (null (move:moves)) = "NonValid " ++ removeFirstWord (show move)
     | errorInMove cards move piecesA piecesB turn = "NonValid " ++ removeFirstWord (show move)
-    | errorInState newState /= 0 = "NonValid " ++ removeFirstWord (show move)
     | otherwise = isValidAux newState moves
     where
-        state = (State (cards, piecesA, piecesB, turn))
         newState = applyMove (State (cards, piecesA, piecesB, turn)) move 
 
 -- Removes everything up to and including the first space
 removeFirstWord :: String -> String 
-removeFirstWord [] = []
 removeFirstWord (x:xs)
     | (x == ' ') = xs
     | otherwise = removeFirstWord xs
