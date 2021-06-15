@@ -261,7 +261,6 @@ getRandomCards seed = getRandomCards' seed []
 getRandomCards' :: Int -> [Int] -> [Int]
 getRandomCards' seed foundCards
     | (length foundCards) == 5 = foundCards
-    | newCard `elem` foundCards = getRandomCards' (seed+1) foundCards
     | otherwise = getRandomCards' (seed+1) (newCard:foundCards)
     where
         newCard = seed*(231) `mod` 16
@@ -346,14 +345,14 @@ cardMoves (string, cardMovesList) = cardMovesList
 
 -- Makes a pseudorandom list of moves
 getMovesList :: State -> Int -> Int -> [Move]
-getMovesList (State (cards, piecesA, piecesB, turn)) seed n
-    = getMovesList' (State (cards, piecesA, piecesB, turn)) seed n []
+getMovesList state seed n
+    = getMovesList' state seed n []
 getMovesList' :: State -> Int -> Int -> [Move] -> [Move]
 getMovesList' state seed n foundMoves
-    | n == 0 = foundMoves
+    | (length foundMoves) == n = foundMoves
     | null validMoves = foundMoves
     | winningMove = (foundMoves++[randomMove])
-    | otherwise = getMovesList' newState (seed+1) (n-1) (foundMoves++[randomMove]) 
+    | otherwise = getMovesList' newState (seed+1) n (foundMoves++[randomMove]) 
     where
         validMoves = allValidMoves state
         nMoves = length validMoves
@@ -371,63 +370,65 @@ extractWinning :: (Bool, Move) -> Bool
 extractWinning (bool, move) = bool
 
 movesNumbers :: Int -> String -> IO (String)
-movesNumbers n filePath = do
-    contents <- readFile filePath
-    let linesAsList = lines contents
-    let state = ("State " ++ (head linesAsList))
-    let maybeState = readMaybe state :: Maybe State
-    -- Getting maybe state
-    if (isNothing maybeState)
-    then return (show ("ParsingError", -1, -1, -1) )
-    -- Checking for empty moves list or invalid state
-    else if (errorInState (read state :: State) /= 0)
-    then return (show ("ParsingError", -1, -1, -1))
-    else return (show (movesNumberResult n (read state :: State)))
-
-movesNumberResult :: Int -> State -> (String, Int, Int, Int)
-movesNumberResult n (State (cards, piecesA, piecesB, turn))
-    | n == 0 = ("OK", 0, 0, 0)
-    | otherwise = result
-    where
-        state = (State (cards, piecesA, piecesB, turn))
-        startingPlayer = turn
-        allSequences = [(sequencesFromState state startingPlayer) | state <- findAllStates n state]
-        resultTuple = addUpSequences allSequences
-        (resTotal, resWinning, resLosing) = resultTuple
-        result = ("OK", resTotal, resWinning, resLosing)
-
-findAllStates :: Int -> State -> [State]
-findAllStates n state = findAllStates' n [state] [] 0
-findAllStates' :: Int -> [State] -> [State] -> Int -> [State]
-findAllStates' n foundStates currentDepth index
-    | n == 1 = foundStates
-    | index == (length foundStates) = findAllStates' (n-1) (foundStates++currentDepth) [] index
-    | otherwise = findAllStates' n foundStates (currentDepth++newStates) (index+1)
-    where
-        currentState = (foundStates !! index)
-        allCurrentMoves = allValidMoves currentState
-        newStates = [applyMove currentState (extractMove move) | move <- allCurrentMoves, not (extractWinning move)]
-
-sequencesFromState :: State -> Int -> (Int, Int, Int)
-sequencesFromState (State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
-    where
-        state = (State (cards, piecesA, piecesB, turn))
-        allMovesFromState = allValidMoves state
-        total = length allMovesFromState
-        winning = if (turn == startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
-        losing  = if (turn /= startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
-
--- Function names says it all 
-addUpSequences :: [(Int, Int, Int)] -> (Int, Int, Int)
-addUpSequences allSequences = addUpSequences' allSequences initialResult
-    where
-        initialResult = (0, 0, 0)
-addUpSequences' :: [(Int, Int, Int)] -> (Int, Int, Int) -> (Int, Int, Int)
-addUpSequences' allSequences resultCount
-    | null allSequences = resultCount
-    | otherwise = addUpSequences' seqs intermediateResult
-    where
-        (seq:seqs) = allSequences
-        (seqTotal, seqWinning, seqLosing) = seq
-        (resTotal, resWinning, resLosing) = resultCount
-        intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing)) 
+movesNumbers n string = do
+  return "Not functioning properly"
+--     contents <- readFile filePath
+--     let linesAsList = lines contents
+--     let state = ("State " ++ (head linesAsList))
+--     let maybeState = readMaybe state :: Maybe State
+--     -- Getting maybe state
+--     if (isNothing maybeState)
+--     then return (show ("ParsingError", -1, -1, -1) )
+--     -- Checking for empty moves list or invalid state
+--     else if (errorInState (read state :: State) /= 0)
+--     then return (show ("ParsingError", -1, -1, -1))
+--     else return (show (movesNumberResult n (read state :: State)))
+-- 
+-- movesNumberResult :: Int -> State -> (String, Int, Int, Int)
+-- movesNumberResult n (State (cards, piecesA, piecesB, turn))
+--     | n == 0 = ("OK", 0, 0, 0)
+--     | otherwise = result
+--     where
+--         state = (State (cards, piecesA, piecesB, turn))
+--         startingPlayer = turn
+--         allSequences = [(sequencesFromState state startingPlayer) | state <- findAllStates n state]
+--         resultTuple = addUpSequences allSequences
+--         (resTotal, resWinning, resLosing) = resultTuple
+--         result = ("OK", resTotal, resWinning, resLosing)
+-- 
+-- findAllStates :: Int -> State -> [State]
+-- findAllStates n state = findAllStates' n [state] [] 0
+-- findAllStates' :: Int -> [State] -> [State] -> Int -> [State]
+-- findAllStates' n foundStates currentDepth index
+--     | n == 1 = foundStates
+--     | index == (length foundStates) = findAllStates' (n-1) (foundStates++currentDepth) [] index
+--     | otherwise = findAllStates' n foundStates (currentDepth++newStates) (index+1)
+--     where
+--         currentState = (foundStates !! index)
+--         allCurrentMoves = allValidMoves currentState
+--         newStates = [applyMove currentState (extractMove move) | move <- allCurrentMoves, not (extractWinning move)]
+-- 
+-- sequencesFromState :: State -> Int -> (Int, Int, Int)
+-- sequencesFromState (State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
+--     where
+--         state = (State (cards, piecesA, piecesB, turn))
+--         allMovesFromState = allValidMoves state
+--         total = length allMovesFromState
+--         winning = if (turn == startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
+--         losing  = if (turn /= startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
+-- 
+-- -- Function names says it all 
+-- addUpSequences :: [(Int, Int, Int)] -> (Int, Int, Int)
+-- addUpSequences allSequences = addUpSequences' allSequences initialResult
+--     where
+--         initialResult = (0, 0, 0)
+-- addUpSequences' :: [(Int, Int, Int)] -> (Int, Int, Int) -> (Int, Int, Int)
+-- addUpSequences' allSequences resultCount
+--     | null allSequences = resultCount
+--     | otherwise = addUpSequences' seqs intermediateResult
+--     where
+--         (seq:seqs) = allSequences
+--         (seqTotal, seqWinning, seqLosing) = seq
+--         (resTotal, resWinning, resLosing) = resultCount
+--         intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing)) 
+-- 

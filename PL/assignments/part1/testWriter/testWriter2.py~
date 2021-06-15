@@ -1,0 +1,7 @@
+for i in range(10):
+  fileName = ("NUKO_SEED" + str(i))
+  f = open((fileName + ".in"), "w")   # .in file
+  output = "generateRandom "
+  output += str(i)
+  output += " 1000"
+  f.write(output)
