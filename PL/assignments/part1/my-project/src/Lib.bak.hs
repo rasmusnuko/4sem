@@ -398,14 +398,16 @@ movesNumberResult n (State (cards, piecesA, piecesB, turn))
         result = ("OK", resTotal, resWinning, resLosing)
 
 findAllStates :: Int -> State -> [State]
-findAllStates n state = findAllStates' n [state]
-findAllStates' :: Int -> [State] -> [State]
-findAllStates' n foundStates
+findAllStates n state = findAllStates' n [state] [] 0
+findAllStates' :: Int -> [State] -> [State] -> Int -> [State]
+findAllStates' n foundStates currentDepth index
     | n == 1 = foundStates
-    | otherwise = findAllStates' (n-1) ((foundStates !! 0):[ (applyMove state (extractMove move))
-                                                          | state <- foundStates,
-                                                            move <- allValidMoves state,
-                                                            not (extractWinning move)])
+    | index == (length foundStates) = findAllStates' (n-1) (foundStates++currentDepth) [] index
+    | otherwise = findAllStates' n foundStates (currentDepth++newStates) (index+1)
+    where
+        currentState = (foundStates !! index)
+        allCurrentMoves = allValidMoves currentState
+        newStates = [applyMove currentState (extractMove move) | move <- allCurrentMoves, not (extractWinning move)]
 
 sequencesFromState :: State -> Int -> (Int, Int, Int)
 sequencesFromState (State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
