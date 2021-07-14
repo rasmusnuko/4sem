@@ -134,7 +134,7 @@ getSecond (_,a) = a
 errorInState :: State -> Int
 errorInState (State (cards, piecesA, piecesB, turn))
     | errorInCards cards = 1
-    | piecesA /= (sortPieces piecesA) && piecesB /= (sortPieces piecesB) = 2
+    | piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = 2
     | (errorInPieces piecesA) || (errorInPieces piecesB) = 3
     | hasDuplicatePieces (piecesA++piecesB) = 4
     | (turn /= 0) && (turn /= 1) = 5
@@ -181,12 +181,12 @@ hasDuplicatePieces (x:xs)
 -- Checks if anything is fundamentally invalid in the move
 errorInMove :: [String] -> Move -> [(Int, Int)] -> [(Int, Int)] -> Int -> Bool
 errorInMove cards (Move (start, end, card)) piecesA piecesB turn
-    | (turn == 0) && not (elem card (take 2 cards)) = True
-    | (turn == 1) && not (elem card ([cards !! 2] ++ [cards !! 3])) = True
-    | (turn == 0) && not (elem start piecesA) = True
-    | (turn == 1) && not (elem start piecesB) = True
-    | (turn == 0) && (elem end piecesA) = True
-    | (turn == 1) && (elem end piecesB) = True
+    | (turn == 0) && not (card `elem` (take 2 cards)) = True
+    | (turn == 1) && not (card `elem` ([cards !! 2] ++ [cards !! 3])) = True
+    | (turn == 0) && not (start `elem` piecesA) = True
+    | (turn == 1) && not (start `elem` piecesB) = True
+    | (turn == 0) && (end `elem` piecesA) = True
+    | (turn == 1) && (end `elem` piecesB) = True
     | otherwise = errorInMove' start end (getLegalMoves card) turn
 
 -- Checks if the move is possible, given the start- and end position,
@@ -203,22 +203,22 @@ errorInMove' (start1, start2) (end1, end2) ((x1, x2):xs) turn
 -- empty list, if the String is not a card in the game
 getLegalMoves :: String -> [(Int, Int)]
 getLegalMoves card
-    | card == "Rabbit" = [(-1,-1), (1,1), (0,2)]
-    | card == "Cobra" = [(0,-1), (-1,1), (1,1)]
-    | card == "Rooster" = [(-1,-1), (0,-1), (0,1), (1,1)]
-    | card == "Tiger" = [(-1,0), (2, 0)]
-    | card == "Monkey" = [(-1,-1), (-1,1), (1,-1), (1,1)]
-    | card == "Crab" = [(0,-2), (1,0), (0,2)]
-    | card == "Crane" = [(-1,-1), (1,0), (-1,1)]
-    | card == "Frog" = [(0,-2), (1,-1), (-1,1)]
-    | card == "Boar" = [(0,-1), (0,1), (1,0)]
-    | card == "Horse" = [(-1,0), (0,-1), (1,0)]
+    | card == "Rabbit"   = [(-1,-1), (1,1), (0,2)]
+    | card == "Cobra"    = [(0,-1), (-1,1), (1,1)]
+    | card == "Rooster"  = [(-1,-1), (0,-1), (0,1), (1,1)]
+    | card == "Tiger"    = [(-1,0), (2, 0)]
+    | card == "Monkey"   = [(-1,-1), (-1,1), (1,-1), (1,1)]
+    | card == "Crab"     = [(0,-2), (1,0), (0,2)]
+    | card == "Crane"    = [(-1,-1), (1,0), (-1,1)]
+    | card == "Frog"     = [(0,-2), (1,-1), (-1,1)]
+    | card == "Boar"     = [(0,-1), (0,1), (1,0)]
+    | card == "Horse"    = [(-1,0), (0,-1), (1,0)]
     | card == "Elephant" = [(1,-1), (0,-1), (0,1), (1,1)]
-    | card == "Ox" = [(0,1), (-1,0), (1,0)]
-    | card == "Goose" = [(-1,1), (0,-1), (0,1), (1,-1)]
-    | card == "Dragon" = [(1,-2), (-1,-1), (-1,1), (1,2)]
-    | card == "Mantis" = [(1,-1), (-1,0), (1,1)]
-    | card == "Eel" = [(1,-1), (-1,-1), (0,1)]
+    | card == "Ox"       = [(0,1), (-1,0), (1,0)]
+    | card == "Goose"    = [(-1,1), (0,-1), (0,1), (1,-1)]
+    | card == "Dragon"   = [(1,-2), (-1,-1), (-1,1), (1,2)]
+    | card == "Mantis"   = [(1,-1), (-1,0), (1,1)]
+    | card == "Eel"      = [(1,-1), (-1,-1), (0,1)]
     | otherwise = []
 
 -- Gets cards names from a index
@@ -335,7 +335,7 @@ calcMove (start0, start1) card turn index
     where
         moves = cardMoves card
         (cardMove0, cardMove1) = (moves !! index)
-        
+
 
 -- Extract name of card from (cardName, cardMove) tuple
 getCardName :: (String, [(Int, Int)]) -> String
@@ -402,10 +402,11 @@ findAllStates n state = findAllStates' n [state]
 findAllStates' :: Int -> [State] -> [State]
 findAllStates' n foundStates
     | n == 1 = foundStates
-    | otherwise = findAllStates' (n-1) ((foundStates !! 0):[ (applyMove state (extractMove move))
-                                                          | state <- foundStates,
-                                                            move <- allValidMoves state,
-                                                            not (extractWinning move)])
+    | otherwise = findAllStates' (n-1) (firstState:[(applyMove state (extractMove move))
+                                                     | state <- foundStates,
+                                                       move <- allValidMoves state])
+    where
+        firstState = (foundStates !! 0)
 
 sequencesFromState :: State -> Int -> (Int, Int, Int)
 sequencesFromState (State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
@@ -429,5 +430,4 @@ addUpSequences' allSequences resultCount
         (seq:seqs) = allSequences
         (seqTotal, seqWinning, seqLosing) = seq
         (resTotal, resWinning, resLosing) = resultCount
-        intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing)) 
-
+        intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing))
