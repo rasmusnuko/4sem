@@ -305,8 +305,8 @@ allValidMoves :: State -> [(Bool, Move)]
 allValidMoves (State (cards, piecesA, piecesB, turn)) = validMoves
     where
         pieces' = if turn == 0 then piecesA else piecesB
-        cards' = [(card, getLegalMoves card) | card <- cards]
-        cards'' = if turn == 0 then (take 2 cards') else ([cards' !! 2] ++ [cards' !! 3])
+        cards' = if turn == 0 then (take 2 cards) else ([cards !! 2] ++ [cards !! 3])
+        cards'' = [(card, getLegalMoves card) | card <- cards']
         validMoves = 
             [
              ((winningMove piece card piecesA piecesB turn index),  -- Check if winning move
@@ -320,10 +320,10 @@ allValidMoves (State (cards, piecesA, piecesB, turn)) = validMoves
 -- Returns true if provided information gives a winning move
 winningMove :: (Int, Int) -> (String, [(Int, Int)]) -> [(Int, Int)] -> [(Int, Int)] -> Int -> Int -> Bool
 winningMove piece card piecesA piecesB turn index
-    | turn == 0 && (piece == head piecesA) && (calcMove piece card turn index) == (4,2) = True
-    | turn == 1 && (piece == head piecesB) && (calcMove piece card turn index) == (0,2) = True
-    | turn == 0 && (calcMove piece card turn index) == (head piecesB) = True
-    | turn == 1 && (calcMove piece card turn index) == (head piecesA) = True
+    | turn == 0 && (piece == head piecesA) && ((calcMove piece card turn index) == (4,2)) = True
+    | turn == 1 && (piece == head piecesB) && ((calcMove piece card turn index) == (0,2)) = True
+    | turn == 0 && ((calcMove piece card turn index) == (head piecesB)) = True
+    | turn == 1 && ((calcMove piece card turn index) == (head piecesA)) = True
     | otherwise = False
 
 -- A description has been written over the parameters:
@@ -335,7 +335,6 @@ calcMove (start0, start1) card turn index
     where
         moves = cardMoves card
         (cardMove0, cardMove1) = (moves !! index)
-
 
 -- Extract name of card from (cardName, cardMove) tuple
 getCardName :: (String, [(Int, Int)]) -> String
@@ -358,7 +357,7 @@ getMovesList' state gen n foundMoves
     where
         validMoves = allValidMoves state
         nMoves = length validMoves
-        (randomIndex, newGen) = randomR (0, nMoves) gen
+        (randomIndex, newGen) = randomR (0, (nMoves-1)) gen
         randomMoveTuple = (validMoves !! randomIndex)
         randomMove = extractMove randomMoveTuple
         winningMove = extractWinning randomMoveTuple
@@ -387,13 +386,12 @@ movesNumbers n filePath = do
     else return (show (movesNumberResult n (read state :: State)))
 
 movesNumberResult :: Int -> State -> (String, Int, Int, Int)
-movesNumberResult n (State (cards, piecesA, piecesB, turn))
+movesNumberResult n state@(State (cards, piecesA, piecesB, turn))
     | n == 0 = ("OK", 0, 0, 0)
     | otherwise = result
     where
-        state = (State (cards, piecesA, piecesB, turn))
         startingPlayer = turn
-        allSequences = [(sequencesFromState state startingPlayer) | state <- findAllStates n state]
+        allSequences = [(sequencesFromState allState startingPlayer) | allState <- findAllStates n state]
         (resTotal, resWinning, resLosing) = addUpSequences allSequences
         result = ("OK", resTotal, resWinning, resLosing)
 
@@ -409,9 +407,8 @@ findAllStates' n foundStates
         firstState = (foundStates !! 0)
 
 sequencesFromState :: State -> Int -> (Int, Int, Int)
-sequencesFromState (State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
+sequencesFromState state@(State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
     where
-        state = (State (cards, piecesA, piecesB, turn))
         allMovesFromState = allValidMoves state
         total = length allMovesFromState
         winning = if (turn == startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
