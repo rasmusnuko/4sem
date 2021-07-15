@@ -12,6 +12,7 @@ import Data.Maybe
 import Data.List
 import Text.Read
 
+-- State and Move data types
 data State = State ([String], [(Int, Int)], [(Int, Int)], Int) deriving (Show, Read)
 data Move = Move ((Int, Int), (Int,Int), String) deriving (Show, Read)
 
@@ -68,12 +69,12 @@ applyMove (State (cards, piecesA, piecesB, turn)) (Move (start, end, card))
 -- Swaps played card with the last card
 swapCards (x:xs) card
     | x == card = (last xs):(swapCards xs card)
-    | null xs = card:[]
+    | null xs = [card]
     | otherwise = x:(swapCards xs card)
 
 -- Sorts first and second, and third and fourth cards, lexicographically repectively
 sortCards :: [String] -> [String]
-sortCards cards = (sort(take 2 cards)) ++ (sort((cards !! 2):(cards !! 3):[])) ++ (last cards):[]
+sortCards cards = (sort(take 2 cards)) ++ (sort((cards !! 2):[cards !! 3])) ++ [last cards]
 
 -- Checks if any player has won
 applyPieces :: (Int, Int) -> (Int, Int) -> Int -> [(Int, Int)] -> [(Int, Int)] -> ([(Int, Int)], [(Int, Int)])
@@ -149,6 +150,7 @@ errorInCards cards
     | cards /= (sortCards cards) = True
     | otherwise = errorInCards' [getLegalMoves card | card <- cards]
 
+-- Returns true, if list contains duplicate cards
 duplicateCards :: [String] -> Bool
 duplicateCards [] = False
 duplicateCards (x:xs)
@@ -199,49 +201,7 @@ errorInMove' (start1, start2) (end1, end2) ((x1, x2):xs) turn
     | (turn == 1) && (start1 - x1 == end1) && (start2 - x2 == end2) = False
     | otherwise = errorInMove' (start1, start2) (end1, end2) xs turn
 
--- Gets legal moves associated with the cards in the game
--- empty list, if the String is not a card in the game
-getLegalMoves :: String -> [(Int, Int)]
-getLegalMoves card
-    | card == "Rabbit"   = [(-1,-1), (1,1), (0,2)]
-    | card == "Cobra"    = [(0,-1), (-1,1), (1,1)]
-    | card == "Rooster"  = [(-1,-1), (0,-1), (0,1), (1,1)]
-    | card == "Tiger"    = [(-1,0), (2, 0)]
-    | card == "Monkey"   = [(-1,-1), (-1,1), (1,-1), (1,1)]
-    | card == "Crab"     = [(0,-2), (1,0), (0,2)]
-    | card == "Crane"    = [(-1,-1), (1,0), (-1,1)]
-    | card == "Frog"     = [(0,-2), (1,-1), (-1,1)]
-    | card == "Boar"     = [(0,-1), (0,1), (1,0)]
-    | card == "Horse"    = [(-1,0), (0,-1), (1,0)]
-    | card == "Elephant" = [(1,-1), (0,-1), (0,1), (1,1)]
-    | card == "Ox"       = [(0,1), (-1,0), (1,0)]
-    | card == "Goose"    = [(-1,1), (0,-1), (0,1), (1,-1)]
-    | card == "Dragon"   = [(1,-2), (-1,-1), (-1,1), (1,2)]
-    | card == "Mantis"   = [(1,-1), (-1,0), (1,1)]
-    | card == "Eel"      = [(1,-1), (-1,-1), (0,1)]
-    | otherwise = []
-
--- Gets cards names from a index
--- empty string, if the index is not described  
-getCardNames :: Int -> String
-getCardNames index
-    | index == 0  = "Rabbit" 
-    | index == 1  = "Cobra" 
-    | index == 2  = "Rooster"
-    | index == 3  = "Tiger" 
-    | index == 4  = "Monkey" 
-    | index == 5  = "Crab" 
-    | index == 6  = "Crane" 
-    | index == 7  = "Frog" 
-    | index == 8  = "Boar" 
-    | index == 9  = "Horse" 
-    | index == 10 = "Elephant" 
-    | index == 11 = "Ox" 
-    | index == 12 = "Goose" 
-    | index == 13 = "Dragon" 
-    | index == 14 = "Mantis" 
-    | index == 15 = "Eel" 
-
+-- Generates a pseudo-random State & list of n moves, based on a seed
 generateRandom :: Int -> Int -> IO (String)
 generateRandom seed n = do
     let gen = mkStdGen seed
@@ -371,6 +331,7 @@ extractMove (bool, move) = move
 extractWinning :: (Bool, Move) -> Bool
 extractWinning (bool, move) = bool
 
+-- Calculates number of moves, aswell as winning / losing scenarios for the starting player
 movesNumbers :: Int -> String -> IO (String)
 movesNumbers n filePath = do
     contents <- readFile filePath
@@ -379,10 +340,10 @@ movesNumbers n filePath = do
     let maybeState = readMaybe state :: Maybe State
     -- Getting maybe state
     if (isNothing maybeState)
-    then return (show ("ParsingError", -1, -1, -1) )
+    then return (show ("ParsingError",-1,-1,-1) )
     -- Checking for empty moves list or invalid state
     else if (errorInState (read state :: State) /= 0)
-    then return (show ("ParsingError", -1, -1, -1))
+    then return (show ("ParsingError",-1,-1,-1))
     else return (show (movesNumberResult n (read state :: State)))
 
 movesNumberResult :: Int -> State -> (String, Int, Int, Int)
@@ -400,6 +361,7 @@ movesNumberResult n state@(State (cards, piecesA, piecesB, turn))
             else ((lastTotal+(winning+losing)), (lastWinning+losing), (lastLosing+winning))
         result = ("OK", total', winning', losing')
 
+-- Finds all states after n moves
 findAllStates :: Int -> State -> ([State], (Int, Int))
 findAllStates n state = findAllStates' n ([state], (0,0))
 findAllStates' :: Int -> ([State], (Int, Int)) -> ([State], (Int, Int))
@@ -417,8 +379,12 @@ findAllStates' n (foundStates, winningCount)
         newWinningCount = (player1, winningResult)
         
 
+-- Generates a tuple containing (total, winning, losing)-moves
+-- within one move from the given state
 sequencesFromState :: State -> Int -> (Int, Int, Int)
-sequencesFromState state@(State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
+sequencesFromState state@(State (cards, piecesA, piecesB, turn)) startingPlayer
+    | null allMovesFromState = (0,0,0)
+    | otherwise = (total, winning, losing)
     where
         allMovesFromState = allValidMoves state
         total = length allMovesFromState
@@ -439,3 +405,47 @@ addUpSequences' allSequences resultCount
         (seqTotal, seqWinning, seqLosing) = seq
         (resTotal, resWinning, resLosing) = resultCount
         intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing))
+
+-- Gets legal moves associated with the cards in the game
+-- empty list, if the String is not a card in the game
+getLegalMoves :: String -> [(Int, Int)]
+getLegalMoves card
+    | card == "Rabbit"   = [(-1,-1), (1,1), (0,2)]
+    | card == "Cobra"    = [(0,-1), (-1,1), (1,1)]
+    | card == "Rooster"  = [(-1,-1), (0,-1), (0,1), (1,1)]
+    | card == "Tiger"    = [(-1,0), (2, 0)]
+    | card == "Monkey"   = [(-1,-1), (-1,1), (1,-1), (1,1)]
+    | card == "Crab"     = [(0,-2), (1,0), (0,2)]
+    | card == "Crane"    = [(-1,-1), (1,0), (-1,1)]
+    | card == "Frog"     = [(0,-2), (1,-1), (-1,1)]
+    | card == "Boar"     = [(0,-1), (0,1), (1,0)]
+    | card == "Horse"    = [(-1,0), (0,-1), (1,0)]
+    | card == "Elephant" = [(1,-1), (0,-1), (0,1), (1,1)]
+    | card == "Ox"       = [(0,1), (-1,0), (1,0)]
+    | card == "Goose"    = [(-1,1), (0,-1), (0,1), (1,-1)]
+    | card == "Dragon"   = [(1,-2), (-1,-1), (-1,1), (1,2)]
+    | card == "Mantis"   = [(1,-1), (-1,0), (1,1)]
+    | card == "Eel"      = [(1,-1), (-1,-1), (0,1)]
+    | otherwise = []
+
+-- Gets cards names from a index
+-- empty string, if the index is not described  
+getCardNames :: Int -> String
+getCardNames index
+    | index == 0  = "Rabbit" 
+    | index == 1  = "Cobra" 
+    | index == 2  = "Rooster"
+    | index == 3  = "Tiger" 
+    | index == 4  = "Monkey" 
+    | index == 5  = "Crab" 
+    | index == 6  = "Crane" 
+    | index == 7  = "Frog" 
+    | index == 8  = "Boar" 
+    | index == 9  = "Horse" 
+    | index == 10 = "Elephant" 
+    | index == 11 = "Ox" 
+    | index == 12 = "Goose" 
+    | index == 13 = "Dragon" 
+    | index == 14 = "Mantis" 
+    | index == 15 = "Eel" 
+
