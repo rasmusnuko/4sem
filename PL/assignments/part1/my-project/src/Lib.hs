@@ -305,7 +305,7 @@ allValidMoves :: State -> [(Bool, Move)]
 allValidMoves (State (cards, piecesA, piecesB, turn)) = validMoves
     where
         pieces' = if turn == 0 then piecesA else piecesB
-        cards' = if turn == 0 then (take 2 cards) else ([cards' !! 2] ++ [cards !! 3])
+        cards' = if turn == 0 then (take 2 cards) else ([cards !! 2] ++ [cards !! 3])
         cards'' = [(card, getLegalMoves card) | card <- cards']
         validMoves = 
             [
