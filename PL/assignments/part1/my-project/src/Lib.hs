@@ -410,11 +410,11 @@ findAllStates' n (foundStates, winningCount)
                               applyMove state (extractMove move)
                               | state <- foundStates,
                                 move <- allValidMoves state
-                             ], newWinningCount)
+                              ], newWinningCount)
     where
-        winningResult = winning + (sum [1 | state <- foundStates, move <- allValidMoves state, (extractWinning move)])
-        (winning, losing) = winningCount
-        newWinningCount = (losing, winningResult)
+        (player0, player1) = winningCount
+        winningResult = player0 + (sum [1 | state <- foundStates, move <- allValidMoves state, (extractWinning move)])
+        newWinningCount = (player1, winningResult)
         
 
 sequencesFromState :: State -> Int -> (Int, Int, Int)
