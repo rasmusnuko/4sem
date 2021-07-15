@@ -144,9 +144,9 @@ errorInState (State (cards, piecesA, piecesB, turn))
 errorInCards :: [String] -> Bool
 errorInCards [] = True
 errorInCards cards
+    | length cards /= 5 = True
     | duplicateCards cards = True
     | cards /= (sortCards cards) = True
-    | length cards /= 5 = True
     | otherwise = errorInCards' [getLegalMoves card | card <- cards]
 
 duplicateCards :: [String] -> Bool
@@ -305,8 +305,8 @@ allValidMoves :: State -> [(Bool, Move)]
 allValidMoves (State (cards, piecesA, piecesB, turn)) = validMoves
     where
         pieces' = if turn == 0 then piecesA else piecesB
-        cards' = if turn == 0 then (take 2 cards) else ([cards' !! 2] ++ [cards !! 3])
-        cards'' = [(card, getLegalMoves card) | card <- cards]
+        cards' = if turn == 0 then (take 2 cards) else ([cards !! 2] ++ [cards !! 3])
+        cards'' = [(card, getLegalMoves card) | card <- cards']
         validMoves = 
             [
              ((winningMove piece card piecesA piecesB turn index),  -- Check if winning move
