@@ -391,21 +391,31 @@ movesNumberResult n state@(State (cards, piecesA, piecesB, turn))
     | otherwise = result
     where
         startingPlayer = turn
-        allSequences = [(sequencesFromState allState startingPlayer) | allState <- findAllStates n state]
-        (resTotal, resWinning, resLosing) = addUpSequences allSequences
-        result = ("OK", resTotal, resWinning, resLosing)
+        (lastStates, (winning, losing)) = findAllStates n state
+        lastSequences = [(sequencesFromState aState startingPlayer) | aState <- lastStates]
+        (lastTotal, lastWinning, lastLosing) = addUpSequences lastSequences
+        (total', winning', losing') = 
+            if n `mod` 2 == 1
+            then ((lastTotal+(winning+losing)), (lastWinning+winning), (lastLosing+losing))
+            else ((lastTotal+(winning+losing)), (lastWinning+losing), (lastLosing+winning))
+        result = ("OK", total', winning', losing')
 
-findAllStates :: Int -> State -> [State]
-findAllStates n state = findAllStates' n [state]
-findAllStates' :: Int -> [State] -> [State]
-findAllStates' n foundStates
-    | n == 1 = foundStates
-    | otherwise = findAllStates' (n-1) (firstState:[(applyMove state (extractMove move))
-                                                     | state <- foundStates,
-                                                       move <- allValidMoves state,
-                                                       not (extractWinning move)])
+findAllStates :: Int -> State -> ([State], (Int, Int))
+findAllStates n state = findAllStates' n ([state], (0,0))
+findAllStates' :: Int -> ([State], (Int, Int)) -> ([State], (Int, Int))
+findAllStates' n (foundStates, winningCount)
+    | n == 1 = (foundStates, winningCount)
+    | otherwise = 
+        findAllStates' (n-1) ([
+                              applyMove state (extractMove move)
+                              | state <- foundStates,
+                                move <- allValidMoves state
+                             ], newWinningCount)
     where
-        firstState = (foundStates !! 0)
+        winningResult = winning + (sum [1 | state <- foundStates, move <- allValidMoves state, (extractWinning move)])
+        (winning, losing) = winningCount
+        newWinningCount = (losing, winningResult)
+        
 
 sequencesFromState :: State -> Int -> (Int, Int, Int)
 sequencesFromState state@(State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)
