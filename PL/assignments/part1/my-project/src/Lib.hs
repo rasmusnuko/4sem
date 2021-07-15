@@ -305,15 +305,15 @@ allValidMoves :: State -> [(Bool, Move)]
 allValidMoves (State (cards, piecesA, piecesB, turn)) = validMoves
     where
         pieces' = if turn == 0 then piecesA else piecesB
-        cards' = if turn == 0 then (take 2 cards) else ([cards !! 2] ++ [cards !! 3])
-        cards'' = [(card, getLegalMoves card) | card <- cards']
+        cards' = if turn == 0 then (take 2 cards) else ([cards' !! 2] ++ [cards !! 3])
+        cards'' = [(card, getLegalMoves card) | card <- cards]
         validMoves = 
             [
              ((winningMove piece card piecesA piecesB turn index),  -- Check if winning move
               Move (piece, (calcMove piece card turn index), (getCardName card))) -- Move containing valid move
               | piece <- pieces', -- Get a piece
                 card <- cards'',  -- Get a (cardString, cardMove) tuple
-                index <- [1..((length (cardMoves card))-1)], -- List of 0 to length of number of moves-1 from card
+                index <- [0..((length (cardMoves card))-1)], -- List of 0 to length of number of moves-1 from card
                 (not (errorInMove cards (Move (piece, (calcMove piece card turn index), (getCardName card))) piecesA piecesB turn)) -- Only add move to list if it is valid)
             ] 
 
@@ -402,7 +402,8 @@ findAllStates' n foundStates
     | n == 1 = foundStates
     | otherwise = findAllStates' (n-1) (firstState:[(applyMove state (extractMove move))
                                                      | state <- foundStates,
-                                                       move <- allValidMoves state])
+                                                       move <- allValidMoves state,
+                                                       not (extractWinning move)])
     where
         firstState = (foundStates !! 0)
 
