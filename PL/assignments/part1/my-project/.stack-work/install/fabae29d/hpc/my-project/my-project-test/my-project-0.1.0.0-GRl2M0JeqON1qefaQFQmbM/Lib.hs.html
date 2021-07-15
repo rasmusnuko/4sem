@@ -155,7 +155,7 @@ span.spaces    { background: white }
 <span class="lineno">  136 </span><span class="spaces">    </span><span class="istickedoff">| errorInCards cards = 1</span>
 <span class="lineno">  137 </span><span class="spaces">    </span><span class="istickedoff">| piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = 2</span>
 <span class="lineno">  138 </span><span class="spaces">    </span><span class="istickedoff">| (errorInPieces piecesA) || (errorInPieces piecesB) = 3</span>
-<span class="lineno">  139 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">hasDuplicatePieces (piecesA++piecesB)</span> = <span class="nottickedoff">4</span></span>
+<span class="lineno">  139 </span><span class="spaces">    </span><span class="istickedoff">| hasDuplicatePieces (piecesA++piecesB) = 4</span>
 <span class="lineno">  140 </span><span class="spaces">    </span><span class="istickedoff">| (turn /= 0) &amp;&amp; (turn /= 1) = 5</span>
 <span class="lineno">  141 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = 0</span></span>
 <span class="lineno">  142 </span>
@@ -194,7 +194,7 @@ span.spaces    { background: white }
 <span class="lineno">  175 </span>hasDuplicatePieces :: [(Int, Int)] -&gt; Bool
 <span class="lineno">  176 </span><span class="decl"><span class="istickedoff">hasDuplicatePieces [] = False</span>
 <span class="lineno">  177 </span><span class="spaces"></span><span class="istickedoff">hasDuplicatePieces (x:xs)</span>
-<span class="lineno">  178 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">elem x xs</span> = <span class="nottickedoff">True</span></span>
+<span class="lineno">  178 </span><span class="spaces">    </span><span class="istickedoff">| elem x xs = True</span>
 <span class="lineno">  179 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = hasDuplicatePieces xs</span></span>
 <span class="lineno">  180 </span>
 <span class="lineno">  181 </span>-- Checks if anything is fundamentally invalid in the move
@@ -246,17 +246,17 @@ span.spaces    { background: white }
 <span class="lineno">  227 </span><span class="decl"><span class="istickedoff">getCardNames index</span>
 <span class="lineno">  228 </span><span class="spaces">    </span><span class="istickedoff">| index == 0  = &quot;Rabbit&quot; </span>
 <span class="lineno">  229 </span><span class="spaces">    </span><span class="istickedoff">| index == 1  = &quot;Cobra&quot; </span>
-<span class="lineno">  230 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">index == 2</span>  = <span class="nottickedoff">&quot;Rooster&quot;</span></span>
+<span class="lineno">  230 </span><span class="spaces">    </span><span class="istickedoff">| index == 2  = &quot;Rooster&quot;</span>
 <span class="lineno">  231 </span><span class="spaces">    </span><span class="istickedoff">| index == 3  = &quot;Tiger&quot; </span>
-<span class="lineno">  232 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">index == 4</span>  = <span class="nottickedoff">&quot;Monkey&quot;</span> </span>
-<span class="lineno">  233 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">index == 5</span>  = <span class="nottickedoff">&quot;Crab&quot;</span> </span>
-<span class="lineno">  234 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">index == 6</span>  = <span class="nottickedoff">&quot;Crane&quot;</span> </span>
+<span class="lineno">  232 </span><span class="spaces">    </span><span class="istickedoff">| index == 4  = &quot;Monkey&quot; </span>
+<span class="lineno">  233 </span><span class="spaces">    </span><span class="istickedoff">| index == 5  = &quot;Crab&quot; </span>
+<span class="lineno">  234 </span><span class="spaces">    </span><span class="istickedoff">| index == 6  = &quot;Crane&quot; </span>
 <span class="lineno">  235 </span><span class="spaces">    </span><span class="istickedoff">| index == 7  = &quot;Frog&quot; </span>
 <span class="lineno">  236 </span><span class="spaces">    </span><span class="istickedoff">| index == 8  = &quot;Boar&quot; </span>
-<span class="lineno">  237 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">index == 9</span>  = <span class="nottickedoff">&quot;Horse&quot;</span> </span>
+<span class="lineno">  237 </span><span class="spaces">    </span><span class="istickedoff">| index == 9  = &quot;Horse&quot; </span>
 <span class="lineno">  238 </span><span class="spaces">    </span><span class="istickedoff">| index == 10 = &quot;Elephant&quot; </span>
 <span class="lineno">  239 </span><span class="spaces">    </span><span class="istickedoff">| index == 11 = &quot;Ox&quot; </span>
-<span class="lineno">  240 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">index == 12</span> = <span class="nottickedoff">&quot;Goose&quot;</span> </span>
+<span class="lineno">  240 </span><span class="spaces">    </span><span class="istickedoff">| index == 12 = &quot;Goose&quot; </span>
 <span class="lineno">  241 </span><span class="spaces">    </span><span class="istickedoff">| index == 13 = &quot;Dragon&quot; </span>
 <span class="lineno">  242 </span><span class="spaces">    </span><span class="istickedoff">| index == 14 = &quot;Mantis&quot; </span>
 <span class="lineno">  243 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">index == 15</span> = &quot;Eel&quot;</span></span> 
@@ -304,8 +304,8 @@ span.spaces    { background: white }
 <span class="lineno">  285 </span>removeDuplicates :: [(Int, Int)] -&gt; [(Int, Int)] -&gt; [(Int, Int)] -&gt; [(Int, Int)] -&gt; ([(Int, Int)], [(Int, Int)])
 <span class="lineno">  286 </span><span class="decl"><span class="istickedoff">removeDuplicates [] _ acceptedPiecesA acceptedPiecesB = (acceptedPiecesA, acceptedPiecesB)</span>
 <span class="lineno">  287 </span><span class="spaces"></span><span class="istickedoff">removeDuplicates piecesA piecesB acceptedPiecesA acceptedPiecesB</span>
-<span class="lineno">  288 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">x `elem` (y:ys)</span> = <span class="nottickedoff">removeDuplicates xs ys acceptedPiecesA (y:acceptedPiecesB)</span></span>
-<span class="lineno">  289 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">y `elem` (x:xs)</span> = <span class="nottickedoff">removeDuplicates xs ys (x:acceptedPiecesA) acceptedPiecesB</span></span>
+<span class="lineno">  288 </span><span class="spaces">    </span><span class="istickedoff">| x `elem` (y:ys) = removeDuplicates xs ys acceptedPiecesA (y:acceptedPiecesB)</span>
+<span class="lineno">  289 </span><span class="spaces">    </span><span class="istickedoff">| y `elem` (x:xs) = removeDuplicates xs ys (x:acceptedPiecesA) acceptedPiecesB</span>
 <span class="lineno">  290 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = removeDuplicates xs ys (x:acceptedPiecesA) (y:acceptedPiecesB)</span>
 <span class="lineno">  291 </span><span class="spaces">    </span><span class="istickedoff">where</span>
 <span class="lineno">  292 </span><span class="spaces">        </span><span class="istickedoff">(x:xs) = piecesA</span>
@@ -324,25 +324,25 @@ span.spaces    { background: white }
 <span class="lineno">  305 </span><span class="decl"><span class="istickedoff">allValidMoves (State (cards, piecesA, piecesB, turn)) = validMoves</span>
 <span class="lineno">  306 </span><span class="spaces">    </span><span class="istickedoff">where</span>
 <span class="lineno">  307 </span><span class="spaces">        </span><span class="istickedoff">pieces' = if turn == 0 then piecesA else piecesB</span>
-<span class="lineno">  308 </span><span class="spaces">        </span><span class="istickedoff">cards' = [(card, getLegalMoves card) | card &lt;- cards]</span>
-<span class="lineno">  309 </span><span class="spaces">        </span><span class="istickedoff">cards'' = if turn == 0 then (take 2 cards') else ([cards' !! 2] ++ [cards' !! 3])</span>
+<span class="lineno">  308 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">cards' = if turn == 0 then (take 2 cards) else ([cards' !! 2] ++ [cards !! 3])</span></span>
+<span class="lineno">  309 </span><span class="spaces">        </span><span class="istickedoff">cards'' = [(card, getLegalMoves card) | card &lt;- cards]</span>
 <span class="lineno">  310 </span><span class="spaces">        </span><span class="istickedoff">validMoves = </span>
 <span class="lineno">  311 </span><span class="spaces">            </span><span class="istickedoff">[</span>
 <span class="lineno">  312 </span><span class="spaces">             </span><span class="istickedoff">((winningMove piece card piecesA piecesB turn index),  -- Check if winning move</span>
 <span class="lineno">  313 </span><span class="spaces">              </span><span class="istickedoff">Move (piece, (calcMove piece card turn index), (getCardName card))) -- Move containing valid move</span>
 <span class="lineno">  314 </span><span class="spaces">              </span><span class="istickedoff">| piece &lt;- pieces', -- Get a piece</span>
 <span class="lineno">  315 </span><span class="spaces">                </span><span class="istickedoff">card &lt;- cards'',  -- Get a (cardString, cardMove) tuple</span>
-<span class="lineno">  316 </span><span class="spaces">                </span><span class="istickedoff">index &lt;- [1..((length (cardMoves card))-1)], -- List of 0 to length of number of moves-1 from card</span>
+<span class="lineno">  316 </span><span class="spaces">                </span><span class="istickedoff">index &lt;- [0..((length (cardMoves card))-1)], -- List of 0 to length of number of moves-1 from card</span>
 <span class="lineno">  317 </span><span class="spaces">                </span><span class="istickedoff">(not (errorInMove cards (Move (piece, (calcMove piece card turn index), (getCardName card))) piecesA piecesB turn)) -- Only add move to list if it is valid)</span>
 <span class="lineno">  318 </span><span class="spaces">            </span><span class="istickedoff">]</span></span> 
 <span class="lineno">  319 </span>
 <span class="lineno">  320 </span>-- Returns true if provided information gives a winning move
 <span class="lineno">  321 </span>winningMove :: (Int, Int) -&gt; (String, [(Int, Int)]) -&gt; [(Int, Int)] -&gt; [(Int, Int)] -&gt; Int -&gt; Int -&gt; Bool
 <span class="lineno">  322 </span><span class="decl"><span class="istickedoff">winningMove piece card piecesA piecesB turn index</span>
-<span class="lineno">  323 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">turn == 0 &amp;&amp; (piece == head piecesA) &amp;&amp; <span class="nottickedoff">(calcMove piece card turn index) == (4,2)</span></span> = <span class="nottickedoff">True</span></span>
-<span class="lineno">  324 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">turn == 1 &amp;&amp; (piece == head piecesB) &amp;&amp; (calcMove piece card turn index) == (0,<span class="nottickedoff">2</span>)</span> = <span class="nottickedoff">True</span></span>
-<span class="lineno">  325 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">turn == 0 &amp;&amp; (calcMove piece card turn index) == (head piecesB)</span> = <span class="nottickedoff">True</span></span>
-<span class="lineno">  326 </span><span class="spaces">    </span><span class="istickedoff">| turn == 1 &amp;&amp; (calcMove piece card turn index) == (head piecesA) = True</span>
+<span class="lineno">  323 </span><span class="spaces">    </span><span class="istickedoff">| turn == 0 &amp;&amp; (piece == head piecesA) &amp;&amp; ((calcMove piece card turn index) == (4,2)) = True</span>
+<span class="lineno">  324 </span><span class="spaces">    </span><span class="istickedoff">| turn == 1 &amp;&amp; (piece == head piecesB) &amp;&amp; ((calcMove piece card turn index) == (0,2)) = True</span>
+<span class="lineno">  325 </span><span class="spaces">    </span><span class="istickedoff">| turn == 0 &amp;&amp; ((calcMove piece card turn index) == (head piecesB)) = True</span>
+<span class="lineno">  326 </span><span class="spaces">    </span><span class="istickedoff">| turn == 1 &amp;&amp; ((calcMove piece card turn index) == (head piecesA)) = True</span>
 <span class="lineno">  327 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = False</span></span>
 <span class="lineno">  328 </span>
 <span class="lineno">  329 </span>-- A description has been written over the parameters:
@@ -355,101 +355,109 @@ span.spaces    { background: white }
 <span class="lineno">  336 </span><span class="spaces">        </span><span class="istickedoff">moves = cardMoves card</span>
 <span class="lineno">  337 </span><span class="spaces">        </span><span class="istickedoff">(cardMove0, cardMove1) = (moves !! index)</span></span>
 <span class="lineno">  338 </span>
-<span class="lineno">  339 </span>
-<span class="lineno">  340 </span>-- Extract name of card from (cardName, cardMove) tuple
-<span class="lineno">  341 </span>getCardName :: (String, [(Int, Int)]) -&gt; String
-<span class="lineno">  342 </span><span class="decl"><span class="istickedoff">getCardName (string, cardMoves) = string</span></span>
-<span class="lineno">  343 </span>
-<span class="lineno">  344 </span>-- Gets all moves from a card
-<span class="lineno">  345 </span>cardMoves :: (String, [(Int, Int)]) -&gt; [(Int, Int)]
-<span class="lineno">  346 </span><span class="decl"><span class="istickedoff">cardMoves (string, cardMovesList) = cardMovesList</span></span>
-<span class="lineno">  347 </span>
-<span class="lineno">  348 </span>-- Makes a pseudorandom list of moves
-<span class="lineno">  349 </span>getMovesList :: State -&gt; StdGen -&gt; Int -&gt; [Move]
-<span class="lineno">  350 </span><span class="decl"><span class="istickedoff">getMovesList state gen n</span>
-<span class="lineno">  351 </span><span class="spaces">    </span><span class="istickedoff">= getMovesList' state gen n []</span></span>
-<span class="lineno">  352 </span>getMovesList' :: State -&gt; StdGen -&gt; Int -&gt; [Move] -&gt; [Move]
-<span class="lineno">  353 </span><span class="decl"><span class="istickedoff">getMovesList' state gen n foundMoves</span>
-<span class="lineno">  354 </span><span class="spaces">    </span><span class="istickedoff">| (length foundMoves) == n = foundMoves</span>
-<span class="lineno">  355 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">null validMoves</span> = <span class="nottickedoff">foundMoves</span></span>
-<span class="lineno">  356 </span><span class="spaces">    </span><span class="istickedoff">| winningMove = (foundMoves++[randomMove])</span>
-<span class="lineno">  357 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = getMovesList' newState newGen n (foundMoves++[randomMove]) </span>
-<span class="lineno">  358 </span><span class="spaces">    </span><span class="istickedoff">where</span>
-<span class="lineno">  359 </span><span class="spaces">        </span><span class="istickedoff">validMoves = allValidMoves state</span>
-<span class="lineno">  360 </span><span class="spaces">        </span><span class="istickedoff">nMoves = length validMoves</span>
-<span class="lineno">  361 </span><span class="spaces">        </span><span class="istickedoff">(randomIndex, newGen) = randomR (0, nMoves) gen</span>
-<span class="lineno">  362 </span><span class="spaces">        </span><span class="istickedoff">randomMoveTuple = (validMoves !! randomIndex)</span>
-<span class="lineno">  363 </span><span class="spaces">        </span><span class="istickedoff">randomMove = extractMove randomMoveTuple</span>
-<span class="lineno">  364 </span><span class="spaces">        </span><span class="istickedoff">winningMove = extractWinning randomMoveTuple</span>
-<span class="lineno">  365 </span><span class="spaces">        </span><span class="istickedoff">newState = (applyMove state randomMove)</span></span>
-<span class="lineno">  366 </span>
-<span class="lineno">  367 </span>-- Extracts move from (Bool, Move) tuple
-<span class="lineno">  368 </span>extractMove :: (Bool, Move) -&gt; Move
-<span class="lineno">  369 </span><span class="decl"><span class="istickedoff">extractMove (bool, move) = move</span></span>
-<span class="lineno">  370 </span>
-<span class="lineno">  371 </span>-- Extracts winning bool from (Bool, Move) tuple
-<span class="lineno">  372 </span>extractWinning :: (Bool, Move) -&gt; Bool
-<span class="lineno">  373 </span><span class="decl"><span class="istickedoff">extractWinning (bool, move) = bool</span></span>
-<span class="lineno">  374 </span>
-<span class="lineno">  375 </span>movesNumbers :: Int -&gt; String -&gt; IO (String)
-<span class="lineno">  376 </span><span class="decl"><span class="nottickedoff">movesNumbers n filePath = do</span>
-<span class="lineno">  377 </span><span class="spaces">    </span><span class="nottickedoff">contents &lt;- readFile filePath</span>
-<span class="lineno">  378 </span><span class="spaces">    </span><span class="nottickedoff">let linesAsList = lines contents</span>
-<span class="lineno">  379 </span><span class="spaces">    </span><span class="nottickedoff">let state = (&quot;State &quot; ++ (head linesAsList))</span>
-<span class="lineno">  380 </span><span class="spaces">    </span><span class="nottickedoff">let maybeState = readMaybe state :: Maybe State</span>
-<span class="lineno">  381 </span><span class="spaces">    </span><span class="nottickedoff">-- Getting maybe state</span>
-<span class="lineno">  382 </span><span class="spaces">    </span><span class="nottickedoff">if (isNothing maybeState)</span>
-<span class="lineno">  383 </span><span class="spaces">    </span><span class="nottickedoff">then return (show (&quot;ParsingError&quot;, -1, -1, -1) )</span>
-<span class="lineno">  384 </span><span class="spaces">    </span><span class="nottickedoff">-- Checking for empty moves list or invalid state</span>
-<span class="lineno">  385 </span><span class="spaces">    </span><span class="nottickedoff">else if (errorInState (read state :: State) /= 0)</span>
-<span class="lineno">  386 </span><span class="spaces">    </span><span class="nottickedoff">then return (show (&quot;ParsingError&quot;, -1, -1, -1))</span>
-<span class="lineno">  387 </span><span class="spaces">    </span><span class="nottickedoff">else return (show (movesNumberResult n (read state :: State)))</span></span>
-<span class="lineno">  388 </span>
-<span class="lineno">  389 </span>movesNumberResult :: Int -&gt; State -&gt; (String, Int, Int, Int)
-<span class="lineno">  390 </span><span class="decl"><span class="nottickedoff">movesNumberResult n (State (cards, piecesA, piecesB, turn))</span>
-<span class="lineno">  391 </span><span class="spaces">    </span><span class="nottickedoff">| n == 0 = (&quot;OK&quot;, 0, 0, 0)</span>
-<span class="lineno">  392 </span><span class="spaces">    </span><span class="nottickedoff">| otherwise = result</span>
-<span class="lineno">  393 </span><span class="spaces">    </span><span class="nottickedoff">where</span>
-<span class="lineno">  394 </span><span class="spaces">        </span><span class="nottickedoff">state = (State (cards, piecesA, piecesB, turn))</span>
-<span class="lineno">  395 </span><span class="spaces">        </span><span class="nottickedoff">startingPlayer = turn</span>
-<span class="lineno">  396 </span><span class="spaces">        </span><span class="nottickedoff">allSequences = [(sequencesFromState state startingPlayer) | state &lt;- findAllStates n state]</span>
-<span class="lineno">  397 </span><span class="spaces">        </span><span class="nottickedoff">(resTotal, resWinning, resLosing) = addUpSequences allSequences</span>
-<span class="lineno">  398 </span><span class="spaces">        </span><span class="nottickedoff">result = (&quot;OK&quot;, resTotal, resWinning, resLosing)</span></span>
-<span class="lineno">  399 </span>
-<span class="lineno">  400 </span>findAllStates :: Int -&gt; State -&gt; [State]
-<span class="lineno">  401 </span><span class="decl"><span class="nottickedoff">findAllStates n state = findAllStates' n [state]</span></span>
-<span class="lineno">  402 </span>findAllStates' :: Int -&gt; [State] -&gt; [State]
-<span class="lineno">  403 </span><span class="decl"><span class="nottickedoff">findAllStates' n foundStates</span>
-<span class="lineno">  404 </span><span class="spaces">    </span><span class="nottickedoff">| n == 1 = foundStates</span>
-<span class="lineno">  405 </span><span class="spaces">    </span><span class="nottickedoff">| otherwise = findAllStates' (n-1) (firstState:[(applyMove state (extractMove move))</span>
-<span class="lineno">  406 </span><span class="spaces">                                                     </span><span class="nottickedoff">| state &lt;- foundStates,</span>
-<span class="lineno">  407 </span><span class="spaces">                                                       </span><span class="nottickedoff">move &lt;- allValidMoves state])</span>
-<span class="lineno">  408 </span><span class="spaces">    </span><span class="nottickedoff">where</span>
-<span class="lineno">  409 </span><span class="spaces">        </span><span class="nottickedoff">firstState = (foundStates !! 0)</span></span>
-<span class="lineno">  410 </span>
-<span class="lineno">  411 </span>sequencesFromState :: State -&gt; Int -&gt; (Int, Int, Int)
-<span class="lineno">  412 </span><span class="decl"><span class="nottickedoff">sequencesFromState (State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)</span>
-<span class="lineno">  413 </span><span class="spaces">    </span><span class="nottickedoff">where</span>
-<span class="lineno">  414 </span><span class="spaces">        </span><span class="nottickedoff">state = (State (cards, piecesA, piecesB, turn))</span>
-<span class="lineno">  415 </span><span class="spaces">        </span><span class="nottickedoff">allMovesFromState = allValidMoves state</span>
-<span class="lineno">  416 </span><span class="spaces">        </span><span class="nottickedoff">total = length allMovesFromState</span>
-<span class="lineno">  417 </span><span class="spaces">        </span><span class="nottickedoff">winning = if (turn == startingPlayer) then sum [1 | move &lt;- allMovesFromState, extractWinning move] else 0</span>
-<span class="lineno">  418 </span><span class="spaces">        </span><span class="nottickedoff">losing  = if (turn /= startingPlayer) then sum [1 | move &lt;- allMovesFromState, extractWinning move] else 0</span></span>
+<span class="lineno">  339 </span>-- Extract name of card from (cardName, cardMove) tuple
+<span class="lineno">  340 </span>getCardName :: (String, [(Int, Int)]) -&gt; String
+<span class="lineno">  341 </span><span class="decl"><span class="istickedoff">getCardName (string, cardMoves) = string</span></span>
+<span class="lineno">  342 </span>
+<span class="lineno">  343 </span>-- Gets all moves from a card
+<span class="lineno">  344 </span>cardMoves :: (String, [(Int, Int)]) -&gt; [(Int, Int)]
+<span class="lineno">  345 </span><span class="decl"><span class="istickedoff">cardMoves (string, cardMovesList) = cardMovesList</span></span>
+<span class="lineno">  346 </span>
+<span class="lineno">  347 </span>-- Makes a pseudorandom list of moves
+<span class="lineno">  348 </span>getMovesList :: State -&gt; StdGen -&gt; Int -&gt; [Move]
+<span class="lineno">  349 </span><span class="decl"><span class="istickedoff">getMovesList state gen n</span>
+<span class="lineno">  350 </span><span class="spaces">    </span><span class="istickedoff">= getMovesList' state gen n []</span></span>
+<span class="lineno">  351 </span>getMovesList' :: State -&gt; StdGen -&gt; Int -&gt; [Move] -&gt; [Move]
+<span class="lineno">  352 </span><span class="decl"><span class="istickedoff">getMovesList' state gen n foundMoves</span>
+<span class="lineno">  353 </span><span class="spaces">    </span><span class="istickedoff">| (length foundMoves) == n = foundMoves</span>
+<span class="lineno">  354 </span><span class="spaces">    </span><span class="istickedoff">| null validMoves = foundMoves</span>
+<span class="lineno">  355 </span><span class="spaces">    </span><span class="istickedoff">| winningMove = (foundMoves++[randomMove])</span>
+<span class="lineno">  356 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = getMovesList' newState newGen n (foundMoves++[randomMove]) </span>
+<span class="lineno">  357 </span><span class="spaces">    </span><span class="istickedoff">where</span>
+<span class="lineno">  358 </span><span class="spaces">        </span><span class="istickedoff">validMoves = allValidMoves state</span>
+<span class="lineno">  359 </span><span class="spaces">        </span><span class="istickedoff">nMoves = length validMoves</span>
+<span class="lineno">  360 </span><span class="spaces">        </span><span class="istickedoff">(randomIndex, newGen) = randomR (0, (nMoves-1)) gen</span>
+<span class="lineno">  361 </span><span class="spaces">        </span><span class="istickedoff">randomMoveTuple = (validMoves !! randomIndex)</span>
+<span class="lineno">  362 </span><span class="spaces">        </span><span class="istickedoff">randomMove = extractMove randomMoveTuple</span>
+<span class="lineno">  363 </span><span class="spaces">        </span><span class="istickedoff">winningMove = extractWinning randomMoveTuple</span>
+<span class="lineno">  364 </span><span class="spaces">        </span><span class="istickedoff">newState = (applyMove state randomMove)</span></span>
+<span class="lineno">  365 </span>
+<span class="lineno">  366 </span>-- Extracts move from (Bool, Move) tuple
+<span class="lineno">  367 </span>extractMove :: (Bool, Move) -&gt; Move
+<span class="lineno">  368 </span><span class="decl"><span class="istickedoff">extractMove (bool, move) = move</span></span>
+<span class="lineno">  369 </span>
+<span class="lineno">  370 </span>-- Extracts winning bool from (Bool, Move) tuple
+<span class="lineno">  371 </span>extractWinning :: (Bool, Move) -&gt; Bool
+<span class="lineno">  372 </span><span class="decl"><span class="istickedoff">extractWinning (bool, move) = bool</span></span>
+<span class="lineno">  373 </span>
+<span class="lineno">  374 </span>movesNumbers :: Int -&gt; String -&gt; IO (String)
+<span class="lineno">  375 </span><span class="decl"><span class="istickedoff">movesNumbers n filePath = do</span>
+<span class="lineno">  376 </span><span class="spaces">    </span><span class="istickedoff">contents &lt;- readFile filePath</span>
+<span class="lineno">  377 </span><span class="spaces">    </span><span class="istickedoff">let linesAsList = lines contents</span>
+<span class="lineno">  378 </span><span class="spaces">    </span><span class="istickedoff">let state = (&quot;State &quot; ++ (head linesAsList))</span>
+<span class="lineno">  379 </span><span class="spaces">    </span><span class="istickedoff">let maybeState = readMaybe state :: Maybe State</span>
+<span class="lineno">  380 </span><span class="spaces">    </span><span class="istickedoff">-- Getting maybe state</span>
+<span class="lineno">  381 </span><span class="spaces">    </span><span class="istickedoff">if <span class="tickonlyfalse">(isNothing maybeState)</span></span>
+<span class="lineno">  382 </span><span class="spaces">    </span><span class="istickedoff">then <span class="nottickedoff">return (show (&quot;ParsingError&quot;, -1, -1, -1) )</span></span>
+<span class="lineno">  383 </span><span class="spaces">    </span><span class="istickedoff">-- Checking for empty moves list or invalid state</span>
+<span class="lineno">  384 </span><span class="spaces">    </span><span class="istickedoff">else if <span class="tickonlyfalse">(errorInState (read state :: State) /= 0)</span></span>
+<span class="lineno">  385 </span><span class="spaces">    </span><span class="istickedoff">then <span class="nottickedoff">return (show (&quot;ParsingError&quot;, -1, -1, -1))</span></span>
+<span class="lineno">  386 </span><span class="spaces">    </span><span class="istickedoff">else return (show (movesNumberResult n (read state :: State)))</span></span>
+<span class="lineno">  387 </span>
+<span class="lineno">  388 </span>movesNumberResult :: Int -&gt; State -&gt; (String, Int, Int, Int)
+<span class="lineno">  389 </span><span class="decl"><span class="istickedoff">movesNumberResult n state@(State (cards, piecesA, piecesB, turn))</span>
+<span class="lineno">  390 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlyfalse">n == 0</span> = <span class="nottickedoff">(&quot;OK&quot;, 0, 0, 0)</span></span>
+<span class="lineno">  391 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = result</span>
+<span class="lineno">  392 </span><span class="spaces">    </span><span class="istickedoff">where</span>
+<span class="lineno">  393 </span><span class="spaces">        </span><span class="istickedoff">startingPlayer = turn</span>
+<span class="lineno">  394 </span><span class="spaces">        </span><span class="istickedoff">(lastStates, (winning, losing)) = findAllStates n state</span>
+<span class="lineno">  395 </span><span class="spaces">        </span><span class="istickedoff">lastSequences = [(sequencesFromState aState startingPlayer) | aState &lt;- lastStates]</span>
+<span class="lineno">  396 </span><span class="spaces">        </span><span class="istickedoff">(lastTotal, lastWinning, lastLosing) = addUpSequences lastSequences</span>
+<span class="lineno">  397 </span><span class="spaces">        </span><span class="istickedoff">(total', winning', losing') = </span>
+<span class="lineno">  398 </span><span class="spaces">            </span><span class="istickedoff">if <span class="tickonlytrue">n `mod` 2 == 1</span></span>
+<span class="lineno">  399 </span><span class="spaces">            </span><span class="istickedoff">then ((lastTotal+(winning+losing)), (lastWinning+winning), (lastLosing+losing))</span>
+<span class="lineno">  400 </span><span class="spaces">            </span><span class="istickedoff">else <span class="nottickedoff">((lastTotal+(winning+losing)), (lastWinning+losing), (lastLosing+winning))</span></span>
+<span class="lineno">  401 </span><span class="spaces">        </span><span class="istickedoff">result = (&quot;OK&quot;, total', winning', losing')</span></span>
+<span class="lineno">  402 </span>
+<span class="lineno">  403 </span>findAllStates :: Int -&gt; State -&gt; ([State], (Int, Int))
+<span class="lineno">  404 </span><span class="decl"><span class="istickedoff">findAllStates n state = findAllStates' n ([state], (0,0))</span></span>
+<span class="lineno">  405 </span>findAllStates' :: Int -&gt; ([State], (Int, Int)) -&gt; ([State], (Int, Int))
+<span class="lineno">  406 </span><span class="decl"><span class="istickedoff">findAllStates' n (foundStates, winningCount)</span>
+<span class="lineno">  407 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">n == 1</span> = (foundStates, winningCount)</span>
+<span class="lineno">  408 </span><span class="spaces">    </span><span class="istickedoff">| <span class="nottickedoff">otherwise</span> = </span>
+<span class="lineno">  409 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">findAllStates' (n-1) ([</span></span>
+<span class="lineno">  410 </span><span class="spaces">                              </span><span class="istickedoff"><span class="nottickedoff">applyMove state (extractMove move)</span></span>
+<span class="lineno">  411 </span><span class="spaces">                              </span><span class="istickedoff"><span class="nottickedoff">| state &lt;- foundStates,</span></span>
+<span class="lineno">  412 </span><span class="spaces">                                </span><span class="istickedoff"><span class="nottickedoff">move &lt;- allValidMoves state</span></span>
+<span class="lineno">  413 </span><span class="spaces">                              </span><span class="istickedoff"><span class="nottickedoff">], newWinningCount)</span></span>
+<span class="lineno">  414 </span><span class="spaces">    </span><span class="istickedoff">where</span>
+<span class="lineno">  415 </span><span class="spaces">        </span><span class="istickedoff">(player0, player1) = <span class="nottickedoff">winningCount</span></span>
+<span class="lineno">  416 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">winningResult = player0 + (sum [1 | state &lt;- foundStates, move &lt;- allValidMoves state, (extractWinning move)])</span></span>
+<span class="lineno">  417 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">newWinningCount = (player1, winningResult)</span></span></span>
+<span class="lineno">  418 </span>        
 <span class="lineno">  419 </span>
-<span class="lineno">  420 </span>-- Function names says it all 
-<span class="lineno">  421 </span>addUpSequences :: [(Int, Int, Int)] -&gt; (Int, Int, Int)
-<span class="lineno">  422 </span><span class="decl"><span class="nottickedoff">addUpSequences allSequences = addUpSequences' allSequences initialResult</span>
-<span class="lineno">  423 </span><span class="spaces">    </span><span class="nottickedoff">where</span>
-<span class="lineno">  424 </span><span class="spaces">        </span><span class="nottickedoff">initialResult = (0, 0, 0)</span></span>
-<span class="lineno">  425 </span>addUpSequences' :: [(Int, Int, Int)] -&gt; (Int, Int, Int) -&gt; (Int, Int, Int)
-<span class="lineno">  426 </span><span class="decl"><span class="nottickedoff">addUpSequences' allSequences resultCount</span>
-<span class="lineno">  427 </span><span class="spaces">    </span><span class="nottickedoff">| null allSequences = resultCount</span>
-<span class="lineno">  428 </span><span class="spaces">    </span><span class="nottickedoff">| otherwise = addUpSequences' seqs intermediateResult</span>
-<span class="lineno">  429 </span><span class="spaces">    </span><span class="nottickedoff">where</span>
-<span class="lineno">  430 </span><span class="spaces">        </span><span class="nottickedoff">(seq:seqs) = allSequences</span>
-<span class="lineno">  431 </span><span class="spaces">        </span><span class="nottickedoff">(seqTotal, seqWinning, seqLosing) = seq</span>
-<span class="lineno">  432 </span><span class="spaces">        </span><span class="nottickedoff">(resTotal, resWinning, resLosing) = resultCount</span>
-<span class="lineno">  433 </span><span class="spaces">        </span><span class="nottickedoff">intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing))</span></span>
+<span class="lineno">  420 </span>sequencesFromState :: State -&gt; Int -&gt; (Int, Int, Int)
+<span class="lineno">  421 </span><span class="decl"><span class="istickedoff">sequencesFromState state@(State (cards, piecesA, piecesB, turn)) startingPlayer = (total, winning, losing)</span>
+<span class="lineno">  422 </span><span class="spaces">    </span><span class="istickedoff">where</span>
+<span class="lineno">  423 </span><span class="spaces">        </span><span class="istickedoff">allMovesFromState = allValidMoves state</span>
+<span class="lineno">  424 </span><span class="spaces">        </span><span class="istickedoff">total = length allMovesFromState</span>
+<span class="lineno">  425 </span><span class="spaces">        </span><span class="istickedoff">winning = if <span class="tickonlytrue">(turn == startingPlayer)</span> then sum [<span class="nottickedoff">1</span> | move &lt;- allMovesFromState, <span class="tickonlyfalse">extractWinning move</span>] else <span class="nottickedoff">0</span></span>
+<span class="lineno">  426 </span><span class="spaces">        </span><span class="istickedoff">losing  = if <span class="tickonlyfalse">(turn /= startingPlayer)</span> then <span class="nottickedoff">sum [1 | move &lt;- allMovesFromState, extractWinning move]</span> else 0</span></span>
+<span class="lineno">  427 </span>
+<span class="lineno">  428 </span>-- Function names says it all 
+<span class="lineno">  429 </span>addUpSequences :: [(Int, Int, Int)] -&gt; (Int, Int, Int)
+<span class="lineno">  430 </span><span class="decl"><span class="istickedoff">addUpSequences allSequences = addUpSequences' allSequences initialResult</span>
+<span class="lineno">  431 </span><span class="spaces">    </span><span class="istickedoff">where</span>
+<span class="lineno">  432 </span><span class="spaces">        </span><span class="istickedoff">initialResult = (0, 0, 0)</span></span>
+<span class="lineno">  433 </span>addUpSequences' :: [(Int, Int, Int)] -&gt; (Int, Int, Int) -&gt; (Int, Int, Int)
+<span class="lineno">  434 </span><span class="decl"><span class="istickedoff">addUpSequences' allSequences resultCount</span>
+<span class="lineno">  435 </span><span class="spaces">    </span><span class="istickedoff">| null allSequences = resultCount</span>
+<span class="lineno">  436 </span><span class="spaces">    </span><span class="istickedoff">| <span class="tickonlytrue">otherwise</span> = addUpSequences' seqs intermediateResult</span>
+<span class="lineno">  437 </span><span class="spaces">    </span><span class="istickedoff">where</span>
+<span class="lineno">  438 </span><span class="spaces">        </span><span class="istickedoff">(seq:seqs) = allSequences</span>
+<span class="lineno">  439 </span><span class="spaces">        </span><span class="istickedoff">(seqTotal, seqWinning, seqLosing) = seq</span>
+<span class="lineno">  440 </span><span class="spaces">        </span><span class="istickedoff">(resTotal, resWinning, resLosing) = resultCount</span>
+<span class="lineno">  441 </span><span class="spaces">        </span><span class="istickedoff">intermediateResult = ((resTotal+seqTotal), (resWinning+seqWinning), (resLosing+seqLosing))</span></span>
 
 </pre>
 </body>
