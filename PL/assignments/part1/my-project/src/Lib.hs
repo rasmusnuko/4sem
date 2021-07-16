@@ -346,8 +346,10 @@ movesNumbers n filePath = do
     else if (errorInState (read state :: State) /= 0)
     then return (show badState)
     else return (show (movesNumberResult n (read state :: State)))
-    where
-        badState = ("ParsingError",-1,-1,-1)
+
+-- Made as function for coverage
+badState :: (String, Int, Int, Int)
+badState = ("ParsingError",-1,-1,-1)
 
 -- Finds all winning/losing moves from a state,
 -- aswell as all last moves after n moves.
