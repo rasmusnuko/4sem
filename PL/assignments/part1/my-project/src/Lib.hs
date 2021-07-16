@@ -261,8 +261,6 @@ makeOutputString' state [] output = (removeFirstWord (show state)) ++ "\n" ++ ou
 makeOutputString' state (move:moves) output
     = makeOutputString' state moves (output ++ (removeFirstWord (show move)) ++ "\n")
 
-trace' arg = trace (show arg) arg
-
 -- Returns a list of all valid moves from a given state
 -- Also keeps track of whether a move is a winning move or not
 allValidMoves :: State -> [(Bool, Move)]
