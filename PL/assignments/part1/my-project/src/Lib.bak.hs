@@ -120,8 +120,8 @@ swapPieces (x:xs) start end
 
 -- Removes a piece from a list
 hitDetected :: [(Int, Int)] -> (Int, Int) -> [(Int, Int)]
-hitDetected [] _ = []
 hitDetected (x:xs) end
+    | null xs = []
     | x == end = (hitDetected xs end)
     | otherwise = x:(hitDetected xs end)
 
@@ -170,10 +170,10 @@ errorInCards' (card:cards)
 -- Checks if all pieces have valid coordinates
 errorInPieces :: [(Int, Int)] -> Bool
 errorInPieces [] = False
-errorInPieces pieces@((x1, x2):xs)
-    | (length pieces) > 5 = True
+errorInPieces ((x1, x2):pieces)
+    | (length pieces) > 4 = True
     | (x1 < 0) || (x2 < 0) || (x1 > 4) || (x2 > 4) = True
-    | otherwise = errorInPieces xs
+    | otherwise = errorInPieces pieces
 
 -- Checks if any two pieces are on the same tile on the board
 hasDuplicatePieces :: [(Int, Int)] -> Bool
@@ -374,7 +374,7 @@ findAllStates :: Int -> State -> ([State], (Int, Int))
 findAllStates n state = findAllStates' n ([state], (0,0))
 findAllStates' :: Int -> ([State], (Int, Int)) -> ([State], (Int, Int))
 findAllStates' n (foundStates, winningCount)
-    | n == 1 = (foundStates, winningCount)
+    | n == 0 = (foundStates, winningCount)
     | otherwise = 
         findAllStates' (n-1) ([
                               applyMove state (extractMove move)
@@ -383,7 +383,7 @@ findAllStates' n (foundStates, winningCount)
                               ], newWinningCount)
     where
         (player0, player1) = winningCount
-        winningResult = player0 + (sum [1 | state <- foundStates, move <- allValidMoves state, (extractWinning $ move)])
+        winningResult = player0 + (sum [1 | state <- foundStates, move <- allValidMoves state, (extractWinning move))])
         newWinningCount = (player1, winningResult)
 
 -- Generates a tuple containing (total, winning, losing)-moves
@@ -393,12 +393,15 @@ sequencesFromState state@(State (cards, piecesA, piecesB, turn)) startingPlayer 
     where
         allMovesFromState = allValidMoves state
         total = length allMovesFromState
-        winning = if (turn == startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
-        losing  = if (turn /= startingPlayer) then sum [1 | move <- allMovesFromState, extractWinning move] else 0
+        winningMoves = sum [1 | move <- allMovesFromState, extractWinning move]
+        winning = if (turn == startingPlayer) then winningMoves else 0
+        losing  = if (turn /= startingPlayer) then winningMoves else 0  
 
 -- Function names says it all 
 addUpSequences :: [(Int, Int, Int)] -> (Int, Int, Int)
-addUpSequences allSequences = addUpSequences' allSequences (0, 0, 0)
+addUpSequences allSequences = addUpSequences' allSequences initialResult
+    where
+        initialResult = (0, 0, 0)
 addUpSequences' :: [(Int, Int, Int)] -> (Int, Int, Int) -> (Int, Int, Int)
 addUpSequences' allSequences resultCount
     | null allSequences = resultCount
