@@ -113,7 +113,6 @@ applyPiecesB start end turn piecesB
 
 -- Swaps start with end and returns the new list
 swapPieces :: [(Int, Int)] -> (Int, Int) -> (Int, Int) -> [(Int, Int)]
-swapPieces [] _ _ = []
 swapPieces (x:xs) start end
     | x == start = end:xs
     | otherwise = x:(swapPieces xs start end)
