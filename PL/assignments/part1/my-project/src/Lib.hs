@@ -342,10 +342,10 @@ movesNumbers n filePath = do
     let maybeState = readMaybe state :: Maybe State
     -- Getting maybe state
     if (isNothing maybeState)
-    then return (show ("ParsingError",-1,-1,-1) )
+    then return (show ("ParsingError",(-1),(-1),(-1)) )
     -- Checking for empty moves list or invalid state
     else if (errorInState (read state :: State) /= 0)
-    then return (show ("ParsingError",-1,-1,-1))
+    then return (show ("ParsingError",(-1),(-1),(-1)))
     else return (show (movesNumberResult n (read state :: State)))
 
 -- Finds all winning/losing moves from a state,
