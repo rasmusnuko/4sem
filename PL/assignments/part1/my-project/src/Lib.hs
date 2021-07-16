@@ -137,8 +137,8 @@ errorInState :: State -> Int
 errorInState (State (cards, piecesA, piecesB, turn))
     | errorInCards cards = 1
     | piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = 2
-    | (errorInPieces piecesA) || (errorInPieces piecesB) = 3
-    | hasDuplicatePieces (piecesA++piecesB) = 4
+    | hasDuplicatePieces (piecesA++piecesB) = 3
+    | (errorInPieces piecesA) || (errorInPieces piecesB) = 4
     | (turn /= 0) && (turn /= 1) = 5
     | otherwise = 0
 
