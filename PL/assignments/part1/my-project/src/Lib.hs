@@ -136,8 +136,8 @@ getSecond (_,a) = a
 errorInState :: State -> Int
 errorInState (State (cards, piecesA, piecesB, turn))
     | errorInCards cards = 1
-    | piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = 2
-    | hasDuplicatePieces (piecesA++piecesB) = 3
+    | hasDuplicatePieces (piecesA++piecesB) = 2
+    | piecesA /= (sortPieces piecesA) || piecesB /= (sortPieces piecesB) = 3
     | (errorInPieces piecesA) || (errorInPieces piecesB) = 4
     | (turn /= 0) && (turn /= 1) = 5
     | otherwise = 0
