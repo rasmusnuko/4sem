@@ -45,8 +45,8 @@ isValid filePath = do
 -- along side a counter used to keep track of the amount of moves played
 isValidAux :: State -> [Move] -> String
 isValidAux state [] = removeFirstWord (show state)
-isValidAux (State (cards, piecesA, piecesB, turn)) (move:moves) 
-    | (null piecesA || null piecesB) && not (null (move:moves)) = "NonValid " ++ removeFirstWord (show move)
+isValidAux (State (cards, piecesA, piecesB, turn)) xs@(move:moves) 
+    | (null piecesA || null piecesB) && not (null xs) = "NonValid " ++ removeFirstWord (show move)
     | errorInMove cards move piecesA piecesB turn = "NonValid " ++ removeFirstWord (show move)
     | otherwise = isValidAux newState moves
     where
@@ -196,7 +196,6 @@ errorInMove cards (Move (start, end, card)) piecesA piecesB turn
 -- Checks if the move is possible, given the start- and end position,
 -- and the legal moves of the card played
 errorInMove' :: (Int, Int) -> (Int, Int) -> [(Int, Int)] -> Int -> Bool
-errorInMove' _ _ [] _ = True
 errorInMove' (start1, start2) (end1, end2) ((x1, x2):xs) turn
     | (end1 < 0) || (end2 < 0) || (end1 > 4) || (end2 > 4) = True
     | (turn == 0) && (start1 + x1 == end1) && (start2 + x2 == end2) = False
