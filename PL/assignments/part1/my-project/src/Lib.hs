@@ -115,7 +115,7 @@ applyPiecesB start end turn piecesB
 swapPieces :: [(Int, Int)] -> (Int, Int) -> (Int, Int) -> [(Int, Int)]
 swapPieces [] _ _ = []
 swapPieces (x:xs) start end
-    | x == start = end:(swapPieces xs start end)
+    | x == start = end:xs
     | otherwise = x:(swapPieces xs start end)
 
 -- Removes a piece from a list
